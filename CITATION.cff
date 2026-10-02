@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+type: software
+title: "The frog model on regular trees"
+authors:
+  - name: mt0-svg
+repository-code: "https://github.com/mt0-svg/frog-model-tree"
+license: Apache-2.0
+version: v1.0.0
+doi: 10.5281/zenodo.23121586
+keywords:
+  - frog model
+  - interacting random walks
+  - d-ary tree
+  - regular trees
+  - transience
+  - stochastic domination
+  - certificate
+  - Lean 4
+  - formal verification
+preferred-citation:
+  type: article
+  title: "The frog model on the 4-ary tree is transient"
+  authors:
+    - name: mt0-svg
+  doi: 10.5281/zenodo.23121586
+  url: "https://github.com/mt0-svg/frog-model-tree"

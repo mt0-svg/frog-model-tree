@@ -1,0 +1,53 @@
+name = "frog-model-tree"
+version = "1.0.0"
+description = "The frog model on regular trees: transience on the rooted 4-ary tree (the case d = 4 of the Hoffman-Johnson-Junge conjecture), formalized in Lean 4"
+keywords = ["math", "probability", "frog model", "regular trees", "interacting random walks", "formal verification"]
+license = "Apache-2.0"
+licenseFiles = ["LICENSE", "NOTICE"]
+preferReleaseBuild = true
+releaseRepo = "https://github.com/mt0-svg/frog-model-tree"
+defaultTargets = ["Defs", "Main", "G3K", "Challenge", "Solution"]
+
+[leanOptions]
+pp.unicode.fun = true
+relaxedAutoImplicit = false
+autoImplicit = false
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.34.1"
+
+# The definitions of the statement (FrogModel/Challenge.lean without its two targets).
+[[lean_lib]]
+name = "Defs"
+roots = ["FrogModel.Defs"]
+
+# The development: Theorems 2.2 and 2.3 of the paper, the soundness of the checker, the targets from the data, and
+# (FrogModel.LemmaX.Main) the statements of Lemmas 4.1 and 4.2 as the paper names them.
+# Every module is listed, so that `lake build M` builds a single module M.
+[[lean_lib]]
+name = "Main"
+globs = ["FrogModel.Final", "FrogModel.TheoremA", "FrogModel.Cert.+", "FrogModel.Engine.+", "FrogModel.Lanes.+",
+  "FrogModel.LemmaX.+", "FrogModel.Lemmas.+", "FrogModel.LinSys.+", "FrogModel.Pieces.+", "FrogModel.Pool.+",
+  "FrogModel.Recursion.+"]
+
+# The kernel checker of the certificate, Lean core only.
+[[lean_lib]]
+name = "G3K"
+globs = ["FrogModel.G3K.+"]
+
+# The data of the certificate and the theorems that check it, written by code/g3k from the certificate (not committed).
+[[lean_lib]]
+name = "Data"
+globs = ["FrogModel.G3Q.+"]
+
+# The two statements with `sorry`, which nothing imports, and the module that proves them: the pair Comparator checks
+# (config.json).
+[[lean_lib]]
+name = "Challenge"
+roots = ["FrogModel.Challenge"]
+
+[[lean_lib]]
+name = "Solution"
+roots = ["FrogModel.Solution"]

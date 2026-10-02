@@ -1,0 +1,21 @@
+name = "g3k"
+version = "1.0.0"
+defaultTargets = ["g3k"]
+
+# The checker (a link to the package's FrogModel/G3K) and the reader of the table and writer of the modules.
+[[lean_lib]]
+name = "G3K"
+globs = ["FrogModel.G3K.+"]
+
+[[lean_lib]]
+name = "G3Tool"
+
+# g3k TABLE DATA OUTDIR NAME: the modules of the data and of the theorems that check it.
+[[lean_exe]]
+name = "g3k"
+root = "G3Tool.MainK"
+
+# g3ktable TABLE SHA256 OUT: the table module FrogModel/G3K/Table.lean of the checker.
+[[lean_exe]]
+name = "g3ktable"
+root = "G3Tool.TableKMain"

@@ -1,0 +1,5 @@
+extrapolated by s = 30: E B(1) = 0.534083, E B(J) = 1.698178
+wrote out/table.v3 and out/table.v2 (kappa = 1064715957/1000000000, M = 1.285094455)
+09949fdce973c130c7d46984a1c3a5e510e0a85c7e2bedf4c148ea9f86fb4782  out/table.v3
+09949fdce973c130c7d46984a1c3a5e510e0a85c7e2bedf4c148ea9f86fb4782  ../certificate/table.cert
+out/table.v3 equals ../certificate/table.cert

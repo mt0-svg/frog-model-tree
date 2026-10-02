@@ -1,0 +1,8 @@
+{
+  "challenge_module": "FrogModel.Challenge",
+  "solution_module": "FrogModel.Solution",
+  "theorem_names": ["FrogModel.transient_four", "FrogModel.meanVisits_four_le"],
+  "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
+  "enable_nanoda": true,
+  "lean_kernel": false
+}

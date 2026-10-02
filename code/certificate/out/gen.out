@@ -1,0 +1,26 @@
+table table.cert sha256 09949fdce973c130c7d46984a1c3a5e510e0a85c7e2bedf4c148ea9f86fb4782; J 4 T 8 T' 16; hmin 1e-7
+(I1) 495 atoms in the finite part, sum h + eps - 1 = 0; holds
+(I2) phi rho < 1: true; kappa^J - M = 45872408087554461107444245167533716754076948872705391143297/7090920545026658214622183555072000000000000000000000000000000000000 (~6.469175e-9): true; theta rho - 1 = 65169161/10000000000 (~6.516916e-3): true; holds
+(I5) c = 9337230319347/17448304640000 (~0.5351368234): holds
+child states 38; theta = 372784043/250000000 (~1.4911361720)
+  1:M row ["0:0.58381", "1:0.37872", "2:0.03161", "3:0.00496", "4:0.00076", "5:0.00011", "6:0.00002", "7:0.00000", "8:0.00000"], w 1.206194
+  2:M row ["0:0.61384", "1:0.35823", "2:0.02390", "3:0.00345", "4:0.00050", "5:0.00007", "6:0.00001", "7:0.00000", "8:0.00000"], w 1.199902
+  3:M row ["0:0.63333", "1:0.34468", "2:0.01904", "3:0.00255", "4:0.00035", "5:0.00005", "6:0.00000", "7:0.00000", "8:0.00000"], w 1.201049
+heavy pairs per phase [36720, 35240, 34273, 32946]
+R per phase [41854, 40379, 39429, 38124] (total 159786); flagged 139145; states with a labelled child 138742
+moves: raw 6037639 (37.8 per state, stops p' > T' included), merged non-stop 4192256 (26.2 per state); stops 418156; product cache 17476
+vector lengths [495, 165, 45, 9]; numbers in V and W 30935760
+Gauss-Seidel phase 4: 38124 states, 67 sweeps, last change below 1e-16: true
+Gauss-Seidel phase 3: 39429 states, 67 sweeps, last change below 1e-16: true
+Gauss-Seidel phase 2: 40379 states, 68 sweeps, last change below 1e-16: true
+Gauss-Seidel phase 1: 41854 states, 68 sweeps, last change below 1e-16: true
+float residuals: V - right side and right side - W at most 1e-15: true; min (Z - KZ) at least 1 - 1e-12: true; Z(s0) 8.47, max Z 28.57
+float: |V(s0)| 0.999965, W(s0)[T] 2.4479e-3, ratio to eps theta^(T+1) 0.6717
+grid round 0: exact failures V 0, W 0
+L: 495 atoms, |L| = 0.999965260760, |L| - sum h = 6.526076e-5; receivers 495
+float plan: deficit at delta 0 below 1e-14; plan built at delta 4.75e-6
+exact plan from the float flow: 1115 entries, 0 receivers left to the exact greedy fill, 0 sources overdrawn
+after the exact greedy fill: receivers not filled 0, missing mass 0 (~0.000000e0)
+data: 250446293 bytes uncompressed, sha256 of the uncompressed data f313dbf34d06d232e062afb4a586e270d26b8360c14abea5d467c86b304001c7; written to out/certificate.v4.zst
+51e5638ac02f22001cebf9437539bbb7d3c8c35c20afa4fbad256e88a2fc6247  out/certificate.v4.zst
+112621222 bytes out/certificate.v4.zst

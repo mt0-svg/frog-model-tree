@@ -1,0 +1,12 @@
+table table.cert J 4 T 8 T' 16; child states 44 (with 9 max-chain states)
+threshold 1e-11
+phase 1: prefix groups 1, longest sub-run 41, state expansions 3174338, contributions 104202256, distinct (multiset, e, p, prefix) 1329592, distinct (multiset, p) 297281, distinct multisets 31844, next starts 151553
+  phase 1 (multiset, p) by summed occupation, threshold:count at or above ["1e-5:4521", "1e-6:14406", "1e-7:36720", "1e-8:80943", "1e-9:150595", "1e-10:233029"]
+phase 2: prefix groups 9, longest sub-run 37, state expansions 14202662, contributions 486087420, distinct (multiset, e, p, prefix) 2388337, distinct (multiset, p) 238498, distinct multisets 27841, next starts 540236
+  phase 2 (multiset, p) by summed occupation, threshold:count at or above ["1e-5:5138", "1e-6:14790", "1e-7:35240", "1e-8:74734", "1e-9:132502", "1e-10:193033"]
+phase 3: prefix groups 45, longest sub-run 33, state expansions 25132563, contributions 871308330, distinct (multiset, e, p, prefix) 4164980, distinct (multiset, p) 197424, distinct multisets 25753, next starts 1474053
+  phase 3 (multiset, p) by summed occupation, threshold:count at or above ["1e-5:5562", "1e-6:14993", "1e-7:34273", "1e-8:70212", "1e-9:119246", "1e-10:164925"]
+phase 4: prefix groups 165, longest sub-run 29, state expansions 40745812, contributions 1427269885, distinct (multiset, e, p, prefix) 7273569, distinct (multiset, p) 166457, distinct multisets 23746, next starts 3491414
+  phase 4 (multiset, p) by summed occupation, threshold:count at or above ["1e-5:5718", "1e-6:14920", "1e-7:32946", "1e-8:65672", "1e-9:107667", "1e-10:142056"]
+total: state expansions 83255375, contributions 2888867891, distinct states (summed over phases and groups) 15156478
+fac70d773bdc805e40909bc02dfbd45aa61924c3f9fc25cd2ca7c1d116b74cfb  out/occupations.txt
