@@ -1,0 +1,9 @@
+[workspace]
+members = ["cert", "fhat"]
+resolver = "2"
+
+[workspace.package]
+edition = "2021"
+
+[profile.release]
+opt-level = 3

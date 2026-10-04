@@ -12,7 +12,7 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{url}
 \usepackage[pdfauthor={311859884+mt0-svg@users.noreply.github.com},
-            pdftitle={The frog model on the 4-ary tree is transient},
+            pdftitle={The frog model is recurrent on the 3-ary tree and transient on the 4-ary tree},
             pdfkeywords={frog model, interacting random walks, d-ary tree, transience, recurrence, stochastic domination, recursive distributional inequality, certificate, Lean 4, formal verification},
             bookmarksnumbered=true]{hyperref}
 \hypersetup{colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue}
@@ -43,6 +43,14 @@
 \newcommand{\nolean}[1]{\ignorespaces}
 % the Lean declaration named in the last sentence of a proof
 \DeclareUrlCommand\decl{\urlstyle{tt}}
+% another Lean name in a sentence, breakable at its dots and underscores
+\DeclareUrlCommand\lname{\urlstyle{tt}}
+% a prime in a Lean name prints, and copies, as a straight quote
+\makeatletter\g@addto@macro\UrlSpecials{\do\'{\mbox{\textquotesingle}}}\makeatother
+% Draft markers: \waits{what} marks a sentence whose check is not yet done (a Lean leaf or a computation);
+% it prints in red while \drafttrue, and the final version has none left.
+\newif\ifdraft\draftfalse
+\newcommand{\waits}[1]{\ifdraft\textcolor{red}{\small\,[waits: #1]}\fi}
 
 \newcommand{\T}{\mathbb{T}}
 \newcommand{\Ts}{\mathbb{T}^{*}}
@@ -60,16 +68,20 @@
 \newcommand{\eps}{\varepsilon}
 \newcommand{\stle}{\preceq}
 \newcommand{\one}{\mathbf{1}}
+\newcommand{\Bin}{\operatorname{Bin}}
+\newcommand{\Mult}{\operatorname{Mult}}
+\newcommand{\KL}{\operatorname{KL}}
 
 \begin{document}
 
-\title[The frog model on the 4-ary tree]{The frog model on the 4-ary tree is transient}
+\title[The frog model on the 3-ary and 4-ary trees]{The frog model is recurrent on the 3-ary tree and transient on the 4-ary tree}
 \author{\authorlink}
 \thanks{2020 {\em Mathematics Subject Classification.} Primary: 60K35; Secondary: 60J80, 60J10, 60E15, 03B35.\\\indent
-{\em Key words and phrases.} Frog model; interacting random walks; $d$-ary tree; transience; stochastic domination; recursive distributional inequality; certificate; Lean~4.}
+{\em Key words and phrases.} Frog model; interacting random walks; $d$-ary tree; transience; recurrence; stochastic domination; recursive distributional inequality; certificate; Lean~4.}
 
 \begin{abstract}
-We prove that the frog model on the rooted $4$-ary tree is transient. One frog starts awake at the root and one sleeps at every other vertex; awake frogs perform independent simple random walks, waking the frogs they visit. Almost surely the root is visited finitely often; the mean number of visits is at most $5.756$. This is the case $d=4$ of a conjecture of Hoffman, Johnson and Junge on the $d$-ary tree, who proved recurrence for $d=2$ and transience for $d\ge5$. The proof bounds by $0.536$ the mean number of frogs that a subtree sends back to the parent of its root. It combines an exact recursion on the laws of the response curves of subtrees with a law, given by a finite table, that dominates its image; two linear systems on $159786$ states certify the domination. The proof is formalized in Lean~4, whose kernel checks the certificate.
+We prove that the frog model on the rooted $d$-ary tree is recurrent for $d=3$ and transient for $d=4$, as conjectured by Hoffman, Johnson and Junge. One frog starts awake at the root and one sleeps at every other vertex; awake frogs perform independent simple random walks, waking the frogs they visit. For $d=4$ the mean number of visits to the root is at most $5.756$. The proof runs an exact recursion on the laws of the responses of subtrees, with a law given by a finite table that dominates its image, certified by two linear systems on $159786$ states. For $d=3$ a subtree of height $m\ge1778250$ entered by one frog sends back at least $(m+2)/5$ frogs on average; the proof combines a lower model, a certified chain of steps on finite tables of bounds, and an induction on the height. Both proofs are formalized in Lean~4.
+
 \end{abstract}
 
 \maketitle
@@ -82,7 +94,7 @@ We prove that the frog model on the rooted $4$-ary tree is transient. One frog s
 \begin{tabular}{>{\raggedright\arraybackslash}p{0.2\textwidth} >{\raggedright\arraybackslash}p{0.7\textwidth}}
 \rowcolor{black!6}
 \multicolumn{2}{>{\raggedright\arraybackslash}p{0.93\textwidth}}{\textit{This is AI-generated research: the results, proofs and code were found and written by AI. Credit goes to all the humans whose work it builds on.}}\\
-\badge{leangreen}{Proved in Lean 4} & Theorem~\ref{thm:main} is proved in Lean~4 with Mathlib, with no hypothesis and only the standard axioms (\texttt{FrogModel.transient\_four} and \texttt{FrogModel.meanVisits\_four\_le}). So are Theorems~\ref{thm:A} and~\ref{thm:B} and the numbered statements of Sections~\ref{sec:thmA} to~\ref{sec:certificate}, those of Section~\ref{sec:criterion} for the table of Section~\ref{sec:certificate}, and the Lean kernel checks the certificate of Section~\ref{sec:certificate}. Comparator checks the two theorems against a copy of their statements, and nanoda, a second implementation of the Lean kernel, checks them again.\\
+\badge{leangreen}{Proved in Lean 4} & Theorems~\ref{thm:main} and~\ref{thm:three} are proved in Lean~4 with Mathlib, with no hypothesis and only the standard axioms (\texttt{FrogModel.transient\_four}, \texttt{FrogModel.meanVisits\_four\_le} and \texttt{FrogModel.recurrent\_three}). So are Theorems~\ref{thm:A} and~\ref{thm:B} and every numbered lemma, proposition and theorem of Sections~\ref{sec:thmA} to~\ref{sec:certificate} and~\ref{sec:three} to~\ref{sec:proofthree} (those of Section~\ref{sec:criterion} for the table of Section~\ref{sec:certificate}), and the Lean kernel checks the certificate of Section~\ref{sec:certificate} and the run, the certificate and the table of Section~\ref{sec:proofthree}. Comparator checks the three theorems against a copy of their statements, and nanoda, a second implementation of the Lean kernel, checks them again.\\
 \rowcolor{black!6}
 \multicolumn{2}{>{\raggedright\arraybackslash}p{0.93\textwidth}}{Lean proofs, code, certificates and the \TeX{} source: \href{\repo}{\texttt{github.com/mt0-svg/frog-model-tree}}}\\
 \end{tabular}
@@ -91,7 +103,7 @@ We prove that the frog model on the rooted $4$-ary tree is transient. One frog s
 \clearpage
 \section{Introduction}\label{sec:intro}
 
-We prove that the frog model on the rooted $4$-ary tree is transient: the root is visited only finitely many times, almost surely. This is the case $d=4$ of a conjecture of Hoffman, Johnson and Junge \cite{HJJ17}. The proof reduces the question to a bound on the mean number of frogs that a subtree sends back through its top edge, and proves that bound with a finite certificate.
+We prove that the frog model on the rooted $3$-ary tree is recurrent, and on the rooted $4$-ary tree transient: the root is visited infinitely many times in the first case and only finitely many times in the second, almost surely. These are the two cases left open by a conjecture of Hoffman, Johnson and Junge \cite{HJJ17}. Both proofs count the frogs that a subtree sends back through its top edge: for $d=4$ the mean of that count is below $1$, which a finite certificate proves, and for $d=3$ it grows linearly in the height of the subtree, which a finite certificate starts and an induction on the height carries on.
 
 The frog model on the rooted $d$-ary tree $\T_d$ is the following system of random walks.
 \begin{enumerate}
@@ -107,7 +119,7 @@ where $s_v$ is the time at which $f_v$ wakes. The model is \emph{transient} if $
 
 Popov asked whether the model with one frog per vertex is recurrent on the tree in which every vertex has degree $d$ \cite[Open Problem~4.1]{Pop03}. Hoffman, Johnson and Junge proved that the frog model on $\T_2$ is recurrent and that the frog model on $\T_d$ is transient for every $d\ge5$ \cite[Theorem~1]{HJJ17}, and they left the two remaining degrees as a conjecture.
 
-\begin{conjecture}[{Hoffman, Johnson and Junge \cite[Conjecture~2, p.~2828]{HJJ17}}]\label{conj:HJJ}\nolean{a quoted conjecture, whose case d = 4 is the main theorem}
+\begin{conjecture}[{Hoffman, Johnson and Junge \cite[Conjecture~2, p.~2828]{HJJ17}}]\label{conj:HJJ}\nolean{a quoted conjecture, whose two cases are Theorems main and three}
 The frog model on $\T_d$ is recurrent a.s. for $d = 3$ and transient a.s. for $d = 4$.
 \end{conjecture}
 
@@ -115,12 +127,16 @@ The frog model on $\T_d$ is recurrent a.s. for $d = 3$ and transient a.s. for $d
 For $d=4$, $V<\infty$ almost surely, and $\E V\le5.756$.
 \end{theorem}
 
-So the second half of Conjecture~\ref{conj:HJJ} holds; the first half, recurrence for $d=3$, remains open.
+\begin{theorem}\label{thm:three}\lean{FrogModel.recurrent_three, FrogModel.Recurrent, FrogModel.D3.Assembly.recurrent_three_of_m1}
+For $d=3$, $V=\infty$ almost surely.
+\end{theorem}
+
+So both halves of Conjecture~\ref{conj:HJJ} hold.
 
 \subsection*{What was known}
-For $d\ge5$ Hoffman, Johnson and Junge compare the projection of the frog model on the distance to the root with a branching random walk. For $d\ge6$ one type suffices, and a normalized exponential weight of the configuration is a martingale \cite[Proposition~18]{HJJ17}; for $d=5$ the walk has $27$ types, whose transition probabilities are computed with computer assistance. The same method, with $6$ types, gives transience on the tree whose levels alternate between $5$ and $6$ children \cite[Proposition~19]{HJJ17}. They write that ``conceptually our approach could extend to a computer-assisted proof for transience when $d = 4$, but the demands of this theoretical program seem well beyond current processing power'' \cite[p.~2829]{HJJ17}. Their Conjecture~2 rests on simulations of the model with stunning fences \cite[Section~5]{HJJ17}: a frog that reaches depth $k$ stops there until all frogs have stopped, and the growth in $k$ of the number $A_{d,k}$ of frogs that pile up at depth $k$ suggests recurrence for $d=3$ and transience for $d=4$. This staged picture is the nearest precursor of steps~2 to~5 of the method below. With independent Poisson numbers of frogs of mean $\mu$ per vertex, the model is transient when $\mu<(d-1)^2/(4d)$ \cite[Proposition~15]{HJJ16}, which is $9/16$ for $d=4$, and the critical density lies between $0.24d$ and $2.28d$ for large $d$ \cite[Theorem~1]{JJ16}. Johnson and Junge extend transience for $d\ge5$ to every configuration of mean at most one per vertex by stochastic orders \cite[Corollary~7]{JJ18}, while for every $\mu$ some law of mean $\mu$ for the initial numbers of frogs makes the model on $\T_d$ transient \cite[Theorem~1.1]{JR19}. Rosenberg proves recurrence on the tree whose levels alternate between $3$ and $2$ children \cite[Theorem~1.1]{Ros18}. In their study of the cover time, Hoffman, Johnson and Junge plant the $d$-ary tree of height $H$ below an extra vertex $y$ and freeze the frogs that reach $y$ \cite[Proposition~4.3]{HJJ19}, and in the proof of \cite[Corollary~4.4]{HJJ19} they sort the frogs that return to the root up to a time $2^j$ into generations, the mean of each generation at most $1+\mu$ times the mean frozen count times the mean of the previous one, with $\mu$ the mean number of sleeping frogs per vertex. Theorem~\ref{thm:A} runs this argument for all time and charges the frogs of the children of the root once in all instead of once per generation (Lemma~\ref{lem:children}), which turns the condition $2x_d<1$ of one frog per vertex into $x_d<1$; this matters here, since the bound of Theorem~\ref{thm:B} exceeds $1/2$. On $\mathbb{Z}^2$ with drift, D\"obler, Gantert, H\"ofelsauer, Popov and Weidner stop the frogs at hyperplanes and refill, before each particle branches, every vertex whose frog has woken, which gives a branching random walk with independent offspring that visits every vertex the frog model visits \cite[proof of Theorem~1.1(ii)]{DGHPW18}; Lemma~\ref{lem:refresh} plays the same role in the proof of Theorem~\ref{thm:A}, where it charges each excursion with an independent copy of the frozen count. The cases $d=3$ and $d=4$ are stated as open in \cite{JJ16,BFJJT19,MR24,MW20,AJ25,Fra26}, and simulations of the model with $d=4$ point to transience \cite[Section~5]{HJJ17}. Related work treats the frog model with drift on $\T_d$ \cite{BFJJT19,GTW22,BJL24,Mat24}, on Galton-Watson trees \cite{MR24,MW20} and on non-amenable trees \cite{MR20}, the cover time and the susceptibility on finite $d$-ary trees \cite{HJJ19,Her18}, and frogs with geometric lifetimes on trees \cite{GR18,Pen24}.
+For $d\ge5$ Hoffman, Johnson and Junge compare the projection of the frog model on the distance to the root with a branching random walk. For $d\ge6$ one type suffices, and a normalized exponential weight of the configuration is a martingale \cite[Proposition~18]{HJJ17}; for $d=5$ the walk has $27$ types, whose transition probabilities are computed with computer assistance. The same method, with $6$ types, gives transience on the tree whose levels alternate between $5$ and $6$ children \cite[Proposition~19]{HJJ17}. They write that ``conceptually our approach could extend to a computer-assisted proof for transience when $d = 4$, but the demands of this theoretical program seem well beyond current processing power'' \cite[p.~2829]{HJJ17}. Their Conjecture~2 rests on simulations of the model with stunning fences \cite[Section~5]{HJJ17}: a frog that reaches depth $k$ stops there until all frogs have stopped, and the growth in $k$ of the number $A_{d,k}$ of frogs that pile up at depth $k$ suggests recurrence for $d=3$ and transience for $d=4$. This staged picture is the nearest precursor of steps~2 to~5 of the method below. With independent Poisson numbers of frogs of mean $\mu$ per vertex, the model is transient when $\mu<(d-1)^2/(4d)$ \cite[Proposition~15]{HJJ16}, which is $9/16$ for $d=4$, and the critical density lies between $0.24d$ and $2.28d$ for large $d$ \cite[Theorem~1]{JJ16}. Johnson and Junge extend transience for $d\ge5$ to every configuration of mean at most one per vertex by stochastic orders \cite[Corollary~7]{JJ18}, while for every $\mu$ some law of mean $\mu$ for the initial numbers of frogs makes the model on $\T_d$ transient \cite[Theorem~1.1]{JR19}. Rosenberg proves recurrence on the tree whose levels alternate between $3$ and $2$ children \cite[Theorem~1.1]{Ros18}. In their study of the cover time, Hoffman, Johnson and Junge plant the $d$-ary tree of height $H$ below an extra vertex $y$ and freeze the frogs that reach $y$ \cite[Proposition~4.3]{HJJ19}, and in the proof of \cite[Corollary~4.4]{HJJ19} they sort the frogs that return to the root up to a time $2^j$ into generations, the mean of each generation at most $1+\mu$ times the mean frozen count times the mean of the previous one, with $\mu$ the mean number of sleeping frogs per vertex. Theorem~\ref{thm:A} runs this argument for all time and charges the frogs of the children of the root once in all instead of once per generation (Lemma~\ref{lem:children}), which turns the condition $2x_d<1$ of one frog per vertex into $x_d<1$; this matters here, since the bound of Theorem~\ref{thm:B} exceeds $1/2$. On $\mathbb{Z}^2$ with drift, D\"obler, Gantert, H\"ofelsauer, Popov and Weidner stop the frogs at hyperplanes and refill, before each particle branches, every vertex whose frog has woken, which gives a branching random walk with independent offspring that visits every vertex the frog model visits \cite[proof of Theorem~1.1(ii)]{DGHPW18}; Lemma~\ref{lem:refresh} plays the same role in the proof of Theorem~\ref{thm:A}, where it charges each excursion with an independent copy of the frozen count. The cases $d=3$ and $d=4$ are stated as open in \cite{JJ16,BFJJT19,MR24,MW20,AJ25,Fra26}, and simulations of the model with $d=4$ point to transience \cite[Section~5]{HJJ17}. For $d=2$, Hoffman, Johnson and Junge compare the frog model with a self-similar model, whose frogs follow non-backtracking walks that may stop and whose number of returns to the root lies below that of the frog model; the generating function of that number is a fixed point of an explicit operator, monotone on a large class of functions, whose iterates tend to $0$ \cite[Section~2]{HJJ17}. Rosenberg adapts this method to the tree whose levels alternate between $3$ and $2$ children \cite[Section~2]{Ros18}, and writes that on $\T_3$, which appears close to criticality, a self-similar model below the frog model seems to stop being recurrent \cite[Section~1]{Ros18}. The simulations with stunning fences \cite[Section~5]{HJJ17} suggest recurrence for $d=3$ through the expected number of visits to the root, which is infinite if $\sum_kd^{-k}\E A_{d,k}=\infty$; Theorem~\ref{thm:crit} turns a linear growth of the mean of a truncated count into recurrence by a second moment bound and a zero-one argument on the planted tree, in the place of the zero-one law of \cite[Theorem~4]{HJJ17} (a zero-one law for general frog processes is \cite[Theorem~13]{KZ17}). Related work treats the frog model with drift on $\T_d$ \cite{BFJJT19,GTW22,BJL24,Mat24}, on Galton-Watson trees \cite{MR24,MW20} and on non-amenable trees \cite{MR20}, the cover time and the susceptibility on finite $d$-ary trees \cite{HJJ19,Her18}, and frogs with geometric lifetimes on trees \cite{GR18,Pen24}.
 
-\subsection*{The method}
+\subsection*{The method for $d=4$}
 Freeze at $y$ the frogs of a planted copy of $\T_4$ and let $x_4$ be the mean number of frozen frogs (Definition~\ref{def:planted}). The proof has five steps.
 \begin{enumerate}
 \item The bound $\E V\le(d+1)x_d/(1-x_d)$ whenever $x_d<1$ (Theorem~\ref{thm:A}, Section~\ref{sec:thmA}). The visits to the root are sorted into generations of excursions from the root, and each excursion into a subtree is charged with an independent copy of the frozen count.
@@ -131,10 +147,20 @@ Freeze at $y$ the frogs of a planted copy of $\T_4$ and let $x_4$ be the mean nu
 \end{enumerate}
 The bound needed, $x_4<1$, holds with room, since the table law has mean $0.535$. What makes a finite table enough is that the recursion of step~2 keeps the dependence between the frogs returned by one subtree: the response curve records how many frogs come back for every number of frogs sent in, and blocks of four values of it already suffice in step~5.
 
-\subsection*{The formalization}
-Theorem~\ref{thm:main} is proved in Lean~4 with Mathlib, with no hypothesis and only the standard axioms, from the definition of the model given above. So are Theorems~\ref{thm:A} and~\ref{thm:B} and the numbered statements of Sections~\ref{sec:thmA} to~\ref{sec:certificate}; those of Section~\ref{sec:criterion} are proved for the table of Section~\ref{sec:certificate}, the one the proof uses. The finite verifications of Section~\ref{sec:certificate} are evaluations in the Lean kernel, and no compiled code is trusted. Each formalized proof ends with the name of its main Lean declaration. Section~\ref{sec:comp} describes the formal proof and its data, and the repository lists, for every numbered statement, the declarations of its formal proof.
+\subsection*{The method for $d=3$}
+For $d=3$ the frozen count is infinite with positive probability, and the proof shows it by counting the frogs frozen at $y$ when only the frogs of the first $m$ levels are present. Let $G_m(1)$ be that count when one frog enters a planted tree of height $m$ (Definition~\ref{def:plantedcurve}). The proof has four steps.
+\begin{enumerate}
+\item If the mean of the frozen count of the truncated model grows linearly in $m$, then the model is recurrent, for every $d\ge2$ (Theorem~\ref{thm:crit}, Section~\ref{sec:crit}), by the second moment method and a zero-one argument. One step from the root turns a linear bound on $\E G_m(1)$ into one on that mean (Lemma~\ref{lem:rootstep}).
+\item The planted curve of height $m+1$ is the output of a closure at its root whose three children answer with planted curves of height $m$ (Lemma~\ref{lem:closid}, Section~\ref{sec:closure}). Optional stopping along the entries into a child, with one coin per entry, compares the deficit $\Delta_m(k)=(m+1+k)/3-\E G_m(k)$ against the mean of the all-awake count from one height to the next.
+\item Finite tables of upper bounds on the distribution functions and the deficits of the planted curves are carried from height $m$ to height $m+1$ by an explicit map $\Phi$ (Lemma~\ref{lem:step}, Sections~\ref{sec:onebounds} and~\ref{sec:states}). A lower model, which reads the frog paths with caps and ghost walks of bounded depth and whose count has a law given by a finite recursion, gives a valid table at height $100$ (Section~\ref{sec:lower}); $505$ certified steps of $\Phi$ and one table that $\Phi$ maps below itself give valid tables at every height of $[605,1778279]$ (Proposition~\ref{prop:m1run}(2)).
+\item Above $m_1=1778279$, an induction on the height that tracks $\E G_m(J)$ for one growing index $J$ keeps $\E G_m(1)\ge\frac35\mu_m(1)=(m+2)/5$, by two inequalities checked on $95$ intervals up to $10^{30}$ and proved beyond (Theorem~\ref{thm:dprime}, Section~\ref{sec:dprime}).
+\end{enumerate}
+The deficit at one entrant is about $0.44$ of its scale at height $100$ and below $0.135$ of it from height $605$ to $m_1$, while the induction needs $0.4$: the certified steps are what bring the deficit down.
 
-Section~\ref{sec:reduction} proves Theorem~\ref{thm:main} from Theorems~\ref{thm:A} and~\ref{thm:B}, Sections~\ref{sec:thmA} to~\ref{sec:certificate} prove them, Section~\ref{sec:comp} describes the formal proof and its data, and Appendix~\ref{app:table} lists the table.
+\subsection*{The formalization}
+Theorem~\ref{thm:main} is proved in Lean~4 with Mathlib, with no hypothesis and only the standard axioms, from the definition of the model given above. So are Theorems~\ref{thm:A} and~\ref{thm:B} and the numbered lemmas, propositions and theorems of Sections~\ref{sec:thmA} to~\ref{sec:certificate}; those of Section~\ref{sec:criterion} are proved for the table of Section~\ref{sec:certificate}, the one the proof uses. The finite verifications of Section~\ref{sec:certificate} are evaluations in the Lean kernel, and no compiled code is trusted. Theorem~\ref{thm:three} is proved in Lean~4 with Mathlib in the same way, and so are the numbered lemmas, propositions and theorems of Sections~\ref{sec:three} to~\ref{sec:proofthree}; the run, the certificate and the table of Section~\ref{sec:proofthree} are checked by evaluation in the Lean kernel. Each formalized proof ends with the name of its main Lean declaration. Section~\ref{sec:comp} describes the formal proof and its data, and the repository lists, for every numbered lemma, proposition and theorem, the declarations of its formal proof.
+
+Section~\ref{sec:reduction} proves Theorem~\ref{thm:main} from Theorems~\ref{thm:A} and~\ref{thm:B}, and Sections~\ref{sec:thmA} to~\ref{sec:certificate} prove them. Section~\ref{sec:three} proves Theorem~\ref{thm:three} from Theorems~\ref{thm:crit} and~\ref{thm:linear} and Lemma~\ref{lem:rootstep}, and Sections~\ref{sec:crit} to~\ref{sec:proofthree} prove them. Section~\ref{sec:comp} describes the formal proofs and their data, and Appendix~\ref{app:table} lists the table of the case $d=4$.
 
 \section{Frozen frogs}\label{sec:reduction}
 
@@ -677,14 +703,673 @@ Every item is decided by the Lean kernel, by evaluation, in exact rational or in
 By Proposition~\ref{prop:cert}, the table and the data satisfy the hypotheses of Theorem~\ref{thm:check}, so $\Phi_4(H^*)\stle H^*$. Theorem~\ref{thm:super} with $J=4$ gives $x_4\le\E B^*(1)$, which is $\cst$ by~\eqref{eq:EB1} and Proposition~\ref{prop:cert}(3). This is \decl{FrogModel.lemmaXFour_of_data} in the formalization, for a data tree that passes the checks of Proposition~\ref{prop:cert}; the data of Section~\ref{sec:certificate} pass them by \texttt{FrogModel.checkAll\_theTree} and \texttt{FrogModel.startOK\_theTree}.
 \end{proof}
 
+\section{Recurrence on the 3-ary tree}\label{sec:three}
+
+This section reduces Theorem~\ref{thm:three} to three statements about the planted tree $\Ts$ of Definition~\ref{def:planted} with $d=3$: a criterion of recurrence for every $d\ge2$ (Theorem~\ref{thm:crit}), one step from a planted curve to the counts of that criterion (Lemma~\ref{lem:rootstep}), and a linear lower bound on the mean of the planted curve (Theorem~\ref{thm:linear}). Sections~\ref{sec:crit} to~\ref{sec:proofthree} prove them. They set their own notation: of Sections~\ref{sec:curves} to~\ref{sec:certificate} they use the pool argument of Lemma~\ref{lem:recursion} and the map $\Psi$ of Section~\ref{sec:curves}, nothing else, and they give new meanings to some letters of those sections.
+
+\subsection*{Planted curves}
+On $\Ts$ a vertex at depth $i$ has $3^i$ descendants at each depth $i+j$. For an integer $m\ge0$, the \emph{planted tree of height} $m$ is $\Ts$ with one sleeping frog at every vertex of depth at most $m$, the vertex $r$ included, and no frog below depth $m$; a vertex at depth $i\le m$ has \emph{height} $m-i$. The frogs follow independent simple random walks on $\Ts$, which are not stopped at depth $m$, and a frog is frozen at its first visit to $y$.
+
+\begin{definition}[planted curve]\label{def:plantedcurve}\lean{FrogModel.D3.Iface.plantedG, FrogModel.D3.Iface.Woken, FrogModel.D3.Iface.pathMeasure, FrogModel.D3.Iface.mu, FrogModel.D3.Iface.deficit}
+Let $m,k\ge0$, and start $k$ awake frogs, the \emph{entrants}, at $r$ in the planted tree of height $m$. The \emph{woken set} is the least set of frogs that contains the entrants and the frog of every vertex of depth at most $m$ visited by the path of one of its members, and $G_m(k)\in\Nb$ is the number of frogs of the woken set whose path visits $y$. The function $k\mapsto G_m(k)$ is the \emph{planted curve} of height $m$, and
+\[
+\mu_m(k)=\frac{m+1+k}3,\qquad\Delta_m(k)=\mu_m(k)-\E G_m(k).
+\]
+\end{definition}
+
+By Lemma~\ref{lem:reach}, the woken set is the set of frogs that the entrants wake in the frog model on $\Ts$, and $G_m(k)$ is the number of frozen frogs. The first entrant wakes the frog of $r$ at once, so with $k\ge1$ entrants there are $k+1$ frogs at $r$ from the start. The number $\mu_m(k)$ is the mean number of frogs that would reach $y$ if every frog were awake (Lemma~\ref{lem:awake}), so $\Delta_m(k)\ge0$ is the \emph{deficit} of the planted curve. The proof of Theorem~\ref{thm:three} shows that the deficit at $k=1$ stays below $2/5$ of $\mu_m(1)$ at every large height.
+
+\subsection*{The three statements}
+For $m\ge0$, let $Z_m$ be the number of frogs that are woken and frozen in the frog model on $\Ts$ of Definition~\ref{def:planted} in which only the frogs at depth at most $m$ are present: the frog at $r$ starts awake, one frog sleeps at every vertex of depth $1$ to $m$, and there is no other frog. Theorem~\ref{thm:A} says that the frog model on $\T_d$ is transient when the mean of the frozen count $X$ is below $1$; the criterion below goes the other way, from a linear growth of the means of the truncated frozen counts $Z_m\le X$. It holds for every $d\ge2$.
+
+\begin{theorem}[recurrence criterion]\label{thm:crit}\lean{FrogModel.LemmaR.recurrent_of_plantedCount, FrogModel.LemmaR.plantedCount, FrogModel.LemmaR.plantedLemmaR', FrogModel.ZeroOne.recurrent_of_frozenCount}
+Let $d\ge2$. If $\limsup_{m\to\infty}\E Z_m/m>0$, then the frog model on $\T_d$ is recurrent.
+\end{theorem}
+
+From here to the end of Section~\ref{sec:proofthree}, $d=3$. The count $Z_{m+1}$ and the planted curve $G_m$ are linked by one step of the frog at $r$.
+
+\begin{lemma}[root step]\label{lem:rootstep}\lean{FrogModel.D3.LaneA.lemma19_proof, FrogModel.D3.Iface.lemma19}
+For every $m\ge0$, $\E Z_{m+1}\ge\bigl(1+\E G_m(1)\bigr)/4$.
+\end{lemma}
+
+The proof of Theorem~\ref{thm:three} combines the two with a linear lower bound on $\E G_m(1)$, proved in Section~\ref{sec:proofthree}.
+
+\begin{theorem}[linear growth]\label{thm:linear}\lean{FrogModel.D3.Assembly.linear_three', FrogModel.D3.Assembly.linear_three}
+Let $m_1=1778279$. For every $m>m_1-30$,
+\[
+\E G_m(1)\ge\frac35\,\mu_m(1)=\frac{m+2}5.
+\]
+\end{theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:three}]
+Let $m\ge m_1$. Theorem~\ref{thm:linear} gives $\E G_m(1)\ge(m+2)/5$, and Lemma~\ref{lem:rootstep} gives
+\[
+\E Z_{m+1}\ge\frac14\Bigl(1+\frac{m+2}5\Bigr)=\frac{m+7}{20}\ge\frac{m+1}{20}.
+\]
+So $\E Z_n/n\ge1/20$ for every $n>m_1$, the upper limit of $\E Z_n/n$ is at least $1/20$, and Theorem~\ref{thm:crit} with $d=3$ gives recurrence. This is \decl{FrogModel.recurrent_three} in the formalization.\computed{code/formal-proof/main_axioms.lean, .github/workflows/ci.yml}
+\end{proof}
+
+The constant $3/5$ of Theorem~\ref{thm:linear} has no role beyond being positive: any linear lower bound on $\E G_m(1)$ would do. The height $m_1$ and the constant come from the way the bound is proved, in three stages.
+\begin{enumerate}
+\item \emph{A seed at height $100$} (Section~\ref{sec:lower}). A reading of the frog paths that wakes fewer frogs than the model, and whose count has a law given by a finite recursion, gives lower bounds on $\E G_{100}(k)$ and upper bounds on $\P(G_{100}(k)\le g)$ for $k\le32$ and $g\le47$, from a stored run of the recursion (Proposition~\ref{prop:m1run}(1)). It leaves the deficit $\Delta_{100}(1)$ at about $0.44\,\mu_{100}(1)$, too large for the last stage.
+\item \emph{A certified chain of steps} (Sections~\ref{sec:closure} to~\ref{sec:states}). A map $\Phi$ on finite tables of such bounds carries bounds valid at height $m$ to bounds valid at height $m+1$ (Lemma~\ref{lem:step}), from inequalities on one vertex and its three subtrees. Five hundred and five steps and a table $T$ that $\Phi$ maps below itself give bounds valid at every height of $[605,m_1]$, with deficits $\Delta_m(1)\le0.135\,\mu_m(1)$ and $\Delta_m(62)\le0.071\,\mu_m(62)$ (Proposition~\ref{prop:m1run}(2)). It leaves a bound that holds on a finite range only.
+\item \emph{An induction above $m_1$} (Section~\ref{sec:dprime}). From those bounds at $m_1$, an induction on the height that tracks $\E G_m(J)$ for one growing index $J=J(m)$ gives Theorem~\ref{thm:linear} at every larger height (Theorem~\ref{thm:dprime}), provided two inequalities hold at every height; they are checked on $95$ intervals from $m_1$ to $10^{30}$ (Proposition~\ref{prop:dcheck}) and proved beyond (Lemma~\ref{lem:tail}).
+\end{enumerate}
+Section~\ref{sec:proofthree} assembles the three stages into the proof of Theorem~\ref{thm:linear}.
+
+\section{Proof of the recurrence criterion}\label{sec:crit}
+
+This section proves Theorem~\ref{thm:crit}. Lemma~\ref{lem:secondmoment} turns the linear growth of $\E Z_m$ into infinitely many frozen frogs with positive probability, by the second moment method, and Theorem~\ref{thm:Bzero} turns infinitely many frozen frogs with positive probability into recurrence almost surely. Here $d\ge2$, and $X$ is the frozen count of Definition~\ref{def:planted}.
+
+The second moment method needs a variable above $Z_m$ whose second moment is of order $m^2$. Let $U'_m$ be the number of frogs at depth at most $m$ of $\Ts$ whose path visits $y$, all frogs counted, woken or not. Lemma~\ref{lem:hit} bounds its terms.
+
+\begin{lemma}\label{lem:hit}\lean{FrogModel.LemmaR.hitStar_le}
+A simple random walk on $\Ts$ from a vertex at depth $i$ visits $y$ with probability at most $d^{-(i+1)}$.
+\end{lemma}
+
+\begin{proof}
+Let $f(y)=1$ and $f(v)=d^{-(|v|+1)}$ for the other vertices. At a vertex of depth $i\ge1$, the mean of $f$ over the $d+1$ neighbours is $(d^{-i}+d\cdot d^{-(i+2)})/(d+1)=d^{-(i+1)}$, and at $r$ it is $(1+d\cdot d^{-2})/(d+1)=d^{-1}$; so $f$ is harmonic off $y$. By induction on $t$, the probability to visit $y$ within $t$ steps from $v$ is at most $f(v)$, since it is $1=f(y)$ at $y$ and the mean of these probabilities at the neighbours elsewhere. Letting $t\to\infty$ gives the bound. This is \decl{FrogModel.LemmaR.hitStar_le} in the formalization.
+\end{proof}
+
+Lemma~\ref{lem:secondmoment}, used in the proof of Theorem~\ref{thm:crit}, is the second moment method along the heights.
+
+\begin{lemma}[second moment]\label{lem:secondmoment}\lean{FrogModel.LemmaR.plantedLemmaR', FrogModel.LemmaR.measure_top_pos_of_linear, FrogModel.LemmaR.paleyZygmund}
+If $\limsup_m\E Z_m/m>0$, then $\P(X=\infty)>0$.
+\end{lemma}
+
+Theorem~\ref{thm:Bzero}, the second step of the proof of Theorem~\ref{thm:crit}, plays the role of the zero-one law of Hoffman, Johnson and Junge \cite[Theorem~4]{HJJ17}, by which the frog model on $\T_d$ is recurrent with probability $0$ or $1$; it starts from the planted tree instead.
+
+\begin{theorem}\label{thm:Bzero}\lean{FrogModel.ZeroOne.recurrent_of_frozenCount}
+If $\P(X=\infty)>0$, then the frog model on $\T_d$ is recurrent.
+\end{theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:crit}]
+Lemma~\ref{lem:secondmoment} gives $\P(X=\infty)>0$, and Theorem~\ref{thm:Bzero} gives recurrence. This is \decl{FrogModel.LemmaR.recurrent_of_plantedCount} in the formalization.
+\end{proof}
+
+\begin{proof}[Proof of Lemma~\ref{lem:secondmoment}]
+\emph{Comparisons.} The frogs counted by $Z_m$ are reached from the frog at $r$ along arcs to vertices of depth at most $m$, so by Lemma~\ref{lem:reach} they are woken in the model with all frogs present, and $Z_m\le X$; they are frogs at depth at most $m$ whose path visits $y$, so $Z_m\le U'_m$.
+
+\emph{Second moment of $U'_m$.} The variable $U'_m$ is a sum of independent indicators, one per vertex of depth at most $m$, and by Lemma~\ref{lem:hit} the $d^i$ vertices of depth $i$ contribute at most $d^i\,d^{-(i+1)}\le1$ to its mean. So $\E U'_m\le m+1$ and $\E U_m'^2\le\E U'_m+(\E U'_m)^2\le(m+1)+(m+1)^2\le6m^2$ for $m\ge1$.
+
+\emph{Paley and Zygmund.} Let $Z\le U$ be nonnegative random variables with $\E U^2<\infty$, and $A=\{Z>\E Z/2\}$. Then $\E Z\le\E Z/2+\E[U\one_A]\le\E Z/2+(\E U^2)^{1/2}\P(A)^{1/2}$ by the Cauchy and Schwarz inequality, so $(\E Z)^2\le4\,\P(A)\,\E U^2$. Let $c>0$ with $\E Z_m\ge cm$ for infinitely many $m$. For each of them, with $Z=Z_m$ and $U=U'_m$,
+\[
+\P\bigl(X>cm/2\bigr)\ge\P\bigl(Z_m>\E Z_m/2\bigr)\ge\frac{(\E Z_m)^2}{4\,\E U_m'^2}\ge\frac{c^2}{24}.
+\]
+The events $\{X>cm/2\}$ decrease to $\{X=\infty\}$ along these $m$, so $\P(X=\infty)\ge c^2/24$. This is \decl{FrogModel.LemmaR.plantedLemmaR'} in the formalization.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:Bzero}]
+Let $\beta=\P(X=\infty)>0$ and $R=\{V=\infty\}$ for the frog model on $\T_d$. For $n\ge0$ let $\mathcal F_n$ be the $\sigma$-field of the paths of the frogs at depth at most $n$ of $\T_d$. These $\sigma$-fields increase and generate the $\sigma$-field of all the paths. We show that $\P(R\cap A)\ge\beta\,\P(A)$ for every $n$ and every $A\in\mathcal F_n$. Then $\P(R\mid\mathcal F_n)\ge\beta$ almost surely for every $n$, and by L\'evy's upward theorem $\P(R\mid\mathcal F_n)$ tends to $\one_R$ almost surely, so $\one_R\ge\beta>0$ and $\P(R)=1$.
+
+Fix $n$. The path of the frog at the root reaches depth $n+1$ almost surely; let $u$ be the first vertex of depth $n+1$ it visits, a function of that path, hence $\mathcal F_n$-measurable, and $p(u)$ the parent of $u$, at depth $n$. The graph $\T(u)\cup\{p(u)\}$ is a copy of $\Ts$ with $r=u$ and $y=p(u)$ (Section~\ref{sec:reduction}). Let $X_u$ be the frozen count of this copy: the frog of $u$ starts awake, the frogs of $\T(u)$ follow their paths stopped at their first visit to $p(u)$. The paths of the frogs of $\T(u)$ are independent of $\mathcal F_n$, and for each fixed vertex $v$ of depth $n+1$ the paths of the frogs of $\T(v)$ give $X_v$ the law of $X$; summing over the values of $u$, $\P(\{X_u=\infty\}\cap A)=\beta\,\P(A)$ for $A\in\mathcal F_n$.
+
+On $\{X_u=\infty\}$, the frog of $u$ is woken by the frog of the root, so by Lemma~\ref{lem:reach} every frog of $\T(u)$ that is reachable in the copy is woken in the frog model on $\T_d$, and infinitely many of them visit $p(u)$. After its first visit to $p(u)$, the path of each of these frogs continues with steps that are independent of the path up to that visit and of the other frogs, by the strong Markov property of each path at its first visit to $p(u)$. With probability $(d+1)^{-n}>0$ these steps go straight up to the root, independently from one frog to the next. On $\{X_u=\infty\}$ there are infinitely many such independent trials, so almost surely infinitely many succeed, and each success is a visit to the root. So $R$ contains $\{X_u=\infty\}$ up to a null set, and $\P(R\cap A)\ge\beta\,\P(A)$. This is \decl{FrogModel.ZeroOne.recurrent_of_frozenCount} in the formalization.
+\end{proof}
+
+\section{The closure at the root}\label{sec:closure}
+
+This section writes the planted curve of height $m+1$ through the planted curves of its three children (Lemma~\ref{lem:closid}) and proves the properties of planted curves that the bounds of Sections~\ref{sec:onebounds} and~\ref{sec:states} use: the all-awake count (Lemma~\ref{lem:awake}), own-path coins (Lemma~\ref{lem:coins}), the domination of the future by a fresh curve (Lemma~\ref{lem:future}), an identity for the mean by optional stopping (Lemma~\ref{lem:D1}) and the recursion of the deficits that follows (Lemmas~\ref{lem:loss} to~\ref{lem:deadchild}). It ends with the proof of Lemma~\ref{lem:rootstep}.
+
+\subsection*{The closure}
+The \emph{closure} is the map $\Psi$ of Section~\ref{sec:curves} with $d=3$, written for planted curves. Its data are three curves $G_1,G_2,G_3:\N\to\Nb$, indexed by the children $c$ of $r$, and directions $D_1,D_2,\dots$ in $\{0,1,2,3\}$, where $0$ is the step to $y$ and $c$ the step into the child $c$. For $n\in\N$ and $a\in\{0,1,2,3\}$ let $n_a(n)=\#\{i\le n:D_i=a\}$, and for $q\ge1$ let
+\[
+\Lambda_q(n)=q+\sum_{c=1}^3G_c\bigl(n_c(n)\bigr),\qquad\nu(q)=\min\{n\ge q:\ \Lambda_q(n)\le n\}\in\Nb,
+\]
+with $\nu(q)=\infty$ if there is no such $n$, and $n_a(\infty)=\sup_nn_a(n)$. The \emph{output} of the closure with $j\ge1$ entrants is $n_0(\nu(j+1))$, the number of steps to $y$ among the first $\nu(j+1)$, and its output with no entrant is $0$; the number of \emph{entries} into $c$ is $e_c=n_c(\nu(j+1))$. When the children are planted trees of height $m$ with curves $G_c$, the $j$ entrants and the frog of $r$ are the $q=j+1$ frogs at $r$ at the start; each step from $r$ takes one frog, $n_c(n)$ frogs have entered the subtree of $c$ after $n$ steps, the subtree has returned $G_c(n_c(n))$ frogs to $r$, its own frog included, and $\nu(q)$ is the number of steps taken from $r$ when no frog waits there any more. In the notation of Section~\ref{sec:curves}, $\Lambda_q$ is $\Lambda_m$ with $m=q$ and $F_c=G_c$: the shift there accounts for the frog of the child, which a planted curve counts already.
+
+Lemma~\ref{lem:closid} is the construction of the planted model from its children, and every bound of Sections~\ref{sec:closure} and~\ref{sec:onebounds} on one closure goes through it.
+
+\begin{lemma}[closure identity]\label{lem:closid}\lean{FrogModel.D3.LaneA.Pool.curveLaw_succ_proof, FrogModel.D3.LaneA.measurable_plantedPair_proof, FrogModel.D3.LaneA.measurable_closPair_proof, FrogModel.D3.Iface.curveLaw_succ, FrogModel.D3.Iface.closMeasure, FrogModel.D3.Iface.closCurve}
+Let $m\ge0$. Let $G_1,G_2,G_3$ be independent planted curves of height $m$, and $D_1,D_2,\dots$ independent and uniform on $\{0,1,2,3\}$, independent of the curves. Then the planted curve of height $m+1$, together with the number of pairs of a woken frog and a time at which it is at $r$, as a function of the number of entrants, has the joint law of the outputs of the closure and of the function $j\mapsto\nu(j+1)$ $(j\ge1)$.
+\end{lemma}
+
+\begin{proof}
+This is the argument of the proof of Lemma~\ref{lem:recursion} with $d=3$, in which the subtrees of the children are planted trees of height $m$ and no frog is killed. Build the planted model of height $m+1$ from the directions of the successive steps taken from $r$, from a sequence of independent entry pieces for each child (simple random walks from the child, stopped at their first return to $r$), and from the paths of the frogs of the subtrees of the children, stopped at $r$. By the pool argument of that proof, processing the frogs at $r$ one at a time, each drawing the next direction and, into a child, the next entry piece of that child, builds the frog model with independent simple random walk paths. The number of frogs that the subtree of $c$ returns to $r$ after $e$ entries is $G_c(e)$, by Lemma~\ref{lem:reach} applied to the subtree of $c$ with $r$ in the role of $y$, whatever the order of the entries into the different children; $G_c$ is a planted curve of height $m$, and the three are independent and independent of the directions. With $q$ frogs at $r$ at the start, the number of steps taken from $r$ is the least fixed point $\nu(q)$ of $\Lambda_q$ (Lemma~\ref{lem:psi}), the frozen frogs are the steps to $y$ among them, and each step from $r$ is a visit of a woken frog to $r$. This is \decl{FrogModel.D3.LaneA.Pool.curveLaw_succ_proof} in the formalization.
+\end{proof}
+
+\subsection*{The all-awake count and monotonicity}
+Lemma~\ref{lem:awake} is used by Lemma~\ref{lem:tails} and by every bound that compares $G_m(k)$ with its mean.
+
+\begin{lemma}\label{lem:awake}\lean{FrogModel.D3.Assembly.lintegral_plantedG_le_proof, FrogModel.D3.Iface.lintegral_plantedG_le_of, FrogModel.D3.LaneA.prob_reach_proof, FrogModel.D3.Iface.plantedG_le_frogs_proof, FrogModel.D3.Iface.lintegral_plantedG_le, FrogModel.D3.Iface.prob_reach, FrogModel.D3.Iface.plantedG_mono, FrogModel.D3.Iface.plantedG_le_frogs} % english-ok: display formula
+Let $m,k\ge0$, and let $U_m(k)$ be the number of frogs, among the $k$ entrants and the frogs of the vertices of depth at most $m$, whose path visits $y$.
+\begin{enumerate}
+\item A path from a vertex at depth $i$ visits $y$ with probability $3^{-(i+1)}$; $U_m(k)$ is a sum of independent indicators with $\E U_m(k)=\mu_m(k)$, and $G_m(k)\le U_m(k)$.
+\item For every family of paths, $G_m(k)\le G_m(k+1)$ and $G_m(k)\le k+(3^{m+1}-1)/2$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) The depth of a simple random walk on $\Ts$ away from $y$ moves up with probability $1/4$ and down with probability $3/4$, so from depth $i$ it reaches depth $-1$, the vertex $y$, with probability $3^{-(i+1)}$ (gambler's ruin with ratio $1/3$). The $3^i$ frogs of depth $i$ contribute $3^i\cdot3^{-(i+1)}=1/3$ together, each entrant $1/3$, so $\E U_m(k)=(m+1+k)/3$; the paths are independent. The frogs counted by $G_m(k)$ are counted by $U_m(k)$. (2) The woken set increases with the set of entrants, and it holds at most the $k$ entrants and the $(3^{m+1}-1)/2$ frogs of depth at most $m$. This is \decl{FrogModel.D3.Assembly.lintegral_plantedG_le_proof} in the formalization, with \texttt{FrogModel.D3.LaneA.prob\_reach\_proof}, \texttt{FrogModel.D3.Iface.plantedG\_mono} and \texttt{FrogModel.D3.Iface.plantedG\_le\_frogs\_proof}.
+\end{proof}
+
+So $\Delta_m(k)\ge0$, and $\Delta_m(0)=\mu_m(0)=(m+1)/3$.
+
+\subsection*{Coins and the future}
+An entrant whose own path visits $y$ is frozen whatever the other frogs do. Lemma~\ref{lem:coins} records this as a coin attached to each entrant; it is used in Lemmas~\ref{lem:D1}, \ref{lem:deficit} and~\ref{lem:deadchild}, and in the lower curves of Section~\ref{sec:states}.
+
+\begin{lemma}[coins]\label{lem:coins}\lean{FrogModel.D3.LaneA.coin_coupling_proof, FrogModel.D3.Iface.coin_coupling}
+Let $m\ge0$. There are a random curve $G$ with the law of $G_m$ and random variables $\xi_1,\xi_2,\ldots\in\{0,1\}$, on one probability space, such that $G(0)=0$ and, for every $e\ge1$, $\P(\xi_e=1)=1/3$, $\xi_e$ is independent of $(G(0),\dots,G(e-1),\xi_1,\dots,\xi_{e-1})$, and $G(e)\ge G(e-1)+\xi_e$ almost surely. In particular $G_m(k)$ stochastically dominates a binomial variable $\Bin(k,1/3)$, and $\E G_m(k+1)\ge\E G_m(k)+1/3$.
+\end{lemma}
+
+\begin{proof}
+Take $G=G_m$ on the space of the paths, and let $\xi_e=1$ if the path of the $e$-th entrant visits $y$; by Lemma~\ref{lem:awake}(1), $\P(\xi_e=1)=1/3$. The woken set with $e-1$ entrants holds no entrant of index $e$ or more and reads only the paths of its own frogs, so $G_m(0),\dots,G_m(e-1)$ and $\xi_1,\dots,\xi_{e-1}$ are functions of the paths of the frogs other than the entrants $e,e+1,\dots$, independent of the path of the $e$-th entrant. If $\xi_e=1$, that entrant is counted by $G_m(e)$ and not by $G_m(e-1)$, and the woken set only grows. This is \decl{FrogModel.D3.LaneA.coin_coupling_proof} in the formalization.
+\end{proof}
+
+The second property says that what the entrants after the $e$-th add is at most what a fresh planted tree would return. Lemma~\ref{lem:loss} uses it.
+
+\begin{lemma}[future domination]\label{lem:future}\lean{FrogModel.D3.LaneA.future_dom_proof, FrogModel.D3.Iface.future_dom}
+Let $m\ge0$, $0\le e\le J$, and let $A$ be an event determined by $(G_m(0),\dots,G_m(e))$. Then
+\[
+\E\bigl[G_m(J)\one_A\bigr]\le\E\bigl[G_m(e)\one_A\bigr]+\P(A)\,\E G_m(J-e).
+\]
+\end{lemma}
+
+\begin{proof}
+Let $W_e$ be the woken set with $e$ entrants. Whether a frog lies in $W_e$ depends only on the paths of the frogs of $W_e$, so $W_e$ is a stopping set of coordinates in the sense of Lemma~\ref{lem:refresh}, and $A$ is determined by it. Replace the paths of the frogs of $W_e$ by independent copies, drop the entrants $1,\dots,e$, and call the entrants $e+1,e+2,\dots$ the entrants $1,2,\dots$ of the new family; let $G'$ be its planted curve. A frog woken with $J$ entrants and not with $e$ is reached from the entrants $e+1,\dots,J$ along a chain that avoids $W_e$, since $W_e$ is closed under the arcs; the paths along that chain are not replaced, so the frog is woken in the new family with $J-e$ entrants. Hence $G_m(J)\le G_m(e)+G'(J-e)$ for every family of paths. By Lemma~\ref{lem:refresh}, on $A$ the new family has the law of the frog paths and is independent of $A$, so $\E[G'(J-e)\one_A]=\P(A)\,\E G_m(J-e)$. This is \decl{FrogModel.D3.LaneA.future_dom_proof} in the formalization.
+\end{proof}
+
+\subsection*{The mean of the closure}
+From here on, the closure at height $m+1$ is the closure of Lemma~\ref{lem:closid}: its children are independent planted curves $G_1,G_2,G_3$ of height $m$, each with its coins of Lemma~\ref{lem:coins}, and its directions are independent and uniform. With $j\ge1$ entrants it has $q=j+1$ frogs at $r$ at the start, $\nu=\nu(j+1)$ steps and $e_c$ entries into $c$, and its output has the law of $G_{m+1}(j)$. Lemma~\ref{lem:D1} is the identity on which the recursion of the deficits rests.
+
+\begin{lemma}[optional stopping]\label{lem:D1}\lean{FrogModel.D3.Assembly.d1_proof, FrogModel.D3.Iface.d1, FrogModel.D3.Iface.lossL}
+Let $j\ge1$ and $J\ge0$, and
+\[
+L_{j,J}=\frac13\sum_{c=1}^3\E\Bigl[\bigl(G_c(J)-J/3\bigr)-\bigl(G_c(e_c\wedge J)-(e_c\wedge J)/3\bigr)\Bigr].
+\]
+Then $\E G_{m+1}(j)\ge\E G_m(J)+(1+j-J)/3-L_{j,J}$.
+\end{lemma}
+
+The term $L_{j,J}$ is the loss caused by children entered fewer than $J$ times. Lemma~\ref{lem:loss}, used by Lemma~\ref{lem:deficit} and Theorem~\ref{thm:dprime}, bounds it.
+
+\begin{lemma}[loss]\label{lem:loss}\lean{FrogModel.D3.Assembly.lemma8a_proof, FrogModel.D3.Iface.lemma8b_of, FrogModel.D3.Iface.lemma8a, FrogModel.D3.Iface.lemma8b}
+Let $j\ge1$ and $J\ge0$. Then $L_{j,J}\le\E G_m(J)\,\P(e_1<J)$, and $\P(e_1<J)\le\P(\nu<k)+\P(\Bin(k,1/4)<J)$ for every $k\ge1$.
+\end{lemma}
+
+The two lemmas give the recursion of the deficits from one height to the next, used by the step map of Section~\ref{sec:states}.
+
+\begin{lemma}[deficit recursion]\label{lem:deficit}\lean{FrogModel.D3.Assembly.lemma17b_proof, FrogModel.D3.Assembly.lemma17a_proof, FrogModel.D3.Iface.lemma17b, FrogModel.D3.Iface.lemma17a}
+\begin{enumerate}
+\item For every $m,k\ge0$, $\Delta_m(k+1)\le\Delta_m(k)$.
+\item Let $j\ge1$, $J\ge0$ and $\gamma\ge\P(e_1<J)$ in the closure at height $m+1$ with $j$ entrants. Then
+\[
+\Delta_{m+1}(j)\le\Delta_m(J)\,(1-\gamma)+\mu_m(J)\,\gamma,
+\]
+and for $\gamma\le1$ the right side is nondecreasing in $\Delta_m(J)$ and in $\gamma$. For $J=0$ it reads $\Delta_{m+1}(j)\le\mu_m(0)=(m+1)/3$.
+\end{enumerate}
+\end{lemma}
+
+The second bound uses the event $\{e_1<J\}$, whose probability is small only when the children are likely to return many frogs. The next one uses a closure in which one child is dead, and works from the start. A random variable \emph{does not read} the child $c$ if it is a function of the directions, of the curves and coins of the two other children, and of auxiliary random variables independent of all the paths.
+
+\begin{lemma}[a dead child]\label{lem:deadchild}\lean{FrogModel.D3.Assembly.lemmaS2'_proof, FrogModel.D3.Iface.lemmaS2'}
+Let $j\ge1$. For each child $c$ let $e'_c\in\N$ be a random variable that does not read $c$, with $e'_c\le e_c$. Then
+\[
+\Delta_{m+1}(j)\le\frac13\sum_{c=1}^3\E\,\Delta_m(e'_c).
+\]
+\end{lemma}
+
+\begin{proof}[Proof of Lemma~\ref{lem:D1}]
+\emph{Finiteness.} Let $s=(3^{m+1}-1)/2$, so that $G_c(e)\le e+s$ by Lemma~\ref{lem:awake}(2), and $F=q+3s$. Then $\Lambda_q(n)\le q+\bigl(n-n_0(n)\bigr)+3s$, so $\Lambda_q(n)>n$ forces $n_0(n)<F$. Infinitely many directions are $0$ almost surely, so $\nu$ is finite almost surely and $n_0(\nu\wedge n)\le F$ for every $n$. The event $\{\nu\ge i\}$ is decided by $D_1,\dots,D_{i-1}$ and the curves, so it is independent of $D_i$, and $\E n_a(\nu\wedge n)=\E(\nu\wedge n)/4$ for each $a$. By monotone convergence $\E\nu\le4F$, $\E e_c=\E n_0(\nu)=\E\nu/4$, and $\E G_c(e_c)\le\E\nu$ is finite.
+
+\emph{The identity.} Each step from $r$ goes to $y$ or into a child, so $\nu=n_0(\nu)+\sum_ce_c$, and $\nu=\Lambda_q(\nu)=q+\sum_cG_c(e_c)$. Taking means, with $\E n_0(\nu)=\E e_c=\E\nu/4$,
+\[
+3\,\E n_0(\nu)=q+\sum_{c=1}^3\E\bigl[G_c(e_c)-e_c/3\bigr].
+\]
+
+\emph{The submartingale.} Fix $c$, let $\mathcal R_c$ be the $\sigma$-field of the directions and of the curves and coins of the two other children, and $\mathcal H_i$ the $\sigma$-field generated by $\mathcal R_c$, $G_c(0),\dots,G_c(i)$ and the coins $\xi^c_1,\dots,\xi^c_i$ of $c$. Then $M(i)=G_c(i)-i/3$ is $\mathcal H_i$-measurable, and $M(i)-M(i-1)\ge\xi^c_i-1/3$, where $\xi^c_i$ is independent of $\mathcal H_{i-1}$: it is independent of $G_c(0),\dots,G_c(i-1),\xi^c_1,\dots,\xi^c_{i-1}$ by Lemma~\ref{lem:coins}, and all of these are independent of $\mathcal R_c$. So $M$ is a submartingale. Let $\tau_i$ be the time of the $i$-th direction $c$. Then $e_c\ge i$ if and only if $\Lambda_q(n)>n$ for every $n$ with $q\le n<\tau_i$, and for these $n$, $n_c(n)\le i-1$; so $\{e_c\ge i\}\in\mathcal H_{i-1}$, and $e_c$ is a stopping time. By optional sampling at the bounded times $e_c\wedge J\wedge n\le e_c\wedge n$, then monotone convergence in $n$ on each of the four terms, all of finite mean,
+\[
+\E\bigl[G_c(e_c)-e_c/3\bigr]\ge\E\bigl[G_c(e_c\wedge J)-(e_c\wedge J)/3\bigr].
+\]
+Summing over $c$, with $\E G_c(J)=\E G_m(J)$ and the definition of $L_{j,J}$, the identity gives $3\,\E n_0(\nu)\ge q+3\,\E G_m(J)-J-3L_{j,J}$, which is the claim since $q=j+1$ and $n_0(\nu)$ has the law of $G_{m+1}(j)$. This is \decl{FrogModel.D3.Assembly.d1_proof} in the formalization.
+\end{proof}
+
+\begin{proof}[Proof of Lemma~\ref{lem:loss}]
+The term of $c$ in $L_{j,J}$ vanishes on $\{e_c\ge J\}$ and is at most $G_c(J)-G_c(e_c)$ on $\{e_c<J\}$. The closure reads the subtree of $c$ only through $G_c(0),\dots,G_c(e_c)$, so for $e<J$ the event $\{e_c=e\}$ is $\{(G_c(0),\dots,G_c(e),R)\in B_e\}$ for a set $B_e$, where $R$, the randomness off the child $c$, is independent of $G_c$. Conditionally on $R$, Lemma~\ref{lem:future} gives $\E[(G_c(J)-G_c(e))\one\{e_c=e\}]\le\P(e_c=e)\,\E G_m(J-e)\le\P(e_c=e)\,\E G_m(J)$. Summing over $e<J$ and using that the children are exchangeable gives the first bound. If $\nu\ge k$, the first $k$ directions are all used, so $e_1\ge n_1(k)$, which has the law $\Bin(k,1/4)$. This is \decl{FrogModel.D3.Assembly.lemma8a_proof} in the formalization, and \texttt{FrogModel.D3.Iface.lemma8b\_of} for the second bound.
+\end{proof}
+
+\begin{proof}[Proof of Lemma~\ref{lem:deficit}]
+(1) By Lemma~\ref{lem:coins}, $\E G_m(k+1)\ge\E G_m(k)+1/3$, and $\mu_m(k+1)=\mu_m(k)+1/3$. (2) Lemmas~\ref{lem:D1} and~\ref{lem:loss} give $\E G_{m+1}(j)\ge\E G_m(J)(1-\gamma)+(1+j-J)/3$, and $\mu_{m+1}(j)-(1+j-J)/3=\mu_m(J)$; so $\Delta_{m+1}(j)\le\mu_m(J)-\E G_m(J)(1-\gamma)$, which is the claim. For $\gamma\le1$ its derivatives in $\Delta_m(J)$ and in $\gamma$ are $1-\gamma\ge0$ and $\mu_m(J)-\Delta_m(J)=\E G_m(J)\ge0$. For $J=0$, $\P(e_1<0)=0$. This is \decl{FrogModel.D3.Assembly.lemma17b_proof} in the formalization, and \texttt{FrogModel.D3.Assembly.lemma17a\_proof} for~(1).
+\end{proof}
+
+\begin{proof}[Proof of Lemma~\ref{lem:deadchild}]
+With $M$, $\mathcal R_c$ and $\mathcal H_i$ as in the proof of Lemma~\ref{lem:D1}, extend $\mathcal R_c$ by the auxiliary variables. Then $e'_c$ is $\mathcal H_0$-measurable, hence a stopping time with $e'_c\le e_c$, and optional sampling at $e'_c\wedge n\le e_c\wedge n$, then $n\to\infty$, gives $\E M(e_c)\ge\E M(e'_c)$. Since $e'_c$ is independent of the curve $G_c$, $\E M(e'_c)=\sum_k\P(e'_c=k)\bigl(\E G_m(k)-k/3\bigr)$. By the identity of that proof, $\Delta_{m+1}(j)=\mu_{m+1}(j)-\E n_0(\nu)=(m+1)/3-\frac13\sum_c\E M_c(e_c)$, where $M_c$ is the process $M$ of the child $c$. So
+\[
+\Delta_{m+1}(j)\le\frac13\sum_{c=1}^3\sum_k\P(e'_c=k)\Bigl(\frac{m+1+k}3-\E G_m(k)\Bigr)=\frac13\sum_{c=1}^3\E\,\Delta_m(e'_c).
+\]
+This is \decl{FrogModel.D3.Assembly.lemmaS2'_proof} in the formalization.
+\end{proof}
+
+\begin{proof}[Proof of Lemma~\ref{lem:rootstep}]
+In the model of $Z_{m+1}$, consider the first step of the frog $f$ at $r$. If it is the step to $y$, which has probability $1/4$, then $f$ is frozen and $Z_{m+1}\ge1$. If it is the step into the child $c$, which has probability $1/4$ for each $c$, restrict the process to $\T(c)\cup\{r\}$: the frogs of $\T(c)$ at depth at most $m+1$, every path stopped at its first visit to $r$. This is the planted tree of height $m$ at $c$, with $r$ in the role of $y$ and the single entrant $f$, whose path from $c$ is a simple random walk independent of that first step; so the number $R_c$ of its frogs that visit $r$ has the law of $G_m(1)$. Each arc of the restricted process is an arc of the model of $Z_{m+1}$, so these frogs are woken there. After its first visit to $r$, the path of each of them is a simple random walk from $r$, independent of the paths up to their first visits to $r$ and of the other frogs, by the strong Markov property; it visits $y$ with probability $1/3$ (Lemma~\ref{lem:awake}(1)), and then the frog is counted by $Z_{m+1}$. So $\E[Z_{m+1}\mid f\text{ steps into }c]\ge\E G_m(1)/3$, and
+\[
+\E Z_{m+1}\ge\frac14+\frac34\cdot\frac13\,\E G_m(1)=\frac{1+\E G_m(1)}4.
+\]
+This is \decl{FrogModel.D3.LaneA.lemma19_proof} in the formalization.
+\end{proof}
+
+\section{Bounds for one closure}\label{sec:onebounds}
+
+This section gives the bounds on one closure that the step map of Section~\ref{sec:states} and the induction of Section~\ref{sec:dprime} evaluate: tails of a variable below a sum of independent indicators (Lemma~\ref{lem:tails}), the end configurations of a closure (Lemmas~\ref{lem:ends} and~\ref{lem:pseudo}), and two lower bounds on the number of steps from $r$ (Lemmas~\ref{lem:fresh} and~\ref{lem:deep}). Here $\Bin(n,p)$ is a binomial variable, and for $0\le a\le1$ and $0<p<1$,
+\[
+\KL(a,p)=a\log\frac ap+(1-a)\log\frac{1-a}{1-p},
+\]
+with $0\log0=0$, is the relative entropy of the Bernoulli laws of parameters $a$ and $p$.
+
+\subsection*{Tails below the all-awake count}
+By Lemma~\ref{lem:awake}, $G_m(k)$ lies below the sum $U_m(k)$ of independent indicators, of mean $\mu_m(k)$, and the deficit $\Delta_m(k)$ measures how far below on average. Lemma~\ref{lem:tails} turns an upper bound on the deficit into upper bounds on the distribution function.
+
+\begin{lemma}[tails]\label{lem:tails}\lean{FrogModel.D3.Assembly.lemma12_G_proof, FrogModel.D3.Assembly.lemma12'_G_proof, FrogModel.D3.Assembly.cdfG_le_binCdf_proof, FrogModel.D3.Iface.lemma12_G, FrogModel.D3.Iface.lemma12_general_proof, FrogModel.D3.Iface.lemma12'_general_proof, FrogModel.D3.Iface.chernoff_binLt_proof, FrogModel.D3.Iface.lemma12_general, FrogModel.D3.Iface.lemma12'_general, FrogModel.D3.Iface.chernoff_binLt, FrogModel.D3.Iface.lemma12'_G, FrogModel.D3.Iface.cdfG_le_binCdf}
+\begin{enumerate}
+\item Let $U$ be the sum of the indicators of finitely many independent events, $\mu=\E U$, $X$ a random variable with $0\le X\le U$, and $\Delta=\mu-\E X$. For $x<\mu$,
+\[
+\P(X<x)\le\frac{\Delta+\mu^{1/2}/2}{\mu-x},
+\]
+and for $0<t<1$ and $g<(1-t)\mu$,
+\[
+\P(X\le g)\le\frac{\Delta}{(1-t)\mu-g}+e^{-t^2\mu/2}.
+\]
+\item For $n\ge1$, $0<p<1$ and an integer $k<np$, $\P(\Bin(n,p)<k)\le\exp\bigl(-n\KL(k/n,p)\bigr)$.
+\item Let $m,k,v\ge0$, $\mu=\mu_m(k)$ and $D\ge\Delta_m(k)$. Then $\P(G_m(k)\le v)\le\P(\Bin(k,1/3)\le v)$; if $v+1<\mu$, then $\P(G_m(k)\le v)\le(D+\mu^{1/2}/2)/(\mu-v-1)$; and if $0<t<1$ and $v<(1-t)\mu$, then $\P(G_m(k)\le v)\le D/((1-t)\mu-v)+e^{-t^2\mu/2}$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) Let $B=\{X<x\}$. Since $U-X\ge0$,
+\[
+\Delta\ge\E\bigl[(U-X)\one_B\bigr]\ge\E[U\one_B]-x\,\P(B)\ge\mu\,\P(B)-\E(\mu-U)_+-x\,\P(B),
+\]
+and $\E(\mu-U)_+=\E|U-\mu|/2\le(\mathrm{Var}\,U)^{1/2}/2\le\mu^{1/2}/2$, the variance of a sum of independent indicators being at most its mean. For the second bound, on $\{X\le g\}\cap\{U\ge(1-t)\mu\}$ the difference $U-X$ is at least $(1-t)\mu-g>0$, so $\Delta\ge((1-t)\mu-g)\,\P(X\le g,\ U\ge(1-t)\mu)$. Let $p_i$ be the probabilities of the events and $\lambda=-\log(1-t)$. Then
+\[
+\E e^{-\lambda U}=\prod_i\bigl(1-p_it\bigr)\le e^{-t\mu},\qquad\P\bigl(U<(1-t)\mu\bigr)\le e^{\lambda(1-t)\mu}\,\E e^{-\lambda U}\le e^{-\mu((1-t)\log(1-t)+t)}, % english-ok: display formula
+\]
+and $(1-t)\log(1-t)+t\ge t^2/2$ on $[0,1)$, since both sides vanish at $0$ and the derivatives are $-\log(1-t)\ge t$. (2) For $k\le0$ the probability is $0$. Otherwise let $a=k/n<p$ and $s=a(1-p)/((1-a)p)\in(0,1)$. Then $\P(\Bin(n,p)<k)\le\E s^{\Bin(n,p)-k}=s^{-k}(1-p+ps)^n=\exp(-n\KL(a,p))$. (3) The first bound is Lemma~\ref{lem:coins}. The other two are (1) with $X=G_m(k)$, which is finite by Lemma~\ref{lem:awake}(2), $U=U_m(k)$ and $\mu=\mu_m(k)$, at $x=v+1$ and $g=v$; the right sides are nondecreasing in $\Delta$. This is \decl{FrogModel.D3.Assembly.lemma12_G_proof} in the formalization, with \lname{FrogModel.D3.Assembly.lemma12'_G_proof} and \lname{FrogModel.D3.Assembly.cdfG_le_binCdf_proof}, from \lname{FrogModel.D3.Iface.lemma12_general_proof}, \lname{FrogModel.D3.Iface.lemma12'_general_proof} and \lname{FrogModel.D3.Iface.chernoff_binLt_proof}.
+\end{proof}
+
+\subsection*{End configurations}
+Fix $m\ge0$, $j\ge1$ and $q=j+1$, and consider the closure at height $m+1$ with $j$ entrants of Section~\ref{sec:closure}: independent planted curves $G_1,G_2,G_3$ of height $m$, independent directions, and $\nu=\nu(q)$. For $n\ge0$ and $k=(k_0,k_1,k_2,k_3)\in\N^4$ with $k_0+k_1+k_2+k_3=n$, let
+\[
+\Mult(n;k)=\frac{n!}{k_0!\,k_1!\,k_2!\,k_3!}\,4^{-n}
+\]
+be the probability that the first $n$ directions take each value $a$ exactly $k_a$ times. For $e=(e_1,e_2,e_3)\in\N^3$ let $|e|=e_1+e_2+e_3$ and $S_e=G_1(e_1)+G_2(e_2)+G_3(e_3)$. For integers $v\ge0$, $\nu_0>q$ and $K>q$, and $s\ge0$, let
+\begin{align*}
+W^A_e(s)&=\Mult\bigl(q+s;(q+s-|e|,e)\bigr)\,\one\{|e|\le q+s,\ q+s-|e|\le v,\ q+s<\nu_0\},\\
+W^B_e(s)&=\Mult\bigl(q+s;(q+s-|e|,e)\bigr)\,\one\{|e|\le q+s<K\}.
+\end{align*}
+Lemma~\ref{lem:ends} bounds the distribution function of the output and the probability of few entries into a child by the closures that end before a given time with few entries into each child.
+
+\begin{lemma}[end configurations]\label{lem:ends}\lean{FrogModel.D3.Assembly.lemma16A_proof, FrogModel.D3.Assembly.lemma16B_proof, FrogModel.D3.Iface.lemma16A, FrogModel.D3.Iface.lemma16B}
+Let $E\ge1$.
+\begin{enumerate}
+\item[(A)] For $v\ge0$ and $\nu_0>q$,
+\begin{multline*}
+\P\bigl(G_{m+1}(j)\le v\bigr)\le\sum_{e\in[0,E)^3}\sum_{s<\nu_0}W^A_e(s)\,\P(S_e=s)\\
++3\,\P\bigl(\Bin(E+v,\tfrac12)\ge E\bigr)\,\P\bigl(G_m(E)\le \nu_0-q-1\bigr)+\P\bigl(\Bin(\nu_0,\tfrac14)\le v\bigr). % english-ok: display formula
+\end{multline*}
+\item[(B)] For $1\le J\le E$ and $K>q$, with $e$ running over the triples with $e_1<J$ and $e_2,e_3<E$,
+\begin{multline*}
+\P(e_1<J)\le\sum_{e}\sum_{s<K}W^B_e(s)\,\P(S_e=s)\\
++2\,\P\bigl(\Bin(E+J-1,\tfrac12)\ge E\bigr)\,\P\bigl(G_m(E)\le K-q-1\bigr)+\P\bigl(\Bin(K,\tfrac14)<J\bigr).
+\end{multline*}
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:closid} we may bound the output $X=n_0(\nu)$ of the closure. (A) If $\nu\ge \nu_0$, then $X\ge n_0(\nu_0)$, which has the law $\Bin(\nu_0,1/4)$. If $\nu<\nu_0$ and $e_c\ge E$ for some child $c$, let $\tau\le\nu$ be the time of the $E$-th direction $c$. Then $G_c(E)\le G_c(e_c)\le\Lambda_q(\nu)-q=\nu-q\le \nu_0-q-1$, and $X$ is at least the number of steps to $y$ before $\tau$, so at most $v$ steps to $y$ precede the $E$-th direction $c$. In the subsequence of the directions in $\{0,c\}$, the terms are independent and fair, and this happens if and only if at least $E$ of the first $E+v$ terms are $c$. The first event reads the curve of $c$ and the second the directions, so they are independent; summing over $c$ gives the middle term. Otherwise $\nu=n<\nu_0$ and $e=(n_1(n),n_2(n),n_3(n))\in[0,E)^3$; then $\Lambda_q(n)=n$, that is $S_e=n-q$, and $n_0(n)=X\le v$. So the event lies in the union over $n<\nu_0$ and over $k=(k_0,e)$ with $k_0\le v$, $e\in[0,E)^3$ and $|k|=n$ of $\{(n_a(n))_a=k\}\cap\{S_e=n-q\}$. These two events are independent, the first has probability $\Mult(n;k)$, and with $s=n-q\ge0$ the union bound is the double sum. (B) The same, with three changes: if $\nu\ge K$ then $e_1\ge n_1(K)$, of law $\Bin(K,1/4)$; if $\nu<K$ and $e_c\ge E$ for $c\in\{2,3\}$, then fewer than $J$ directions $1$ precede the $E$-th direction $c$, so at least $E$ of the first $E+J-1$ terms of the subsequence in $\{1,c\}$ are $c$; and $e_1\ge E$ is excluded by $e_1<J\le E$. This is \decl{FrogModel.D3.Assembly.lemma16A_proof} in the formalization, and \texttt{FrogModel.D3.Assembly.lemma16B\_proof} for (B).
+\end{proof}
+
+The double sums of Lemma~\ref{lem:ends} need the laws of the $S_e$, which are not known. Lemma~\ref{lem:pseudo} replaces them by distribution functions bounded from above. Let $G_M\ge0$, and let $F(e,g)\in[0,1]$, for $0\le e\le E$ and $0\le g\le G_M$, be nondecreasing in $g$. The \emph{pseudo-law} of the row $e$ puts the mass $p_e(g)=F(e,g)-F(e,g-1)$ at $g\le G_M$, with $F(e,-1)=0$, and the rest at $+\infty$; for $e\in[0,E]^3$ and $s\ge0$ let
+\[
+\pi_e(s)=\sum_{g_1+g_2+g_3=s}p_{e_1}(g_1)\,p_{e_2}(g_2)\,p_{e_3}(g_3),
+\]
+with $p_e(g)=0$ for $g>G_M$, the mass at $s$ of the sum of three independent variables of these pseudo-laws. For $W:\N\to[0,\infty)$ and $\bar s\ge0$ let $\overline W(s)=\max_{s\le s'\le \bar s}W(s')$, the least nonincreasing function above $W$ on $[0,\bar s]$.
+
+\begin{lemma}[pseudo-laws]\label{lem:pseudo}\lean{FrogModel.D3.Assembly.lemma16C_proof, FrogModel.D3.Iface.lemma16C, FrogModel.D3.Assembly.lemma16AC_proof, FrogModel.D3.Assembly.lemma16BC_proof, FrogModel.D3.Iface.lemma16AC, FrogModel.D3.Iface.lemma16BC, FrogModel.D3.Iface.boundA, FrogModel.D3.Iface.boundB}
+Assume $\P(G_m(e)\le g)\le F(e,g)$ for $0\le e\le E$ and $0\le g\le G_M$.
+\begin{enumerate}
+\item If $e\in[0,E]^3$, $W\ge0$ vanishes beyond $G_M$ and $\bar s\ge0$, then $\sum_{s<\bar s}W(s)\,\P(S_e=s)\le\sum_{s<\bar s}\overline W(s)\,\pi_e(s)$.
+\item If $\nu_0-q-1\le G_M$, the bound (A) of Lemma~\ref{lem:ends} holds with $W^A_e$ replaced by $\overline{W^A_e}$ (with $\bar s=\nu_0$), $\P(S_e=s)$ by $\pi_e(s)$, and $\P(G_m(E)\le \nu_0-q-1)$ by $F(E,\nu_0-q-1)$. If $K-q-1\le G_M$, the same holds for (B), with $\bar s=K$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) Let $\widehat W=\overline W$ on $[0,\bar s)$ and $\widehat W(\bar s)=0$. Then $\widehat W$ is nonincreasing and nonnegative, $\widehat W\ge W$, and $\widehat W$ vanishes beyond $G_M$. Summation by parts gives $\sum_{s<\bar s}\widehat W(s)\,\P(S_e=s)=\sum_{s<\bar s}(\widehat W(s)-\widehat W(s+1))\,\P(S_e\le s)$, with nonnegative coefficients, which vanish for $s>G_M$. For $s\le G_M$, let $Y_1,Y_2,Y_3$ be independent with the pseudo-laws of the rows $e_1,e_2,e_3$. Since $\P(G_c(e_c)\le g)\le\P(Y_c\le g)$ for $g\le G_M$, the variable $\min(Y_c,G_M+1)$ lies stochastically below $\min(G_c(e_c),G_M+1)$; coupling the two by quantiles, independently over $c$, gives $\P(S_e\le s)\le\P(Y_1+Y_2+Y_3\le s)=\sum_{s'\le s}\pi_e(s')$. Summation by parts back gives the bound. (2) Every $W^A_e(s)$ vanishes for $s\ge \nu_0-q$, hence beyond $G_M$, and the same for $W^B_e$ with $K$; apply (1) to each $e$, and the hypothesis to $\P(G_m(E)\le \nu_0-q-1)$. This is \decl{FrogModel.D3.Assembly.lemma16C_proof} in the formalization, with \texttt{FrogModel.D3.Assembly.lemma16AC\_proof} and \texttt{FrogModel.D3.Assembly.lemma16BC\_proof} for (2).
+\end{proof}
+
+We write $A_F(j,v,\nu_0)$ and $B_F(j,J,K)$ for the right sides of (2).
+
+\subsection*{Fresh children}
+The term $\P(\nu<k)$ of Lemma~\ref{lem:loss} asks for lower bounds on the number of steps from $r$. The first one waits for one of the children entered by the first $q$ steps to return many frogs.
+
+\begin{lemma}[fresh children]\label{lem:fresh}\lean{FrogModel.D3.Assembly.lemma9_proof, FrogModel.D3.Iface.lemma9, FrogModel.D3.Assembly.lemma9_two_proof, FrogModel.D3.Iface.lemma9_two, FrogModel.D3.Iface.lemma9Bound, FrogModel.D3.Iface.SPoly}
+Let $q\ge2$, $x\ge1$ and $p=\P(G_m(1)\ge x)$, and let $(a_0,a_1,a_2,a_3)$ be the numbers of directions $0,1,2,3$ among the first $q$. In the closure at height $m+1$,
+\[
+\P\bigl(\nu(q)<x\bigr)\le\E\Bigl[(1-p)^{\#\{c:\ a_c\ge1\}}\Bigr],
+\]
+and for $q=2$ this is $1-\chi(p)$, with $\chi(p)=\frac{15}{16}-\frac9{16}(1-p)-\frac38(1-p)^2$.
+\end{lemma}
+
+\begin{proof}
+Since $\nu\ge q$ and $\Lambda_q$ is nondecreasing, $\nu\ge\Lambda_q(\nu)\ge\Lambda_q(q)=q+\sum_cG_c(a_c)$ when $\nu$ is finite. If some child $c$ with $a_c\ge1$ has $G_c(1)\ge x$, then $G_c(a_c)\ge x$ and $\nu\ge x$. The $G_c(1)$ are independent, of the law of $G_m(1)$, and independent of the directions. For $q=2$ the first two directions are two steps to $y$ with probability $1/16$, one step to $y$ and one into a child with probability $6/16$, twice the same child with probability $3/16$, and two different children with probability $6/16$, which gives $1/16+(9/16)(1-p)+(6/16)(1-p)^2=1-\chi(p)$. This is \decl{FrogModel.D3.Assembly.lemma9_proof} in the formalization, and \texttt{FrogModel.D3.Assembly.lemma9\_two\_proof} for $q=2$.
+\end{proof}
+
+The second one sends the first $q$ frogs deep into the tree, where they meet fresh subtrees with high probability.
+
+\begin{lemma}[deep fresh trials]\label{lem:deep}\lean{FrogModel.D3.LaneA.lemma10_proof, FrogModel.D3.Iface.lemma10}
+Let $q\ge2$, $1\le w\le m+1$, $x,x'\ge1$, and $p_w=\P(G_{m+1-w}(1)\ge x')$. In the closure at height $m+1$,
+\[
+\P\bigl(\nu(q)<x\bigr)\le\Bigl(1-\bigl(\tfrac23-(q-1)\,3^{-w}\bigr)p_w\Bigr)^q+\P\bigl(\Bin(x',3^{1-w})<x\bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:closid}, $\nu(q)$ has the law of the number of pairs of a woken frog and a time at which it is at $r$, in the planted model of height $m+1$ with $q-1$ entrants; we bound that number from below on the frog paths, by waking only some of the frogs, which can only lower it. Number the $q$ frogs at $r$ at the start $1,\dots,q$, and follow the path of the frog $i$ until it reaches depth $w$ or visits $y$. It reaches depth $w$ before visiting $y$ with probability at least $2/3$ (Lemma~\ref{lem:awake}(1)), and then its first vertex $v_i$ at depth $w$ is uniform over the $3^w$ vertices of that depth, by the symmetries of the tree that fix $r$, independently of the frogs $1,\dots,i-1$; so it reaches depth $w$ at a vertex $v_i$ not among $v_1,\dots,v_{i-1}$ with probability at least $\frac23-(i-1)3^{-w}$. Before depth $w$ the path stays above it, so it enters no $\T(v_l)$. If $v_i$ is new, run in $\T(v_i)$ the planted model of height $m+1-w$ with the single entrant $i$ and the parent of $v_i$ in the role of $y$: the number of frogs it returns to the parent of $v_i$ has the law of $G_{m+1-w}(1)$, and it is independent of the paths used before, which lie in other subtrees or are earlier segments. With probability at least $(\frac23-(q-1)3^{-w})p_w$, given the past, the frog $i$ succeeds: $v_i$ is new and at least $x'$ frogs return. Then the continuations of the paths of $x'$ of these frogs after their first visits to the parent of $v_i$, at depth $w-1$, are independent simple random walks, and each visits $r$ with probability $3^{1-w}$; each visit is a pair counted by $\nu(q)$. So $\P(\nu(q)<x)$ is at most the probability that all $q$ frogs fail, plus $\P(\Bin(x',3^{1-w})<x)$. This is \decl{FrogModel.D3.LaneA.lemma10_proof} in the formalization.
+\end{proof}
+
+\section{States and the step map}\label{sec:states}
+
+This section turns the bounds of Sections~\ref{sec:closure} and~\ref{sec:onebounds} into a map $\Phi$ on finite tables, which carries upper bounds on the distribution functions and the deficits of the planted curves from one height to the next (Lemma~\ref{lem:step}). Two more bounds enter first: closures with lower curves for the children, whose laws are given by a finite recursion (Lemma~\ref{lem:lower}).
+
+\subsection*{Lower closures}
+Let $m\ge0$ and $G_M\ge0$, and let $F_1:\{0,\dots,G_M\}\to[0,1]$ be nondecreasing with $\P(G_m(1)\le g)\le F_1(g)$ for $g\le G_M$. Put $\widetilde F(g)=F_1(g)$ for $g\le G_M$ and $\widetilde F(G_M+1)=1$, and let $\rho(0)=\widetilde F(0)$ and $\rho(i)=\widetilde F(i)-\widetilde F(i-1)$ for $1\le i\le G_M+1$: the law of a variable $R$ with $\P(R\le g)=\widetilde F(g)$.
+
+For a cap $\bar k\ge1$, numbers $p_{\mathrm c},p_{\mathrm g},p_{\mathrm n}\ge0$ and a family of laws $A'(u)$ on $\{0,\dots,\bar k\}$, $u\ge0$, the \emph{stage} with these data is the family of laws $A(u)$ on $\{0,\dots,\bar k\}$ given by $A(0)=\delta_0$ and
+\[
+A(u+1)=p_{\mathrm c}\,\mathrm{up}\,A(u)+p_{\mathrm g}\,A(u)+p_{\mathrm n}\sum_{i=0}^{G_M+1}\rho(i)\,A'(u+i),
+\]
+where $\mathrm{up}$ moves the mass at $k$ to $k+1$ for $k<\bar k$ and keeps the mass at $\bar k$. A stage reads the pool size $u$ of a closure in which every child is either dead (it returns nothing), or live and fresh (its first entry returns $R$ frogs), or live and entered before (each later entry returns its frog with probability $1/3$); $p_{\mathrm c}$ is the probability that the next step is counted, $p_{\mathrm g}$ that its frog is gone, and $p_{\mathrm n}$ that it enters a fresh live child, which moves to the next stage $A'$, all for the jump chain in which a frog that comes back at once is not a step.
+
+Let $a^{(2)}_q$ be the law $A_0(q)$ of the stages $A_2,A_1,A_0$ with cap $E\ge1$ and data $(p_{\mathrm c},p_{\mathrm g},p_{\mathrm n})$ equal to $(\frac3{10},\frac7{10},0)$, $(\frac3{11},\frac5{11},\frac3{11})$ and $(\frac14,\frac14,\frac12)$, where $A_2$ uses $A'=0$, $A_1$ uses $A'=A_2$ and $A_0$ uses $A'=A_1$. Let $a^{(3)}_q$ be the law $A_0(q)$ of the stages $A_3,\dots,A_0$ with cap $G_M+1$ and data $(\frac13,\frac23,0)$, $(\frac3{10},\frac4{10},\frac3{10})$, $(\frac3{11},\frac2{11},\frac6{11})$ and $(\frac14,0,\frac34)$.
+
+\begin{lemma}[lower closures]\label{lem:lower}\lean{FrogModel.D3.Assembly.lemmaS2_proof, FrogModel.D3.Assembly.lemmaS3_proof, FrogModel.D3.Iface.lemmaS2, FrogModel.D3.Iface.lemmaS3, FrogModel.D3.Iface.lawS2, FrogModel.D3.Iface.lawS3, FrogModel.D3.Iface.stageLaw}
+Let $j\ge1$ and $F_1$ be as above.
+\begin{enumerate}
+\item If $E\ge1$ and $D(k)\ge\Delta_m(k)$ for $0\le k\le E$, then
+\[
+\Delta_{m+1}(j)\le\sum_{k=0}^Ea^{(2)}_{j+1}(k)\,\min_{k'\le k}D(k').
+\]
+\item For $v\le G_M$, $\P(G_{m+1}(j)\le v)\le\sum_{x\le v}a^{(3)}_{j+1}(x)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+\emph{Lower curves.} Consider the closure at height $m+1$ with $j$ entrants, $q=j+1$, with the coins $\xi_{s,e}$ of Lemma~\ref{lem:coins} for each child $s$, and an auxiliary uniform variable $\vartheta_s$ on $(0,1)$ for each child, independent of everything. Let $\upsilon_s=\P(G_m(1)<G_s(1))+\vartheta_s\,\P(G_m(1)=G_s(1))$, where the probabilities are those of the law of $G_m(1)$ evaluated at the value $G_s(1)$; then $\upsilon_s$ is uniform on $(0,1)$. Let $R_s=\min\{g\le G_M+1:\widetilde F(g)\ge \upsilon_s\}$ and $G''_s(0)=0$, $G''_s(k)=R_s+\xi_{s,2}+\dots+\xi_{s,k}$. If $G_s(1)\le G_M$, then $\widetilde F(G_s(1))\ge\P(G_m(1)\le G_s(1))\ge \upsilon_s$, so $R_s\le G_s(1)$; otherwise $R_s\le G_M+1\le G_s(1)$. With $G_s(e)\ge G_s(e-1)+\xi_{s,e}$, $G''_s\le G_s$. The variable $R_s$ has the law $\rho$, and $R_s,\xi_{s,2},\xi_{s,3},\dots$ are independent, since $\xi_{s,e}$ is independent of $(G_s(0),\dots,G_s(e-1),\xi_{s,2},\dots,\xi_{s,e-1})$.
+
+\emph{The two lower closures.} For (1), let the child $1$ be dead and the two others answer $G''_s$: $\Lambda''(n)=q+\sum_{s=2,3}G''_s(n_s(n))$, $\nu''$ the least $n\ge q$ with $\Lambda''(n)\le n$, and $e''=n_1(\nu'')$. Since $\Lambda''\le\Lambda_q$, $\nu''\le\nu$ and $e''\le e_1$; and $e''$ does not read the child $1$, the variables $\vartheta_s$ being auxiliary. By Lemma~\ref{lem:deadchild}, applied with the same construction for each child by symmetry, $\Delta_{m+1}(j)\le\E\Delta_m(e'')$, and $\Delta_m(k)\le\Delta_m(\min(k,E))\le\min_{k'\le\min(k,E)}D(k')$ by Lemma~\ref{lem:deficit}(1). For (2), let the three children answer $G''_s$, with $\nu''$ defined in the same way and $X''=n_0(\nu'')$; then $X''\le n_0(\nu)$, which has the law of $G_{m+1}(j)$ by Lemma~\ref{lem:closid}.
+
+\emph{The laws.} Process the frogs at $r$ one at a time. A step goes to $y$ with probability $1/4$ and into each child with probability $1/4$; into a dead child the frog is lost; into a live child not entered before it adds $R_s$ frogs to the pool, independently of the past; into a live child entered before, the frog comes back with probability $1/3$, independently. A frog that comes back at once does not change the counts, so they have the law of the jump chain without these returns. With $f$ the number of live children entered before, one step of the jump chain of (1) is: into the dead child, to a fresh live child or gone, with probabilities $(\frac14,\frac12,\frac14)$, $(\frac3{11},\frac3{11},\frac5{11})$ and $(\frac3{10},0,\frac7{10})$ for $f=0,1,2$; and of (2): to $y$, to a fresh child or lost, with probabilities $(\frac14,\frac34,0)$, $(\frac3{11},\frac6{11},\frac2{11})$, $(\frac3{10},\frac3{10},\frac4{10})$ and $(\frac13,0,\frac23)$ for $f=0,1,2,3$. A first-step analysis gives that the law of the count, capped at $E$ in (1) and at $G_M+1$ in (2), from a pool of $u$ frogs at stage $f$ is $A_f(u)$; so $\min(e'',E)$ has the law $a^{(2)}_q$, and $\P(X''\le v)=\sum_{x\le v}a^{(3)}_q(x)$ for $v\le G_M$. This is \decl{FrogModel.D3.Assembly.lemmaS2_proof} in the formalization, and \texttt{FrogModel.D3.Assembly.lemmaS3\_proof} for~(2).
+\end{proof}
+
+\subsection*{States}
+The parameters of a state are integers $E\ge1$, $G_M$, $V_M\le G_M$ and $J_M\le E$: the number of entrants tracked, the range of the distribution functions, the largest value at which Lemma~\ref{lem:pseudo}(A) is evaluated, and the largest comparison index.
+
+\begin{definition}[states]\label{def:state}\lean{FrogModel.D3.Iface.StParams, FrogModel.D3.Iface.State, FrogModel.D3.Iface.State.WF, FrogModel.D3.Iface.State.Le, FrogModel.D3.Iface.Valid}
+A \emph{state} is a pair $S=(F,\delta)$ of tables $F(k,g)\in[0,1]$, for $0\le k\le E$ and $0\le g\le G_M$, nondecreasing in $g$, and $\delta(k)\in[0,1]$, for $0\le k\le E$, with $F(0,\cdot)=1$ and $\delta(0)=1$. It is \emph{valid at height} $m$ if, for all $k\le E$ and $g\le G_M$,
+\[
+\P\bigl(G_m(k)\le g\bigr)\le F(k,g),\qquad\Delta_m(k)\le\delta(k)\,\mu_m(k). % english-ok: display formula
+\]
+States are ordered componentwise, and a state above a valid state is valid.
+\end{definition}
+
+\subsection*{The step map}
+Let $a\le b$ be heights; the map $\Phi_{[a,b]}$ bounds a parent at any height $m+1$ with $m\in[a,b]$ from children valid for $S$ at height $m$. For a state $S=(F,\delta)$, let $\lambda(D,\mu,v)$ be the minimum of the two bounds of Lemma~\ref{lem:tails}(3), the second one for $t=i/200$, $i=1,\dots,199$, each read as $1$ where its condition fails; let
+\[
+r(k',j)=\max_{h\in\{a,b\}}\frac{\mu_h(k')}{\mu_{h+1}(j)},\qquad\widetilde\delta_j(k)=\min_{k'\le k}\delta(k')\,r(k',j),
+\]
+and let $\mathcal G(q)$ be the set of the integers $\min(q+o,q+G_M+1)$ for $o\in\{8,16,24,32,48,\allowbreak64,96,128,192,256\}$, together with $q+G_M+1$. With $A_F$ and $B_F$ the bounds of Lemma~\ref{lem:pseudo}(2), $q=j+1$, let $\gamma_B(j,J)=\min_{K\in\mathcal G(j+1)}B_F(j,J,K)$, and let $a^{(2)}_q$ and $a^{(3)}_q$ be the laws of Lemma~\ref{lem:lower} with $F_1=F(1,\cdot)$.
+
+\begin{definition}[the step map]\label{def:phi}\lean{FrogModel.D3.Iface.phiS, FrogModel.D3.Iface.deltaNew, FrogModel.D3.Iface.dTerms, FrogModel.D3.Iface.Fnew, FrogModel.D3.Iface.preF, FrogModel.D3.Iface.L12, FrogModel.D3.Iface.PB, FrogModel.D3.Iface.PA, FrogModel.D3.Iface.grid, FrogModel.D3.Iface.ratio, FrogModel.D3.Iface.Dt}
+The state $\Phi_{[a,b]}(S)$ is $(F',\delta')$, where $\delta'(0)=1$, $F'(0,\cdot)=1$, and for $j=1,\dots,E$, in this order:
+\begin{align*}
+\delta'(j)&=\min\Bigl\{r(0,j);\ \bigl(\delta(J)(1-\gamma_B(j,J))+\gamma_B(j,J)\bigr)\,r(J,j)\ (1\le J\le J_M);\\
+&\qquad\qquad\sum_{k=0}^Ea^{(2)}_{j+1}(k)\,\widetilde\delta_j(k);\ \delta'(j-1)\ (j\ge2)\Bigr\},
+\end{align*}
+then, for $j=1,\dots,E$ and $v\le G_M$, $F'(j,v)=\min_{v\le v'\le G_M}f(j,v')$ with
+\begin{align*}
+f(j,v)=\min\Bigl\{&\P\bigl(\Bin(j,\tfrac13)\le v\bigr);\ \lambda\bigl(\delta'(j)\,\mu_{a+1}(j),\mu_{a+1}(j),v\bigr);\ \min_{\nu_0\in\mathcal G(j+1)}A_F(j,v,\nu_0)\ (v\le V_M);\\
+&\textstyle\sum_{x\le v}a^{(3)}_{j+1}(x);\ F'(j-1,v)\Bigr\}.
+\end{align*}
+We write $\Phi_m=\Phi_{[m,m]}$.
+\end{definition}
+
+The grids $\mathcal G(q)$ hold the times $\nu_0$ and $K$ at which Lemma~\ref{lem:ends} cuts the closure; their largest element $q+G_M+1$ keeps $\nu_0-q-1$ and $K-q-1$ in the range of the table. A state $S'$ at larger parameters is obtained from $S$ by the extension of Definition~\ref{def:ext}.
+
+\begin{definition}[extension]\label{def:ext}\lean{FrogModel.D3.Iface.ext, FrogModel.D3.Iface.deltaExt, FrogModel.D3.Iface.FExt, FrogModel.D3.Iface.preExt}
+Let $S=(F,\delta)$ be a state at parameters with $(E_0,G_0)$, let $E\ge E_0$ and $G_M\ge G_0$, and let $h$ be a height. The extension $\mathrm{ext}_h(S)=(\widehat F,\widehat\delta)$ at $(E,G_M)$ is given by $\widehat\delta(0)=1$, $\widehat F(0,\cdot)=1$, and for $k=1,\dots,E$:
+\begin{align*}
+\widehat\delta(k)&=\min\Bigl\{1;\ \frac{\mu_h(0)}{\mu_h(k)};\ \widehat\delta(k-1);\ \delta(k)\text{ if }k\le E_0,\ \text{else }\delta(E_0)\frac{\mu_h(E_0)}{\mu_h(k)}\Bigr\},\\
+\widehat F(k,g)&=\min_{g\le g'\le G_M}\min\Bigl\{F(k,g')\text{ if }k\le E_0\text{ and }g'\le G_0;\ \P\bigl(\Bin(k,\tfrac13)\le g'\bigr);\\ % english-ok: display formula
+&\qquad\qquad\lambda\bigl(\widehat\delta(k)\mu_h(k),\mu_h(k),g'\bigr);\ \widehat F(k-1,g')\Bigr\}. % english-ok: display formula
+\end{align*}
+\end{definition}
+
+Lemma~\ref{lem:step}, used in the proof of Theorem~\ref{thm:linear}, says that $\Phi$ and the extension preserve validity, and how a certificate of steps is read.
+
+\begin{lemma}[step]\label{lem:step}\lean{FrogModel.D3.Assembly.lemma18_1_proof, FrogModel.D3.LaneC.lemma18_3_proof, FrogModel.D3.Assembly.ext_valid_proof, FrogModel.D3.Iface.lemma18_1, FrogModel.D3.Iface.lemma18_3, FrogModel.D3.Iface.ext_valid, FrogModel.D3.Iface.lemma18_4_of, FrogModel.D3.Iface.lemma18_6_of, FrogModel.D3.Iface.CertStep}
+Let $S$ be a state.
+\begin{enumerate}
+\item (One step.) If $S$ is valid at $m$, then $\Phi_m(S)$ is valid at $m+1$.
+\item (Worst case.) If $a\le m\le b$, then $\Phi_m(S)\le\Phi_{[a,b]}(S)$.
+\item (Extension.) If $S$ is valid at $h$, then $\mathrm{ext}_h(S)$ is valid at $h$.
+\item (Interval.) If $S$ is valid at $a$, and $\Phi_{[a,b-1]}(S)\le S$, then $S$ is valid at every height of $[a,b]$.
+\item (Certificate.) Let $S_0$ be a state valid at $h_0$. For $i<n$ let $S_{i+1}$ be a state with either $S_{i+1}\ge\Phi_{h_i}(S_i)$ at the same parameters and $h_{i+1}=h_i+1$, or $S_{i+1}\ge\mathrm{ext}_{h_i}(S_i)$ at larger $E$ and $G_M$ and $h_{i+1}=h_i$. If $T\ge S_n$ is a state and $\Phi_{[h_n,b-1]}(T)\le T$, then $T$ is valid at every height of $[h_n,b]$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) The parent curve at height $m+1$ with $j$ entrants is the output of the closure with $j$ entrants whose children have curves of height $m$, for which $S$ is valid. Deficits, with $a=b=m$, so that $r(k',j)=\mu_m(k')/\mu_{m+1}(j)$: the first term is Lemma~\ref{lem:deficit}(2) with $J=0$; for $1\le J\le J_M$, $\gamma_B(j,J)\ge\P(e_1<J)$ by Lemma~\ref{lem:pseudo}(2); if $\gamma_B(j,J)\le1$, Lemma~\ref{lem:deficit}(2) with $\Delta_m(J)\le\delta(J)\mu_m(J)$ gives the second, and if $\gamma_B(j,J)>1$, Lemma~\ref{lem:deficit}(2) with $\gamma=1$ gives $\Delta_{m+1}(j)\le\mu_m(J)\le(\delta(J)(1-\gamma_B(j,J))+\gamma_B(j,J))\mu_m(J)$, since $\delta(J)\le1$; the third is Lemma~\ref{lem:lower}(1) with $D(k)=\delta(k)\mu_m(k)$; the fourth is $\Delta_{m+1}(j)\le\Delta_{m+1}(j-1)\le\delta'(j-1)\mu_{m+1}(j-1)\le\delta'(j-1)\mu_{m+1}(j)$, by Lemma~\ref{lem:deficit}(1) and $\delta'(j-1)\ge0$. Distribution functions: the binomial term and the term $\lambda$ are Lemma~\ref{lem:tails}(3), with $\Delta_{m+1}(j)\le\delta'(j)\mu_{m+1}(j)$; the term $A_F$ is Lemma~\ref{lem:pseudo}(2); the term $a^{(3)}$ is Lemma~\ref{lem:lower}(2); the term $F'(j-1,v)$ holds since $G_{m+1}(j)\ge G_{m+1}(j-1)$; and a distribution function is nondecreasing, which gives the minimum over $v'\ge v$. Each term is a valid bound given the components computed before it. (2) The bounds of Lemmas~\ref{lem:pseudo} and~\ref{lem:lower} do not depend on the height. The ratio $\mu_h(k')/\mu_{h+1}(j)=(h+1+k')/(h+2+j)$ is monotone in $h$, so its maximum over $[a,b]$ is at $a$ or $b$; the bounds of Lemma~\ref{lem:tails}(3) at a fixed ratio $D/\mu$ decrease in $\mu$, so over $[a+1,b+1]$ they are largest at $\mu_{a+1}$; and the terms that read components computed before are nondecreasing in them. So the comparison holds component by component, in the order of the definition. (3) Rows $k\le E_0$ at $g\le G_0$ are those of $S$. The term $1$ holds since $\E G_h(k)\ge0$, the term $\mu_h(0)/\mu_h(k)$ since $\E G_h(k)\ge k/3$ (Lemma~\ref{lem:coins}), the term $\widehat\delta(k-1)$ by Lemma~\ref{lem:deficit}(1) and $\mu_h(k-1)\le\mu_h(k)$, and for $k>E_0$ the last one since $\Delta_h(k)\le\Delta_h(E_0)$. The terms of $\widehat F$ are those of (1). (4) By induction on $m\in[a,b-1]$: if $S$ is valid at $m$, then $\Phi_m(S)$ is valid at $m+1$ by (1), and $\Phi_m(S)\le\Phi_{[a,b-1]}(S)\le S$ by (2). (5) By induction on $i$, with (1) and (3) and the order, $S_n$ is valid at $h_n$, so $T$ is, and (4) applies. This is \decl{FrogModel.D3.Assembly.lemma18_1_proof} in the formalization for (1), with \texttt{FrogModel.D3.LaneC.lemma18\_3\_proof}, \texttt{FrogModel.D3.Assembly.ext\_valid\_proof}, \texttt{FrogModel.D3.Iface.lemma18\_4\_of} and \texttt{FrogModel.D3.Iface.lemma18\_6\_of}.
+\end{proof}
+
+\section{A lower model and the seed}\label{sec:lower}
+
+The step map needs a state valid at some height to start from. This section builds one at height $100$ from a reading of the frog paths that wakes fewer frogs than the planted model (Lemma~\ref{lem:dom}) and whose count has a law given by a finite recursion (Lemma~\ref{lem:m1law}); Proposition~\ref{prop:F3} turns a stored run of the recursion, rounded down, into bounds on $G_m(k)$, and Lemma~\ref{lem:seed} into a valid state.
+
+\subsection*{The rule}
+Fix the planted tree of height $m\ge1$ with $k\ge1$ entrants at $r$, and integers $\bar a\ge1$ (an answer cap), $P\ge2$ (a pool cap) and $L\ge2$ (a ghost depth). For a vertex $v$ of depth at most $m$, of height $h(v)$, the rule keeps a set of \emph{marked} vertices, initially empty, and $f(v)$ denotes the number of unmarked children of $v$. The rule reads the paths one step at a time, together with independent \emph{kill coins}; the keep probabilities $\kappa^R_h(f;a,f')$ and $\kappa^H_h(f;a,f')$ in $[0,1]$, for $0\le h<m$, are equal to $1$ at $(a,f')=(0,0)$, and at $h=0$ they depend on $a$ only. An R closure is the first closure at its vertex, so it starts with $f_0=3$, and we write $\kappa^R_h(a,f')$ for $\kappa^R_h(3;a,f')$.
+
+A \emph{closure} $C(v,Q,t)$ at a vertex $v$, with a list $Q$ of frogs at $v$ and a type $t\in\{R,H\}$, holds a pool, initially $Q$, and a list of \emph{ups}, initially empty, and records $f_0=f(v)$ at its start. While the pool is not empty, it takes the frog $\varphi$ at the head of the pool and reads the next step of its path.
+\begin{itemize}
+\item A step to the parent of $v$: $\varphi$ joins the ups if there are fewer than $\bar a$, and is discarded otherwise.
+\item A step to a child $z$, when $h(v)=0$, or when $t=H$ and $z$ is marked (a \emph{ghost entry}): the rule reads the steps of $\varphi$ until it is back at $v$, and then puts it at the head of the pool, or at depth $L$ below $v$, and then discards it.
+\item A step to an unmarked child $z$, when $h(v)\ge1$: mark $z$, wake the frog $\psi_z$ of $z$, run $C(z,(\varphi,\psi_z),R)$ (an \emph{R entry}).
+\item A step to a marked child $z$, when $t=R$ and $h(v)\ge1$: run $C(z,(\varphi),H)$ (an \emph{H entry}).
+\item The frogs returned by an entry are appended to the pool, which is then cut to its first $P$ frogs.
+\end{itemize}
+When the pool is empty, a closure at $v\ne r$ has the outcome $(a,f')$, with $a$ the number of its ups and $f'=f(v)$ (and $f'=0$ if $h(v)=0$); it reads a kill coin, which keeps the outcome with probability $\kappa^t_{h(v)}(f_0;a,f')$. A kept closure returns its ups to its parent; a killed one returns nothing and marks every child of $v$, so that its outcome becomes $(0,0)$. The run wakes the frog of $r$ and runs $C(r,(\text{entrants},\psi_r),R)$; its count $\underline G\le \bar a$ is the number of ups of this closure, which are frozen at $y$. We call this rule $M1_L$.
+
+\begin{lemma}[domination]\label{lem:dom}\lean{FrogModel.D3.f1_gen}
+For every family of paths and coins, and after any number of reads, the number of ups of the top closure of $M1_L$ is at most $G_m(k)$.
+\end{lemma}
+
+\begin{proof}
+The rule moves every frog along its own path. By induction on the reads, every frog the rule holds is in the woken set of Definition~\ref{def:plantedcurve}: the entrants are; the frog of $r$ is woken at the start, and $r$ is the start of the path of an entrant; the frog of $z$ is woken right after a step of a frog of the woken set that ends at $z$, which then lies in the range of its path. A frog that is an up of the top closure has stepped from $r$ to $y$, so its path visits $y$; and the ups are distinct frogs. This is \decl{FrogModel.D3.f1_gen} in the formalization.
+\end{proof}
+
+\subsection*{The recursion}
+Let $p_L=(3^{L-1}-1)/(3^L-1)$, the probability that a walk on $\{0,\dots,L\}$ with steps $+1$ with probability $3/4$ and $-1$ with probability $1/4$, started at $1$, hits $0$ before $L$: the probability that a ghost entry brings its frog back. Let $q_L=1/(4-3p_L)$, the probability that a frog at height $0$ steps up before it is lost. The laws below are on pairs $(a,f')\in\{0,\dots,\bar a\}\times\{0,\dots,3\}$; the \emph{bottom} is $(0,0)$; $\mathrm{up}(\ell)$ is the law $\ell$ shifted by one in its first coordinate, with $\bar a$ absorbing, and $\bar\ell$ is the first marginal of $\ell$. At height $0$, $\widehat R_0$ is the law of $(\min(\Bin(2,q_L),\bar a),0)$, and $\widehat K_0(f\to\cdot)$ puts the mass $q_L$ at $(1,f)$ and $1-q_L$ at $(0,f)$. Only $\widehat K_0(0\to\cdot)$ is read by the recursions below: an outcome at height $0$ has $f'=0$, so an entered child of height $0$ has type $U_0$.
+
+At a height $h\ge1$, given a law $\rho$, let $Y_f(0)=\delta_{(0,f)}$ and, for $s\ge1$,
+\[
+Y_f(s)=\frac{\frac14\,\mathrm{up}(Y_f(s-1))+\frac{3-f}4(1-p_L)\,Y_f(s-1)+\frac f4\sum_b\bar\rho(b)\,Y_{f-1}(\min(s-1+b,P))}{1-(3-f)p_L/4},
+\]
+and $\widehat K_h[\rho](f\to\cdot)=Y_f(1)$: the law of an H closure with one frog and $f$ unmarked children, the returns of its ghost entries solved out. Given moreover laws $K(t\to\cdot)$ on $\{0,\dots,\bar a\}\times\{0,\dots,t\}$ for $t\le3$, a \emph{child type} is $N$ (unmarked) or $U_t$ (marked, with $t$ the second coordinate of its last outcome: its number of unmarked children, and $0$ at height $0$), and for a triple $\sigma$ of child types let $W_\sigma(0)=\delta_{(0,\#N(\sigma))}$ and, for $p\ge1$,
+\begin{multline*}
+W_\sigma(p)=\frac1{1-\mathrm{loop}_\sigma}\Bigl(\frac14\,\mathrm{up}(W_\sigma(p-1))+\mathrm{lost}_\sigma\,W_\sigma(p-1)+\frac14\sum_{c:N}\sum_{b,f'}\rho(b,f')\,W_{\sigma(c\to U_{f'})}(p_b)\\
++\frac14\sum_{c:U_t}\sum_{a,\,f'<t}K(t\to(a,f'))\,W_{\sigma(c\to U_{f'})}(p_a)\Bigr),
+\end{multline*}
+where $p_b=\min(p-1+b,P)$, $\mathrm{loop}_\sigma=\frac14\sum_{c:U_t}K(t\to(1,t))$ and $\mathrm{lost}_\sigma=\frac14\sum_{c:U_t}K(t\to(0,t))$. Every other term lowers the total type of $\sigma$ ($N$ counting $4$ and $U_t$ counting $t$), so the system is triangular. Let $\widehat R_h[\rho,K]=W_{NNN}(2)$ and $\mathrm{Wtop}_q[\rho,K]=W_{NNN}(q)$. The \emph{kill} of a law $\ell$ by a keep function $\kappa$ is $\ell(o)\kappa(o)$ at each $o$ other than the bottom, the rest of the mass at the bottom.
+
+\begin{lemma}[the law of the lower model]\label{lem:m1law}\lean{FrogModel.D3.top_law_gen, FrogModel.D3.law_gen, FrogModel.D3.chain_law, FrogModel.D3.map_fp_read, FrogModel.D3.Gen_Wrec, FrogModel.D3.Gen_Yrec}
+Let $\rho_0$ and $K_0(f\to\cdot)$ be the kills of $\widehat R_0$ and $\widehat K_0(f\to\cdot)$ by $\kappa^R_0$ and $\kappa^H_0(f;\cdot)$, and for $1\le h<m$ let $\rho_h$ and $K_h(f\to\cdot)$ be the kills of $\widehat R_h[\rho_{h-1},K_{h-1}]$ and $\widehat K_h[\rho_{h-1}](f\to\cdot)$ by $\kappa^R_h$ and $\kappa^H_h(f;\cdot)$. If $k+1\le P$, the run of $M1_L$ on the frog paths and independent kill coins ends almost surely, and its count $\underline G$ has the first marginal of $\mathrm{Wtop}_{k+1}[\rho_{m-1},K_{m-1}]$ as its law.
+\end{lemma}
+
+\begin{proof}
+\emph{The values read are independent.} Each read takes the next unused step of the path of the frog the rule names, or the next unused kill coin, and the choice is a function of the values read before. By the pool argument of Lemma~\ref{lem:recursion}, with one pool for each frog and one for the coins, the sequence of values read has the law of an independent sequence of pairs of a uniform step and a coin. On that sequence the rule is a deterministic machine, so its states form a Markov chain on a countable space: a state is the stack of the open closures, innermost first, each with its vertex, type, $f_0$, pool, ups, the frog on a ghost walk and its depth, and whether it waits for its kill coin, together with the marks.
+
+\emph{The probability of an end is the least solution.} Let $h_b(x)$ be the probability that the chain from $x$ ends with $b$ ups. Let $u\ge0$ be a function on the states with $u(x)=\one\{x\text{ has }b\text{ ups}\}$ at the ends and $u(x)\ge\E\,u(x')$ elsewhere, $x'$ the next state. Then the probability to end with $b$ ups within $n$ reads is at most $u$, by induction on $n$, and it increases to $h_b$; so $h_b\le u$.
+
+\emph{A solution from the recursion.} Let $U_b(x)$ be the probability that the top closure ends with $b$ ups when every open closure finishes with the law the recursion gives: the innermost one from its pool, ups and child types, with probability $(3^{-d}-3^{-L})/(1-3^{-L})$ that a frog on a ghost walk at depth $d$ comes back; each outcome is then killed, and passed to the closure below, which continues in the same way. The child types are read off the marks: an R closure reads, of each marked child, only its number of unmarked children, its type $U_t$, and an H closure at a vertex $z$ reads only $f(z)$; so the marks inside the subtree of a child enter only through these numbers. Height $0$ is the exception: the steps of a closure at a vertex $z$ of height $0$ read no mark, its outcome is $(a,0)$ and its keep depends on $a$ only, so it finishes with the law $\rho_0$ (type $R$) or $K_0(0\to\cdot)$ (type $H$) whatever $f(z)$ is, and a marked child of height $0$ has type $U_0$ whatever its number of unmarked children; no closure has the law $K_0(f\to\cdot)$ with $f\ge1$. The recursions with the loops solved out give $U_b(x)\ge\E\,U_b(x')$, read by read, and $\sum_bU_b=1$. So $h_b\le U_b$.
+
+\emph{The run ends.} The same construction with a cost of one per read, and at most $2(L-d)$ for a ghost walk at depth $d$, gives a finite function $\tau$ on the states with $\tau(x)\ge1+\E\,\tau(x')$ off the ends, $x'$ the next state. So the expected number of reads is at most $\tau(x)$, the run ends almost surely, and $\sum_bh_b=1=\sum_bU_b$; hence $h_b=U_b$. At the initial state, $U_b$ is the first marginal of $\mathrm{Wtop}_{k+1}[\rho_{m-1},K_{m-1}]$ at $b$. This is \decl{FrogModel.D3.top_law_gen} in the formalization, with \texttt{FrogModel.D3.law\_gen} for every state and \texttt{FrogModel.D3.Gen\_Wrec}, \texttt{FrogModel.D3.Gen\_Yrec} for the recursions.
+\end{proof}
+
+A stored run is a family of probability vectors below the recursion evaluated on the stored vectors themselves. Proposition~\ref{prop:F3} is what such a run gives.
+
+\begin{proposition}\label{prop:F3}\lean{FrogModel.D3.f3L_holds, FrogModel.D3.Iface.f3L, FrogModel.D3.Iface.F3Hyp, FrogModel.D3.Iface.Wtop, FrogModel.D3.Iface.Wrec, FrogModel.D3.Iface.Yrec, FrogModel.D3.Iface.KhatH, FrogModel.D3.Iface.Rhat, FrogModel.D3.Iface.Rhat0, FrogModel.D3.Iface.Khat0}
+Let $\bar a\ge1$, $P\ge2$, $L\ge2$ and $m\ge1$. For $0\le h<m$ let $\rho^*_h$ be a probability vector on $\{0,\dots,\bar a\}\times\{0,\dots,3\}$ and $K^*_h(t\to\cdot)$, $t\le3$, a probability vector on $\{0,\dots,\bar a\}\times\{0,\dots,t\}$, such that, entrywise off the bottom,
+\begin{enumerate}
+\item[(i)] $\rho^*_0\le\widehat R_0$ and $K^*_0(t\to\cdot)\le\widehat K_0(t\to\cdot)$;
+\item[(ii)] $\rho^*_h\le\widehat R_h[\rho^*_{h-1},K^*_{h-1}]$ and $K^*_h(t\to\cdot)\le\widehat K_h[\rho^*_{h-1}](t\to\cdot)$ for $1\le h<m$.
+\end{enumerate}
+Let $1\le k$ with $k+1\le P$, and let $\widetilde W\le\mathrm{Wtop}_{k+1}[\rho^*_{m-1},K^*_{m-1}]$ entrywise on $\{0,\dots,\bar a\}\times\{0,\dots,3\}$, and $W(x)=\sum_f\widetilde W(x,f)$. Then
+\[
+\P\bigl(G_m(k)\le g\bigr)\le1-\sum_{g<x\le \bar a}W(x)\quad(g<\bar a),\qquad\E G_m(k)\ge\sum_{x\le \bar a}x\,W(x). % english-ok: display formula
+\]
+\end{proposition}
+
+\begin{proof}
+By induction on $h\ge1$, let $\kappa^R_h(o)=\rho^*_h(o)/\widehat R_h(o)$ where $o$ is not the bottom and $\widehat R_h(o)>0$, and $1$ elsewhere, with $\widehat R_h$ evaluated on $\rho^*_{h-1},K^*_{h-1}$; by (i) and (ii) these numbers lie in $[0,1]$, and $\rho^*_h(o)=0$ where $\widehat R_h(o)=0$. So the kill of $\widehat R_h$ by $\kappa^R_h$ is $\rho^*_h$ off the bottom, and at the bottom too, both being probability vectors; the same for the $K^*_h$. At height $0$ the keeps must depend on $a$ only: let $\kappa^R_0(a,f')$ be the ratio above at $o=(a,0)$, for every $f'$, and $\kappa^H_0(f;a,f')$ the ratio of $K^*_0(0\to(a,0))$ to $\widehat K_0(0\to(a,0))$ for $a\ge1$ with $\widehat K_0(0\to(a,0))>0$, and $1$ elsewhere, for every $f$ and $f'$. Since $\widehat R_0$ and $\widehat K_0(0\to\cdot)$ put no mass off $f'=0$, neither do $\rho^*_0$ and $K^*_0(0\to\cdot)$, by (i), so the kills of $\widehat R_0$ and of $\widehat K_0(0\to\cdot)$ are $\rho^*_0$ and $K^*_0(0\to\cdot)$, and the recursions read no other law at height $0$. A keep probability is the mass of a set of values of a coin. Lemma~\ref{lem:m1law} then gives $\P(\underline G=x)=\sum_f\mathrm{Wtop}_{k+1}[\rho^*_{m-1},K^*_{m-1}](x,f)\ge W(x)$, and Lemma~\ref{lem:dom} gives $\underline G\le G_m(k)$, with the planted curve computed on the frog paths. This is \decl{FrogModel.D3.f3L_holds} in the formalization.
+\end{proof}
+
+The comparisons (i) and (ii) compare two evaluations of the recursion on the same stored vectors, so no monotonicity of the recursion in its inputs is used. Each operation of the recursion (sums and products of nonnegative numbers, the capped shift, the division by $1-\mathrm{loop}$) is nondecreasing in its arguments, so a computation that rounds every operation down gives arrays below the exact ones, and any probability vector below them off the bottom, with the missing mass at the bottom, satisfies (ii).
+
+\subsection*{The seed}
+Let $m_0\ge0$, $\bar a\ge1$, parameters $(E,G_M,V_M,J_M)$, and numbers $W_k(x)\ge0$ for $1\le k\le E$ and $x\le \bar a$. Put
+\[
+e_k=\sum_{x\le \bar a}x\,W_k(x),\qquad c_k(g)=1-\sum_{g<x\le \bar a}W_k(x),\qquad D_0(k)=\min\Bigl\{\mu_{m_0}(k);\ \min_{1\le k'\le k}\bigl(\mu_{m_0}(k')-e_{k'}\bigr)\Bigr\}. % english-ok: display formula
+\]
+The \emph{seed} is the pair $S_0=(F_0,\delta_0)$ with $\delta_0(k)=D_0(k)/\mu_{m_0}(k)$, $F_0(0,\cdot)=1$ and, for $k\ge1$,
+\[
+F_0(k,g)=\min_{g\le g'\le G_M}\min\Bigl\{c_k(g')\ (g'<\bar a);\ \P\bigl(\Bin(k,\tfrac13)\le g'\bigr);\ \lambda\bigl(D_0(k),\mu_{m_0}(k),g'\bigr);\ F_0(k-1,g')\Bigr\}. % english-ok: display formula
+\]
+
+Lemma~\ref{lem:seed}, used in the proof of Theorem~\ref{thm:linear}, turns bounds on the laws of the $G_{m_0}(k)$ into a valid state.
+
+\begin{lemma}[seed]\label{lem:seed}\lean{FrogModel.D3.Assembly.seed_valid_proof, FrogModel.D3.Iface.seed_valid, FrogModel.D3.Iface.seedState, FrogModel.D3.Iface.F0, FrogModel.D3.Iface.D0}
+If $\P(G_{m_0}(k)\le g)\le c_k(g)$ for $g<\bar a$ and $\E G_{m_0}(k)\ge e_k$, for $1\le k\le E$, then the seed satisfies the inequalities of validity at $m_0$.
+\end{lemma}
+
+\begin{proof}
+For $k'\le k$, $\Delta_{m_0}(k)\le\Delta_{m_0}(k')\le\mu_{m_0}(k')-e_{k'}$ by Lemma~\ref{lem:deficit}(1), and $\Delta_{m_0}(k)\le\mu_{m_0}(k)$; so $\Delta_{m_0}(k)\le D_0(k)=\delta_0(k)\mu_{m_0}(k)$. The terms of $F_0$ are the hypothesis, Lemma~\ref{lem:tails}(3) with $D=D_0(k)$, and $G_{m_0}(k)\ge G_{m_0}(k-1)$; a minimum over $g'\ge g$ keeps an upper bound of a distribution function. This is \decl{FrogModel.D3.Assembly.seed_valid_proof} in the formalization.
+\end{proof}
+
+The certificate of Section~\ref{sec:proofthree} starts from a state above the seed.
+
+\section{An induction on the height}\label{sec:dprime}
+
+Above $m_1$ the bound of Theorem~\ref{thm:linear} is carried from one height to the next by an induction that tracks $\E G_m(J)$ for one comparison index $J=J(m)$ (Theorem~\ref{thm:dprime}). Its inequalities are checked on finitely many intervals (Lemma~\ref{lem:interval}) up to $10^{30}$, and proved beyond (Lemma~\ref{lem:tail}).
+
+Let $c_0=3/5$, $\eps=1/50$, $m_1=1778279$ and $b_1=27290443/50$. For a height $h$ and $x\ge0$ let
+\[
+\pi(h,x)=\max\Bigl\{0,\ 1-\frac{(1-c_0)\,\mu_h(1)+\mu_h(1)^{1/2}/2}{\mu_h(1)-x}\Bigr\}\ \text{ if }x<\mu_h(1),\qquad\pi(h,x)=0\ \text{ otherwise}.
+\]
+If $\E G_h(1)\ge c_0\mu_h(1)$, then $\Delta_h(1)\le(1-c_0)\mu_h(1)$, and Lemma~\ref{lem:tails}(1) gives $\P(G_h(1)\ge x)\ge\pi(h,x)$. For integers $J,w,k,k_1,k_2\ge1$ and a height $m$ with $w\le m+1$, let
+\begin{align*}
+\Theta_J(m)&=\Bigl(1-\max\bigl\{0,\tfrac23-J\,3^{-w}\bigr\}\,\pi(m+1-w,k_2)\Bigr)^{J+1}\\
+&\qquad+\P\bigl(\Bin(k_2,3^{1-w})<k\bigr)+\P\bigl(\Bin(k,\tfrac14)<J\bigr),\\
+\Theta^\circ(m)&=1-\chi\bigl(\pi(m,k_1)\bigr)+\P\bigl(\Bin(k_1,\tfrac14)<J\bigr),
+\end{align*}
+with $\chi$ as in Lemma~\ref{lem:fresh}. Given functions $J,w,k,k_1,k_2$ of the height, the \emph{conditions at} $m$ are: $J,k,k_1,k_2\ge1$, $1\le w\le m+1$, $m+1-w>m_1-30$, and
+\begin{align*}
+&\text{(K1)}\quad\frac{m+J+1}3\,\Theta_J(m)\le\eps,\\
+&\text{(K2)}\quad\Bigl(b_1+\bigl(\tfrac13-\eps\bigr)(m-m_1)\Bigr)\bigl(1-\Theta^\circ(m)\bigr)-\frac{J-2}3\ge c_0\,\frac{m+3}3,
+\end{align*}
+all parameters taken at $m$.
+
+Theorem~\ref{thm:dprime} is the third stage of the proof of Theorem~\ref{thm:linear}.
+
+\begin{theorem}\label{thm:dprime}\lean{FrogModel.D3.Assembly.thmDprime1_proof, FrogModel.D3.Iface.thmDprime1, FrogModel.D3.LaneE.thmDprime1_of, FrogModel.D3.Iface.DCond, FrogModel.D3.Iface.LJ, FrogModel.D3.Iface.L1, FrogModel.D3.Iface.jackLower}
+Let $J,w,k,k_1,k_2:\N\to\N$ with $J(m_1)=62$, $J$ nondecreasing on $[m_1,\infty)$, and the conditions at every $m\ge m_1$. Assume
+\[
+\E G_h(1)\ge c_0\,\mu_h(1)\quad(m_1-30<h\le m_1),\qquad\E G_{m_1}(62)\ge b_1.
+\]
+Then $\E G_m(1)\ge c_0\,\mu_m(1)$ for every $m>m_1-30$.
+\end{theorem}
+
+\begin{proof}
+By induction on $m\ge m_1$ we prove: $\E G_h(1)\ge c_0\mu_h(1)$ for $m_1-30<h\le m$, and $\E G_m(J(m))\ge b_1+(\frac13-\eps)(m-m_1)$. At $m_1$ this is the assumption. Let it hold at $m$, and write $J=J(m)$ and so on. The heights $m+1-w$ and $m$ lie in $(m_1-30,m]$, so $\P(G_{m+1-w}(1)\ge k_2)\ge\pi(m+1-w,k_2)$ and $\P(G_m(1)\ge k_1)\ge\pi(m,k_1)$.
+
+\emph{The index $J$.} In the closure at height $m+1$ with $J$ entrants, Lemma~\ref{lem:deep} with $q=J+1$, $x=k$ and $x'=k_2$, then Lemma~\ref{lem:loss}, give $\P(e_1<J)\le \Theta_J(m)$: the first term of $\Theta_J$ is nonincreasing in the probability it reads, and it is at least $1$ if $\frac23-J3^{-w}<0$. By Lemma~\ref{lem:loss} and Lemma~\ref{lem:awake}, $L_{J,J}\le\E G_m(J)\,\Theta_J(m)\le\mu_m(J)\,\Theta_J(m)\le\eps$ by (K1), and Lemma~\ref{lem:D1} with $j=J$ gives $\E G_{m+1}(J)\ge\E G_m(J)+\frac13-\eps$. Since $J(m+1)\ge J$ and $\E G_{m+1}$ is nondecreasing, $\E G_{m+1}(J(m+1))\ge b_1+(\frac13-\eps)(m+1-m_1)$.
+
+\emph{One entrant.} In the closure with one entrant, Lemma~\ref{lem:fresh} with $q=2$ and $x=k_1$, then Lemma~\ref{lem:loss}, give $\P(e_1<J)\le \Theta^\circ(m)$, since $1-\chi$ is decreasing on $[0,1]$. Lemmas~\ref{lem:D1} and~\ref{lem:loss} with $j=1$ give $\E G_{m+1}(1)\ge\E G_m(J)\bigl(1-\Theta^\circ(m)\bigr)-\frac{J-2}3$. By (K2), $1-\Theta^\circ(m)>0$, since otherwise its left side is at most $\frac13$; so the induction hypothesis on $\E G_m(J)$ and (K2) give $\E G_{m+1}(1)\ge c_0(m+3)/3=c_0\mu_{m+1}(1)$. This is \decl{FrogModel.D3.Assembly.thmDprime1_proof} in the formalization.
+\end{proof}
+
+\subsection*{Intervals}
+On an interval of heights with fixed parameters the conditions reduce to finitely many inequalities between rational numbers. An \emph{entry} is a tuple $(m_\ell,m_h,J,w,\eta,a_9,s_w,s_1)$ of integers $m_\ell\le m_h$, $J,w,\eta,a_9$ and rationals $s_w,s_1\ge0$; its parameters are $k=2\eta J$, $k_2=3\eta J\,3^{w-1}$ and $k_1=a_9J$. Let $\mu_w=\mu_{m_\ell+1-w}(1)$, $\mu_1=\mu_{m_\ell}(1)$, and
+\begin{align*}
+p_w&=1-\frac{(1-c_0)\mu_w+s_w/2}{\mu_w-k_2},\qquad p_1=1-\frac{(1-c_0)\mu_1+s_1/2}{\mu_1-k_1},\\
+t_2&=\Bigl(\frac38\Bigr)^{\eta J}\Bigl(\frac32\Bigr)^{k-1},\qquad t_3=\frac{(3/4+z_3/4)^k}{z_3^{J-1}},\qquad t_9=\frac{(3/4+z_9/4)^{k_1}}{z_9^{J-1}},
+\end{align*}
+with $z_3=3/(2\eta-1)$ and $z_9=3/(a_9-1)$. The entry \emph{passes} if $J\ge1$, $1\le w\le30$, $m_1\le m_\ell$, $\eta\ge2$, $a_9\ge4$, $\mu_w\le s_w^2$, $\mu_1\le s_1^2$, $k_2<\mu_w$, $k_1<\mu_1$, $\frac23-J3^{-w}\ge0$, $p_w\ge0$, and, with $\bar\Theta^\circ=1-\chi(p_1)+t_9$,
+\begin{align*}
+&\frac{m_h+J+1}3\Bigl(\bigl(1-(\tfrac23-J3^{-w})p_w\bigr)^{J+1}+t_2+t_3\Bigr)\le\eps,\qquad\frac{c_0}3\le\Bigl(\frac13-\eps\Bigr)(1-\bar\Theta^\circ),\\
+&\frac{c_0(m_\ell+3)+J-2}3\le\Bigl(b_1+\bigl(\tfrac13-\eps\bigr)(m_\ell-m_1)\Bigr)(1-\bar\Theta^\circ).
+\end{align*}
+
+Lemma~\ref{lem:interval}, used in the proof of Proposition~\ref{prop:dcheck}, reduces the conditions on an interval to the test of its entry.
+
+\begin{lemma}\label{lem:interval}\lean{FrogModel.D3.LaneE.Entry.sound, FrogModel.D3.LaneE.Entry.check}
+If an entry passes, then the conditions hold at every $m\in[m_\ell,m_h]$ for parameter functions equal to $J,w,k,k_1,k_2$ there.
+\end{lemma}
+
+\begin{proof}
+\emph{Binomial tails.} For $0\le p\le1$ and $0<z\le1$, $\P(\Bin(n,p)<J)\le\E z^{\Bin(n,p)-(J-1)}=(1-p+pz)^n/z^{J-1}$. With $p=3^{1-w}$ and $z=2/3$, $1-p+pz=1-3^{-w}$ and $(1-3^{-w})^{k_2}\le e^{-k_2\,3^{-w}}=e^{-\eta J}\le(3/8)^{\eta J}$, so $\P(\Bin(k_2,3^{1-w})<k)\le t_2$; with $p=1/4$, $\P(\Bin(k,\frac14)<J)\le t_3$ and $\P(\Bin(k_1,\frac14)<J)\le t_9$. \emph{Jackpots.} Since $\mu_w\le s_w^2$, $\pi(m_\ell+1-w,k_2)\ge p_w$, and the same at $m_\ell$. The function $\pi(\cdot,x)$ is nondecreasing in the height: with $\mu\le\mu'$ and $s=\mu^{1/2}\le s'=\mu'^{1/2}$, the difference of the two fractions, cross-multiplied, is $-(1-c_0)x(\mu'-\mu)+ss'(s-s')/2-x(s'-s)/2\le0$. So on the interval $\Theta_J(m)\le \Theta_J(m_\ell)$ and $\Theta^\circ(m)\le \Theta^\circ(m_\ell)\le \bar\Theta^\circ$, the maps $p\mapsto(1-cp)^{J+1}$, $0\le c\le\frac23$, and $p\mapsto1-\chi(p)$ being nonincreasing on $[0,1]$. \emph{The conditions.} (K1) at $m$ follows from the first inequality since $m\le m_h$. For (K2), the second inequality says that its left side minus its right side, with $\bar\Theta^\circ$ in place of $\Theta^\circ(m)$, is nondecreasing in $m$, and the third that it is nonnegative at $m_\ell$; replacing $\bar\Theta^\circ$ by $\Theta^\circ(m)\le \bar\Theta^\circ$ only helps. The other conditions are read off the entry, with $m+1-w\ge m_1-29$. This is \decl{FrogModel.D3.LaneE.Entry.sound} in the formalization.
+\end{proof}
+
+Above $10^{30}$ the parameters are given by formulas, and Lemma~\ref{lem:tail}, used in the proof of Theorem~\ref{thm:linear}, proves the conditions there.
+
+\begin{lemma}[the tail]\label{lem:tail}\lean{FrogModel.D3.LaneE.dprime_tail_holds, FrogModel.D3.Iface.dprime_tail, FrogModel.D3.Iface.Jtail, FrogModel.D3.Iface.Dtail, FrogModel.D3.Iface.ytail, FrogModel.D3.Iface.ktail}
+For $m\ge10^{30}$ let $J(m)=\max\{140,\lceil\frac{11}5\log m\rceil\}$, $w(m)$ the least integer with $3^{w(m)}\ge100J(m)$, $k_2(m)=18J(m)\,3^{w(m)-1}$ and $k(m)=k_1(m)=12J(m)$. Then the conditions hold at every $m\ge10^{30}$.
+\end{lemma}
+
+\begin{proof}
+Write $J=J(m)$ and so on. Since $\log x\le4x^{1/4}$, $J\le9m^{1/4}$; since $J\ge\frac{11}5\log m$ and $e^{5/11}\le197/125$, $m\le(197/125)^J$; and $J3^{-w}\le1/100$, so $\frac23-J3^{-w}\ge197/300$. The thresholds $k_2\le1800J^2$ and $k_1=12J$ are negligible against $\mu_h(1)\ge m/4$ at the heights $h\ge m+1-w$ read, so both jackpots $\pi(m+1-w,k_2)$ and $\pi(m,k_1)$ are at least $59/100$. The parameters are those of an entry with $\eta=6$ and $a_9=12$, and the tilt bounds of the proof of Lemma~\ref{lem:interval} give, with $1-\frac{197}{300}\cdot\frac{59}{100}=\frac{18377}{30000}$ and $m+J+1\le2m$,
+\[
+\frac{m+J+1}3\Theta_J(m)\le\frac23\Bigl(\frac{197}{125}\Bigr)^J\Bigl(\Bigl(\frac{18377}{30000}\Bigr)^{J+1}+\Bigl(\bigl(\tfrac38\bigr)^6\bigl(\tfrac32\bigr)^{12}\Bigr)^J+\Bigl(\bigl(\tfrac9{11}\bigr)^{12}\tfrac{11}3\Bigr)^J\Bigr),
+\]
+which decreases in $J$ and is about $0.0030\le\eps$ at $J=140$. For (K2), $1-\chi(59/100)=1-\frac{51507}{80000}$ and $t_9\le10^{-10}$, so $1-\Theta^\circ(m)\ge\frac{51507}{80000}-10^{-10}$ and the slope $(\frac13-\eps)(1-\Theta^\circ(m))-\frac{c_0}3$ is at least $\frac{47}{150}(\frac{51507}{80000}-10^{-10})-\frac15>0.0017$; this slope times $m-m_1$ exceeds $\frac{J-2}3\le3m^{1/4}$ and the other terms. Finally $100J\le222\log m\le m$, so $w<1+\log_3m$ and $m+1-w>m_1-30$. This is \decl{FrogModel.D3.LaneE.dprime_tail_holds} in the formalization, with the rational inequalities checked in exact arithmetic.
+\end{proof}
+
+\section{Proof of Theorem~\ref{thm:linear}}\label{sec:proofthree}
+
+The three stages of Section~\ref{sec:three} rest on two finite computations. The first is a stored run of the recursion of Section~\ref{sec:lower} and a certificate of steps of $\Phi$ from the seed it gives; the second is a table of entries.
+
+\begin{proposition}[the run and the certificate]\label{prop:m1run}\lean{FrogModel.D3.Chain.m1run_certS_proof, FrogModel.D3.Iface.m1run_certS, FrogModel.D3.Iface.M1Run.Holds, FrogModel.D3.Iface.CertS1, FrogModel.D3.Iface.P0, FrogModel.D3.Iface.topMass}\computed{code/m1run/run.sh, code/d3cert/run.sh, code/d3cert/out/run.out, code/d3chain/gen.sh, code/formal-proof/main_axioms.lean}
+\begin{enumerate}
+\item There are probability vectors $\rho^*_h$, $K^*_h(t\to\cdot)$, $0\le h\le99$, satisfying (i) and (ii) of Proposition~\ref{prop:F3} at $(\bar a,P,L,m)=(48,96,60,100)$, and arrays $\widetilde W_q\le\mathrm{Wtop}_q[\rho^*_{99},K^*_{99}]$ for $q=2,\dots,33$.
+\item Let $S_0$ be the seed at $m_0=100$, $\bar a=48$ and $(E,G_M)=(32,96)$ made from $W_k(x)=\sum_f\widetilde W_{k+1}(x,f)$. There are a state $S'_0\ge S_0$ at the parameters $(32,96,16,12)$ and a chain of states as in Lemma~\ref{lem:step}(5) from $S'_0$ at height $100$, ending at a height $h_n\le m_1-30$, and a state $T$ at parameters with $E\ge62$, such that $T\ge S_n$, $\Phi_{[h_n,m_1-1]}(T)\le T$, $\delta_T(1)\le2/5$ and $\delta_T(62)\le7045771/88917100$.
+\end{enumerate}
+\end{proposition}
+
+The certificate has $500$ plain steps at the parameters $(32,96,16,12)$ from $100$ to $600$, an extension to $(64,224,32,24)$ at $600$, five plain steps to $605$, and a state $T$ checked on $[605,m_1]$. Its values are dyadic numbers $n/2^{52}$, and $\delta_T(1)=0.1345023427\ldots$ and $\delta_T(62)=0.0708908650\ldots$, with margins $0.2654976572\ldots$ and $0.0083489100\ldots$ to the two thresholds. The run is stored over $2^{62}$.\computed{code/d3cert/run.sh, code/d3cert/out/run.out, code/m1run/run.sh}
+
+\begin{proof}
+The kernel evaluates checkers written in Lean on the stored run and on the certificate: the run against the recursions of Section~\ref{sec:lower}, each plain step against $\Phi_h$ of the previous state, the extension against Definition~\ref{def:ext}, the first state against the seed, and the last state against $\Phi_{[605,m_1-1]}$ and the two thresholds. The formal proof shows that data that pass the checkers satisfy the proposition. Section~\ref{sec:comp-three} describes the data and the checks. This is \decl{FrogModel.D3.Chain.m1run_certS_proof} in the formalization.\computed{code/formal-proof/main_axioms.lean, records/build/release-build.sh, records/build/out/release-build.out}
+\end{proof}
+
+The second computation of the proof of Theorem~\ref{thm:linear} is the table of entries below $10^{30}$.
+
+\begin{proposition}[the table]\label{prop:dcheck}\lean{FrogModel.D3.LaneE.dcheck1_holds, FrogModel.D3.Iface.dcheck1}\computed{code/dcheck/dbranch_m1.gp, code/dcheck/dcheck_m1_cert.gp, code/dcheck/gen_table.gp}
+There are $95$ entries, all passing, whose intervals $[M_i,M_{i+1}]$, $i=3,\dots,97$, with $M_i=\mathrm{round}(10^{5.5+i/4})$, so that $M_3=m_1$ and $M_{98}=10^{30}$, cover $[m_1,10^{30}]$, with $J$ nondecreasing from $62$ on the first interval to at most $140$ on the last. So the conditions hold at every $m\in[m_1,10^{30}]$ for the parameter functions that read the entry of the last interval starting at or below $m$.
+\end{proposition}
+
+\begin{proof}
+The kernel evaluates the test of each entry in exact rationals, and checks that consecutive intervals meet and that $J$ does not decrease; Lemma~\ref{lem:interval} gives the conditions on each interval. This is \decl{FrogModel.D3.LaneE.dcheck1_holds} in the formalization.
+\end{proof}
+
+The comparison index is $62$ on the first $25$ intervals. Over the $95$ entries, the largest left side of the first inequality is at most $0.9988\,\eps$, the smallest slope margin $(\frac13-\eps)(1-\bar\Theta^\circ)-\frac{c_0}3$ is at least $4.18\cdot10^{-3}$, and the third inequality holds with a slack of at least $0.00427$.\computed{code/dcheck/gen_probe.gp, code/dcheck/run.sh, code/dcheck/out/run.out}
+
+\begin{proof}[Proof of Theorem~\ref{thm:linear}]
+By Proposition~\ref{prop:m1run}(1) and Proposition~\ref{prop:F3} with $k=1,\dots,32$ ($k+1\le33\le P$), $\P(G_{100}(k)\le g)\le c_k(g)$ for $g<48$ and $\E G_{100}(k)\ge e_k$, so the seed satisfies the inequalities of validity at $100$ (Lemma~\ref{lem:seed}), and so does $S'_0\ge S_0$. By Proposition~\ref{prop:m1run}(2) and Lemma~\ref{lem:step}(5), $T$ is valid at every height of $[h_n,m_1]$, which contains $(m_1-30,m_1]$. Validity of $T$ gives $\E G_h(1)\ge(1-\delta_T(1))\mu_h(1)\ge\frac35\mu_h(1)$ for $m_1-30<h\le m_1$, and $\E G_{m_1}(62)\ge(1-\delta_T(62))\mu_{m_1}(62)\ge b_1$, since $\mu_{m_1}(62)=1778342/3$ and $(1-\frac{7045771}{88917100})\frac{1778342}3=b_1$. Let $J,w,k,k_1,k_2$ be the parameter functions of Proposition~\ref{prop:dcheck} on $[m_1,10^{30})$ and those of Lemma~\ref{lem:tail} from $10^{30}$ on; $J$ is nondecreasing, since $J\le140$ below $10^{30}$, and the conditions hold at every $m\ge m_1$. Theorem~\ref{thm:dprime} gives $\E G_m(1)\ge\frac35\mu_m(1)=\frac{m+2}5$ for every $m>m_1-30$. This is \decl{FrogModel.D3.Assembly.linear_three'} in the formalization, with Proposition~\ref{prop:m1run} as its hypothesis.
+\end{proof}
+
 \section{The formal proof and its data}\label{sec:comp}
 
-This section describes how the proof is checked: what the formal proof proves and what it trusts, how the kernel checks the certificate, and which programs wrote the data it checks. The repository gives the commands that rerun each check, and it maps every numbered statement to the Lean declarations of its formal proof.
+This section describes how the proof is checked: what the formal proof proves and what it trusts, how the kernel checks the certificate, and which programs wrote the data it checks. The repository gives the commands that rerun each check, and it maps every numbered lemma, proposition and theorem to the Lean declarations of its formal proof.
 
 \subsection{The formal proof}\label{sec:comp-lean}\computed{FrogModel/Challenge.lean, .github/workflows/ci.yml, code/formal-proof/main_axioms.lean}
-The formal proof \cite{FrogLean} is a development in Lean~4 \cite{Lean4} with Mathlib \cite{Mathlib20}, in the versions of Section~\ref{sec:comp-soft}. Its two statements repeat Theorem~\ref{thm:main} for the model of the introduction. A vertex of $\T_d$ is a finite word over $\{1,\dots,d\}$; every frog and every step of that frog carry one step variable, uniform on $\{1,\dots,d\}\times\{0,1,\dots,d\}$, all independent, the first coordinate choosing the child at the root and the second the parent ($0$) or a child elsewhere, so that every step is uniform on the neighbours of the current vertex; the wake times are defined by recursion on time. For $d=4$, the first statement says that the set of pairs (frog, time $t\ge1$) at which an awake frog is at the root is finite almost surely, and the second that the expected number of these pairs is at most $5.756$. The theorems \texttt{FrogModel.transient\_four} and \texttt{FrogModel.meanVisits\_four\_le} prove them. They have no hypothesis, and they depend on the three standard axioms of Lean and Mathlib, propositional extensionality, the axiom of choice and the soundness of quotients, and on no other axiom.
+The formal proof \cite{FrogLean} is a development in Lean~4 \cite{Lean4} with Mathlib \cite{Mathlib20}, in the versions of Section~\ref{sec:comp-soft}. Its two statements for $d=4$ repeat Theorem~\ref{thm:main} for the model of the introduction; Section~\ref{sec:comp-three} gives the statement for $d=3$. A vertex of $\T_d$ is a finite word over $\{1,\dots,d\}$; every frog and every step of that frog carry one step variable, uniform on $\{1,\dots,d\}\times\{0,1,\dots,d\}$, all independent, the first coordinate choosing the child at the root and the second the parent ($0$) or a child elsewhere, so that every step is uniform on the neighbours of the current vertex; the wake times are defined by recursion on time. For $d=4$, the first statement says that the set of pairs (frog, time $t\ge1$) at which an awake frog is at the root is finite almost surely, and the second that the expected number of these pairs is at most $5.756$. The theorems \texttt{FrogModel.transient\_four} and \texttt{FrogModel.meanVisits\_four\_le} prove them. They have no hypothesis, and they depend on the three standard axioms of Lean and Mathlib, propositional extensionality, the axiom of choice and the soundness of quotients, and on no other axiom.
 
-The Lean kernel checks each declaration of the development when it is compiled. Comparator \cite{Comparator} checks that the two theorems prove the statements as written in a copy of the statement files, which imports only Mathlib, and that the proofs use no axiom other than these three. It has every declaration that the theorems depend on, those of Mathlib included, checked again by nanoda \cite{nanoda}, an implementation of the Lean kernel written separately.
+The Lean kernel checks each declaration of the development when it is compiled. Comparator \cite{Comparator} checks that the two theorems for $d=4$ prove the statements as written in a copy of the statement files, which imports only Mathlib, and that the proofs use no axiom other than these three. It has every declaration that the theorems depend on, those of Mathlib included, checked again by nanoda \cite{nanoda}, an implementation of the Lean kernel written separately.
 
 The written proofs follow the route and the lemma cuts of the formal proof, with three differences of form. The formal proof states the lemmas of Section~\ref{sec:criterion} for the table of Section~\ref{sec:certificate}, and some of them for every table. Its root chain draws, at each step, a direction and one uniform variable, and the entered child takes the transition that the quantile of this variable selects in its row, which builds the coupling of the proof of Lemma~\ref{lem:maxchain} into the chain. And it proves Theorems~\ref{thm:B} and~\ref{thm:main} for every data tree that passes the checks of Proposition~\ref{prop:cert}, and applies them to the data of Section~\ref{sec:certificate}.
 
@@ -694,8 +1379,19 @@ Items (1) to (3) of Proposition~\ref{prop:cert} are decided by the kernel, by ev
 \subsection{The data}\label{sec:comp-data}\computed{code/table/run_table.sh, code/table/out/iterates.out, code/certificate/run_gen.sh, code/certificate/out/gen.out, code/g3k/G3Tool/MainK.lean, code/gp/table_tex.gp}
 The table of Appendix~\ref{app:table} and the data of Section~\ref{sec:certificate} were written by programs that the proof does not trust, since the kernel checks what they write: a program in Rust that wrote the table, in floating point; a second program in Rust that wrote the data file; a program in Lean that writes, from the table and the data file, the Lean modules that the kernel checks; and a script in PARI/GP that prints Appendix~\ref{app:table} from the table file.
 
-\subsection{Software}\label{sec:comp-soft}\computed{rust-toolchain.toml, .github/workflows/ci.yml, code/certificate/out/gen.out, code/g3k/modules.sha256}
-The computations used Lean~4.34.1 with Mathlib~v4.34.1, Rust~1.98.1 and PARI/GP~2.15.4 \cite{PARI}, on a workstation with an AMD Ryzen~9 5900X processor (12 cores, 24 threads) and 64~GB of memory. The data file takes about $250$~MB, and the Lean modules written from it are $145$ modules of data and $61$ modules of theorems. On that machine, the data file takes a few minutes to write and the Lean modules about two minutes, the compilation of the formal proof about an hour on four cores, and the check by Comparator with nanoda about an hour; the program that wrote the table takes ten to twenty minutes per step of its iteration, on one core. The repository \url{\repo} contains the Lean development, the programs that wrote the table and the data with their recorded outputs, and the \TeX{} source of this paper; the data file is an asset of its releases.
+\subsection{The proof for $d=3$}\label{sec:comp-three}
+The formal statement of Theorem~\ref{thm:three} uses the model of Section~\ref{sec:comp-lean}: for $d=3$, the set of pairs (frog, time $t\ge1$) at which an awake frog is at the root is infinite almost surely. The theorem \texttt{FrogModel.recurrent\_three} proves it, with no hypothesis, from the three standard axioms only. Comparator checks it against a statement file that imports only Mathlib\computed{FrogModel/ChallengeRecurrent.lean}: the model of the statement file for $d=4$ of Section~\ref{sec:comp-lean}, without the definition of transience, the statement of transience for $d=4$ and a lemma on that definition, followed by the definition of recurrence and the statement of the theorem. nanoda checks every declaration the theorem depends on.\computed{records/comparator/run_comparator.sh, records/comparator/out/comparator.txt}
+
+Three families of data enter, each written by a program that the proof does not trust and checked by the kernel.
+\begin{itemize}
+\item The run of Proposition~\ref{prop:m1run}(1): the vectors $\rho^*_h$, $K^*_h$ and the arrays $\widetilde W_q$ as integers over $2^{62}$, written by a program in Rust that evaluates the recursion of Section~\ref{sec:lower} rounding every operation down, as in the remark after Proposition~\ref{prop:F3}. A checker written in Lean recomputes every entry of the recursion on the stored vectors in exact integer arithmetic and compares.\computed{code/m1run/src/bin/m1run.rs, code/m1run/run.sh, code/m1gen/Gen/Main.lean, code/m1gen/gen.sh, .github/workflows/ci.yml}
+\item The certificate of Proposition~\ref{prop:m1run}(2): $508$ files of states with values $n/2^{52}$, written by a program in Rust that evaluates each term of $\Phi$ in floating point with every operation rounded outward, and stores with each value the name of the term that attains it. A checker written in Lean compares every stored value with its named term evaluated on the previous state, exactly in integers; the only rounded quantities are the laws $a^{(2)}$ and $a^{(3)}$, replaced by upper bounds of all their masses at precision $2^{-64}$, the deficit bounds, rounded up at precision $2^{-128}$, and the square roots $\mu^{1/2}$ of the first bound of Lemma~\ref{lem:tails}(1), replaced by upper bounds over $2^{128}$ that the checker verifies by squaring. Every rounding is in the safe direction.\computed{FrogModel/D3/LaneD/K/SLaws.lean, FrogModel/D3/LaneD/K/Check.lean}\ The end configuration sums of Lemma~\ref{lem:pseudo} are computed exactly on packed integers. The formal proof shows that a line that passes is above $\Phi_h$ of the previous state, so that the chain is one of Lemma~\ref{lem:step}(5).\computed{code/d3cert/cert/src/main.rs, code/d3cert/fhat/src/main.rs, code/d3cert/run.sh, code/d3cert/out/run.out, code/d3chain/Gen/Main.lean, code/d3chain/gen.sh, code/formal-proof/main_axioms.lean, records/build/release-build.sh, records/build/out/release-build.out}
+\item The table of Proposition~\ref{prop:dcheck}: $95$ entries, written by a script in PARI/GP; each square root bound $s$ is $(\lfloor(\mu\,4^{64})^{1/2}\rfloor+1)/2^{64}$. The kernel evaluates the test of each entry in exact rationals.\computed{code/dcheck/dbranch_m1.gp, code/dcheck/dcheck_m1_cert.gp, code/dcheck/gen_table.gp, .github/workflows/ci.yml}
+\end{itemize}
+nanoda checks the closure of Proposition~\ref{prop:dcheck}, $14429$ declarations, in $4.4$~s, that of Lemma~\ref{lem:tail}, $16871$ declarations, in $3.5$~s and that of \texttt{FrogModel.D3.LaneE.thmDprime1\_of}, the declaration behind Theorem~\ref{thm:dprime}, $29799$ declarations, in $8.8$~s, on one thread.\computed{records/nanoda/run_nanoda.sh, records/nanoda/nanoda.json, records/nanoda/out/nanoda.txt}\ On the machine of Section~\ref{sec:comp-soft}, from the files of the release, the $1029$ modules of the certificate are written in $554$~s and the $24$ modules of the run in under a second; the $1490$ modules of the formal proofs for $d=3$ and $d=4$ then compile in $5991$~s on four cores, with no failure and at most $3.7$~GiB of memory for one Lean process, and the modules for $d=3$ print no warning. Summed over modules, the compilation takes $2846$~s for the $506$ modules of the lines of the certificate, whose steps the kernel checks, at most $107$~s for one of them, and $348$~s for the modules of the run. Comparator, with nanoda, checks Theorem~\ref{thm:three} in $1581$~s on four cores; in that run, under a memory cap of $10$~GiB, the memory of its control group, page cache included, peaked at $8089$~MiB.\computed{records/build/release-build.sh, records/build/out/release-build.out, records/build/out/release-build-clean_build.out, records/build/release-build-times.sh, records/build/out/release-build-times.out, records/comparator/run_comparator.sh, records/comparator/out/comparator.txt}
+
+\subsection{Software}\label{sec:comp-soft}\computed{rust-toolchain.toml, .github/workflows/ci.yml, records/writers/writers-local.sh, records/writers/out/writers-local.out, code/certificate/out/gen.out, code/g3k/modules.sha256}
+The computations used Lean~4.34.1 with Mathlib~v4.34.1, Rust~1.98.1 and PARI/GP~2.17.4 \cite{PARI} (the scripts in PARI/GP give the same outputs under version~2.15.4), on a workstation with an AMD Ryzen~9 5900X processor (12 cores, 24 threads) and 64~GB of memory. The data file for $d=4$ takes about $250$~MB, and the Lean modules written from it are $145$ modules of data and $61$ modules of theorems. On that machine, the data file takes a few minutes to write and the Lean modules about two minutes, the compilation of the formal proof for $d=4$ about an hour on four cores, and its check by Comparator with nanoda about an hour; the program that wrote the table takes ten to twenty minutes per step of its iteration, on one core. The repository \url{\repo} contains the Lean development, the programs that wrote the table and the data with their recorded outputs, and the \TeX{} source of this paper; the data file is an asset of its releases.
 
 \appendix
 \section{The table}\label{app:table}\computed{code/gp/table_tex.gp, paper/table.tex, code/certificate/table.cert}

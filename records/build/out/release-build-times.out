@@ -1,0 +1,49 @@
+# parts of release-build.sh (wall time, from release-build.out), run by run
+# release-build.sh on the release tree at be49067; 2026-10-04T02:28Z
+  data: code/g3k/gen.sh: exit 0                                    44 s    0.01 h
+  data3: code/m1gen/gen.sh: exit 0                                  0 s    0.00 h
+  data3: code/d3chain/gen.sh: exit 0                              554 s    0.15 h
+  build: code/formal-proof/clean_build.sh: exit 0                5991 s    1.66 h
+  lean: lake build --no-build: exit 0                               6 s    0.00 h
+  lean: replay of every module: exit 0                              5 s    0.00 h
+  lean: warnings and infos of the modules: exit 1                   0 s    0.00 h
+  lean: main_axioms.lean: exit 0                                   17 s    0.00 h
+  lean: negative controls of the d = 3 data: exit 0                 4 s    0.00 h
+  lean: facts.lean: exit 0                                          6 s    0.00 h
+  # total 6627 s
+  RESULT: FAIL
+# release-build.sh on the release tree at a0386ab; 2026-10-04T04:23Z
+  POST=1
+  lean: lake build --no-build: exit 0                               6 s    0.00 h
+  lean: replay of every module: exit 0                              6 s    0.00 h
+  lean: warnings and infos of the modules: exit 0                   0 s    0.00 h
+  lean: main_axioms.lean: exit 0                                    4 s    0.00 h
+  lean: negative controls of the d = 3 data: exit 0                 5 s    0.00 h
+  lean: facts.lean: exit 0                                          4 s    0.00 h
+  # total 25 s
+  RESULT: PASS
+# release-build.sh on the release tree at 15c03a1; 2026-10-04T06:33Z
+  RESUME=1
+  build: code/formal-proof/clean_build.sh: exit 0                1292 s    0.36 h
+  lean: lake build --no-build: exit 0                               5 s    0.00 h
+  lean: replay of every module: exit 0                              5 s    0.00 h
+  lean: warnings and infos of the modules: exit 0                   0 s    0.00 h
+  lean: main_axioms.lean: exit 0                                   19 s    0.01 h
+  lean: negative controls of the d = 3 data: exit 0                 4 s    0.00 h
+  lean: facts.lean: exit 0                                          4 s    0.00 h
+  # total 1329 s
+  RESULT: PASS
+
+# modules of clean_build.sh by group (from release-build-modules.txt: the full build, the lines before a later part RESUME=1)
+group                              modules      sum (s)    max (s)  longest module
+CertData.B (segments)                   11         31.9        3.5  FrogModel.D3.CertData.B.B6
+CertData.L (lines, kernel checks)      506       2845.7      107.0  FrogModel.D3.CertData.L.LT
+CertData (Seed, Ext, LeT, Main)          4          6.3        2.4  FrogModel.D3.CertData.Main
+CertData.S (states)                    508        219.4        0.7  FrogModel.D3.CertData.S.S311
+Chain                                    3          5.5        2.8  FrogModel.D3.Chain.Link
+ChallengeRecurrent, SolutionRecurrent       2         12.3       10.0  FrogModel.ChallengeRecurrent
+d = 3 (D3, LemmaR, ZeroOne)            136        573.7       15.0  FrogModel.D3.LaneD.ConvSound
+d = 4 (the rest)                        88        427.9       16.0  FrogModel.Challenge
+G3Q (d = 4 data)                       208       4273.7       82.0  FrogModel.G3Q.Cand.Thm35
+M1Data (d = 3 run)                      24        348.1       35.0  FrogModel.D3.M1Data.C7
+all                                   1490       8744.7

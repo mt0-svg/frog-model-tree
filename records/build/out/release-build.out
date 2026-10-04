@@ -1,0 +1,447 @@
+# release-build.sh on the release tree at be49067 (0 changed files); 2026-10-04T02:28Z
+# 4 CPUs visible, LEAN_NUM_THREADS=2; Lean (version 4.34.1, x86_64-unknown-linux-gnu, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)
+== data: code/g3k/gen.sh: code/g3k/gen.sh ASSETS/certificate.v4 records/build/out/release-build/g3k
+Build completed successfully (12 jobs).
+208 modules written, every sha256 equal to modules.sha256
+== data: code/g3k/gen.sh: exit 0, 44 s
+== data3: code/m1gen/gen.sh: code/m1gen/gen.sh ASSETS/frog-model-tree-d3-m1run.txt.xz ASSETS/d3-certificate/masses100.txt records/build/out/release-build/m1gen
+✔ [2/4] Built Gen.Main (462ms)
+Build completed successfully (4 jobs).
+24 modules written, every sha256 equal to modules.sha256
+== data3: code/m1gen/gen.sh: exit 0, 0 s
+== data3: code/d3chain/gen.sh: env JOBS=4 code/d3chain/gen.sh ASSETS/d3-certificate records/build/out/release-build/d3chain
+✔ [2/20] Built FrogModel.D3.LaneD.K.Basic (206ms)
+✔ [3/20] Built FrogModel.D3.LaneD.K.Conv (246ms)
+✔ [4/20] Built FrogModel.D3.LaneD.K.Basic:c.o (214ms)
+✔ [5/20] Built FrogModel.D3.LaneD.K.SLaws (197ms)
+✔ [6/20] Built FrogModel.D3.LaneD.K.SLaws:c.o (189ms)
+✔ [7/20] Built FrogModel.D3.LaneD.K.Conv:c.o (367ms)
+✔ [8/20] Built FrogModel.D3.LaneD.K.Check (324ms)
+✔ [9/20] Built FrogModel.D3.LaneD.K.Single (176ms)
+✔ [10/20] Built FrogModel.D3.LaneD.K.Single:c.o (138ms)
+✔ [11/20] Built FrogModel.D3.LaneD.K.Cover (191ms)
+✔ [12/20] Built FrogModel.D3.LaneD.K.Ext (172ms)
+✔ [13/20] Built FrogModel.D3.LaneD.K.Check:c.o (713ms)
+✔ [14/20] Built FrogModel.D3.LaneD.K.Seed (168ms)
+✔ [15/20] Built FrogModel.D3.LaneD.K.Cover:c.o (133ms)
+✔ [16/20] Built FrogModel.D3.LaneD.K.Seed:c.o (138ms)
+✔ [17/20] Built FrogModel.D3.LaneD.K.Ext:c.o (137ms)
+✔ [18/20] Built Gen.Main (1.3s)
+✔ [19/20] Built Gen.Main:c.o (2.3s)
+✔ [20/20] Built d3chain:exe (156ms)
+Build completed successfully (20 jobs).
+1029 modules written, every sha256 equal to modules.sha256
+== data3: code/d3chain/gen.sh: exit 0, 554 s
+== build: code/formal-proof/clean_build.sh: env RUN_WRAP= HB=1 LB=2 PEAK_HEAVY=9G PEAK_LIGHT=4G MEM_MARGIN=1G MIN_DISK_GB=3 code/formal-proof/clean_build.sh
+ok 11 s, peak 3.0 GiB: FrogModel.LemmaR.Planted.Main FrogModel.D3.LaneA.Depth
+ok 9 s, peak 3.0 GiB: FrogModel.Recursion.Main FrogModel.Engine.Markov
+ok 8 s, peak 3.0 GiB: FrogModel.D3.M1L.GenFold FrogModel.D3.M1L.GenBasic
+ok 14 s, peak 3.0 GiB: FrogModel.LemmaX.CertMain FrogModel.D3.LaneB.ClosMean
+ok 6 s, peak 2.9 GiB: FrogModel.D3.Chain.Link FrogModel.D3.LaneC.Couple
+ok 6 s, peak 2.9 GiB: FrogModel.D3.M1K.Sound FrogModel.D3.LaneA.Walk
+ok 6 s, peak 2.9 GiB: FrogModel.D3.LaneA.Sym FrogModel.D3.LaneA.Meas
+ok 9 s, peak 3.0 GiB: FrogModel.Engine.DomChain FrogModel.D3.ChainLaw
+ok 7 s, peak 3.0 GiB: FrogModel.D3.M1L.GenAux
+ok 6 s, peak 2.9 GiB: FrogModel.LemmaR.Planted.Check
+ok 7 s, peak 2.9 GiB: FrogModel.D3.LaneB.Lemma8a FrogModel.D3.CertData.B.B9
+ok 6 s, peak 2.9 GiB: FrogModel.D3.CertData.B.B8 FrogModel.D3.CertData.B.B7
+ok 7 s, peak 2.9 GiB: FrogModel.D3.CertData.B.B6 FrogModel.D3.CertData.B.B5
+ok 6 s, peak 2.9 GiB: FrogModel.D3.CertData.B.B4 FrogModel.D3.CertData.B.B3
+ok 6 s, peak 2.9 GiB: FrogModel.D3.CertData.B.B2 FrogModel.D3.CertData.B.B10
+ok 7 s, peak 2.9 GiB: FrogModel.D3.CertData.B.B1 FrogModel.D3.CertData.B.B0
+ok 6 s, peak 3.0 GiB: FrogModel.D3.LaneC.S2S3 FrogModel.D3.M1K.Run
+ok 6 s, peak 2.9 GiB: FrogModel.D3.Bridge FrogModel.D3.LaneA.Indep
+ok 11 s, peak 3.1 GiB: FrogModel.Engine.CandDom FrogModel.D3.M1L.Height0
+ok 6 s, peak 2.9 GiB: FrogModel.D3.CertData.Main FrogModel.D3.Interfaces.Assembly
+ok 5 s, peak 2.9 GiB: FrogModel.D3.LaneA.Trials FrogModel.D3.LaneA.Coins
+ok 9 s, peak 3.0 GiB: FrogModel.Engine.CandKernel FrogModel.D3.M1L.Height1
+ok 6 s, peak 2.9 GiB: FrogModel.D3.M1L.GenLaw
+ok 11 s, peak 3.4 GiB: FrogModel.Engine.G3Codes
+ok 9 s, peak 3.0 GiB: FrogModel.D3.Chain.Final FrogModel.D3.LaneB.Lemma10
+ok 6 s, peak 2.9 GiB: FrogModel.D3.LaneA.Pool.Defs FrogModel.D3.LaneA.FutureDom
+ok 8 s, peak 3.0 GiB: FrogModel.D3.M1L.Height1Law FrogModel.D3.M1L.GenStep
+ok 6 s, peak 2.9 GiB: FrogModel.D3.LaneA.Pool.Arrive FrogModel.D3.LaneA.Lemma19
+ok 11 s, peak 3.0 GiB: FrogModel.Engine.G3Sem FrogModel.D3.M1L.GenGood
+ok 9 s, peak 3.3 GiB: FrogModel.D3.LaneA.Pool.Copy FrogModel.Engine.G3Step
+ok 7 s, peak 2.9 GiB: FrogModel.D3.M1L.GenMain FrogModel.D3.LaneA.Pool.Law
+ok 9 s, peak 3.0 GiB: FrogModel.Engine.G3StepV FrogModel.D3.M1L.GenIface
+ok 16 s, peak 3.1 GiB: FrogModel.D3.LaneA.Pool.Main FrogModel.Engine.G3StepW
+ok 13 s, peak 3.0 GiB: FrogModel.D3.M1L.F3L FrogModel.D3.LaneA.Delivered
+ok 6 s, peak 2.9 GiB: FrogModel.Engine.G3Cert FrogModel.D3.M1L.F3LMain
+ok 6 s, peak 2.9 GiB: FrogModel.Final FrogModel.D3.Assembly
+ok 8 s, peak 3.2 GiB: FrogModel.Solution FrogModel.SolutionRecurrent
+# done in 99 min: 1490 modules, 754 batches (15 heavy, 739 light), 754 lake calls, 0 modules failed
+# size of .lake/build: 2043.3 MiB in all, setup.json 1215.3 MiB, olean 498.9 MiB, olean.private 188.3 MiB, c 61.0 MiB, ilean 42.8 MiB, ir 25.9 MiB, olean.server 6.2 MiB, trace 4.5 MiB, ir.sig 0.3 MiB, olean.server.hash 0.0 MiB, olean.private.hash 0.0 MiB, olean.hash 0.0 MiB, ir.sig.hash 0.0 MiB, ir.hash 0.0 MiB, ilean.hash 0.0 MiB, c.hash 0.0 MiB
+# result: ok, all 1490 modules built
+== build: code/formal-proof/clean_build.sh: exit 0, 5991 s
+== lean: lake build --no-build: lake build --no-build Defs Main G3K Challenge Solution D3 ChallengeRecurrent SolutionRecurrent
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: FrogModel/Recursion/LawGen.lean:499:76: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Recursion/LawGen.lean:502:74: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Recursion/LawGen.lean:505:74: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Recursion/LawGen.lean:506:76: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Recursion/LawGen.lean:555:32: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Recursion/LawGen.lean:555:32: This simp argument is unused:
+  Set.mem_setOf_eq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [G, Function.eval, Set.ext_iff, eq_comm]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: FrogModel/Recursion/LawGen.lean:620:18: This simp argument is unused:
+  Set.mem_inter_iff
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Set.mem_prod, Set.mem_compl_iff, Set.mem_univ]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: FrogModel/Recursion/LawGen.lean:819:8: `measurable_pi_lambda` has been deprecated: Use `Measurable.of_eval` instead
+warning: FrogModel/Recursion/LawGen.lean:831:23: `measurable_pi_lambda` has been deprecated: Use `Measurable.of_eval` instead
+warning: FrogModel/Recursion/LawGen.lean:874:14: Try this: intro v h_eq
+⚠ [9025/9038] Replayed FrogModel.Challenge
+warning: FrogModel/Challenge.lean:107:8: declaration uses `sorry`
+warning: FrogModel/Challenge.lean:964:8: declaration uses `sorry`
+⚠ [10420/10421] Replayed FrogModel.ChallengeRecurrent
+warning: FrogModel/ChallengeRecurrent.lean:938:8: declaration uses `sorry`
+All targets up-to-date (10421 jobs).
+== lean: lake build --no-build: exit 0, 6 s
+== lean: replay of every module: replay
+1490 modules, exit 0
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+All targets up-to-date (10413 jobs).
+== lean: replay of every module: exit 0, 5 s
+== lean: warnings and infos of the modules: msgs
+d = 3 modules: warnings 1, infos 0 (none allowed); d = 4 modules (v1): warnings 144, infos 0; the sorry of FrogModel/Challenge.lean and FrogModel/ChallengeRecurrent.lean aside
+     24 warning FrogModel/Engine/G3StepW.lean
+     17 warning FrogModel/Engine/G3StepV.lean
+     17 warning FrogModel/Engine/G3Step.lean
+     14 warning FrogModel/Recursion/LawGen.lean
+      9 warning FrogModel/Engine/FK.lean
+      8 warning FrogModel/Recursion/Copy.lean
+      8 warning FrogModel/Engine/Drive.lean
+      6 warning FrogModel/Engine/G3Codes.lean
+      5 warning FrogModel/Recursion/Glue.lean
+      5 warning FrogModel/Engine/G3Sem.lean
+      5 warning FrogModel/Engine/DomChain.lean
+      4 warning FrogModel/Pieces/Stage.lean
+      4 warning FrogModel/Pieces/Basic.lean
+      3 warning FrogModel/Recursion/Arrive.lean
+      3 warning FrogModel/Engine/G3Lanes.lean
+      2 warning FrogModel/Recursion/Closure.lean
+      2 warning FrogModel/Pieces/Glue.lean
+      2 warning FrogModel/Engine/Markov.lean
+      2 warning FrogModel/Challenge.lean
+      1 warning FrogModel/Lemmas/Refresh.lean
+      1 warning FrogModel/Lemmas/Quantile.lean
+      1 warning FrogModel/Engine/CandKernel.lean
+      1 warning FrogModel/ChallengeRecurrent.lean
+      1 warning FrogModel/Cert/Sound.lean
+== lean: warnings and infos of the modules: exit 1, 0 s
+== lean: main_axioms.lean: lake env lean code/formal-proof/main_axioms.lean
+'FrogModel.transient_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+'FrogModel.meanVisits_four_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'FrogModel.checkAll_theTree' depends on axioms: [propext, Quot.sound]
+'FrogModel.startOK_theTree' depends on axioms: [propext]
+'FrogModel.recurrent_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'FrogModel.D3.Chain.m1run_certS_proof' depends on axioms: [propext, Classical.choice, Quot.sound]
+'FrogModel.D3.M1K.storedRun_holds' depends on axioms: [propext, Classical.choice, Quot.sound]
+== lean: main_axioms.lean: exit 0, 17 s
+== lean: negative controls of the d = 3 data: negd3
+code/d3chain/neg/NegLe.lean  rc 1  fails as expected
+code/d3chain/neg/NegLe.lean:11:2: error: (kernel) application type mismatch
+  id (Eq.refl true)
+argument has type
+  true = true
+but function has type
+  decide (leCheck 64 224 S605.F S605.D (T.F.set 1 (getN S605.F 1 - 1)) T.D = true) = true →
+    decide (leCheck 64 224 S605.F S605.D (T.F.set 1 (getN S605.F 1 - 1)) T.D = true) = true
+code/d3chain/neg/NegLine.lean  rc 1  fails as expected
+code/d3chain/neg/NegLine.lean:11:2: error: (kernel) application type mismatch
+  id (Eq.refl true)
+argument has type
+  true = true
+but function has type
+  decide
+        (check
+            ((let __src := L350.line;
+== lean: negative controls of the d = 3 data: exit 0, 4 s
+== lean: facts.lean: lake env lean code/formal-proof/facts.lean
+hypotheses 0
+axioms 3
+sorryAx false
+== lean: facts.lean: exit 0, 6 s
+# total 6627 s
+RESULT: FAIL
+# release-build.sh on the release tree at a0386ab (0 changed files); 2026-10-04T04:23Z
+# 4 CPUs visible, LEAN_NUM_THREADS=2; Lean (version 4.34.1, x86_64-unknown-linux-gnu, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)
+# POST=1: a second part, the steps after the build on the tree that the first part built
+== lean: lake build --no-build: lake build --no-build Defs Main G3K Challenge Solution D3 ChallengeRecurrent SolutionRecurrent
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: FrogModel/Recursion/LawGen.lean:499:76: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Recursion/LawGen.lean:502:74: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Recursion/LawGen.lean:505:74: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Recursion/LawGen.lean:506:76: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Recursion/LawGen.lean:555:32: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Recursion/LawGen.lean:555:32: This simp argument is unused:
+  Set.mem_setOf_eq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [G, Function.eval, Set.ext_iff, eq_comm]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: FrogModel/Recursion/LawGen.lean:620:18: This simp argument is unused:
+  Set.mem_inter_iff
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Set.mem_prod, Set.mem_compl_iff, Set.mem_univ]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: FrogModel/Recursion/LawGen.lean:819:8: `measurable_pi_lambda` has been deprecated: Use `Measurable.of_eval` instead
+warning: FrogModel/Recursion/LawGen.lean:831:23: `measurable_pi_lambda` has been deprecated: Use `Measurable.of_eval` instead
+warning: FrogModel/Recursion/LawGen.lean:874:14: Try this: intro v h_eq
+⚠ [9017/9030] Replayed FrogModel.Challenge
+warning: FrogModel/Challenge.lean:107:8: declaration uses `sorry`
+warning: FrogModel/Challenge.lean:964:8: declaration uses `sorry`
+⚠ [10418/10421] Replayed FrogModel.ChallengeRecurrent
+warning: FrogModel/ChallengeRecurrent.lean:938:8: declaration uses `sorry`
+All targets up-to-date (10421 jobs).
+== lean: lake build --no-build: exit 0, 6 s
+== lean: replay of every module: replay
+1490 modules, exit 0
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+All targets up-to-date (10413 jobs).
+== lean: replay of every module: exit 0, 6 s
+== lean: warnings and infos of the modules: msgs
+d = 3 modules: warnings 0, infos 0 (none allowed); d = 4 modules (v1): warnings 142, infos 0; the sorry of FrogModel/Challenge.lean and FrogModel/ChallengeRecurrent.lean aside
+     24 warning FrogModel/Engine/G3StepW.lean
+     17 warning FrogModel/Engine/G3StepV.lean
+     17 warning FrogModel/Engine/G3Step.lean
+     14 warning FrogModel/Recursion/LawGen.lean
+      9 warning FrogModel/Engine/FK.lean
+      8 warning FrogModel/Recursion/Copy.lean
+      8 warning FrogModel/Engine/Drive.lean
+      6 warning FrogModel/Engine/G3Codes.lean
+      5 warning FrogModel/Recursion/Glue.lean
+      5 warning FrogModel/Engine/G3Sem.lean
+      5 warning FrogModel/Engine/DomChain.lean
+      4 warning FrogModel/Pieces/Stage.lean
+      4 warning FrogModel/Pieces/Basic.lean
+      3 warning FrogModel/Recursion/Arrive.lean
+      3 warning FrogModel/Engine/G3Lanes.lean
+      2 warning FrogModel/Recursion/Closure.lean
+      2 warning FrogModel/Pieces/Glue.lean
+      2 warning FrogModel/Engine/Markov.lean
+      1 warning FrogModel/Lemmas/Refresh.lean
+      1 warning FrogModel/Lemmas/Quantile.lean
+      1 warning FrogModel/Engine/CandKernel.lean
+      1 warning FrogModel/Cert/Sound.lean
+== lean: warnings and infos of the modules: exit 0, 0 s
+== lean: main_axioms.lean: lake env lean code/formal-proof/main_axioms.lean
+'FrogModel.transient_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+'FrogModel.meanVisits_four_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'FrogModel.checkAll_theTree' depends on axioms: [propext, Quot.sound]
+'FrogModel.startOK_theTree' depends on axioms: [propext]
+'FrogModel.recurrent_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'FrogModel.D3.Chain.m1run_certS_proof' depends on axioms: [propext, Classical.choice, Quot.sound]
+'FrogModel.D3.M1K.storedRun_holds' depends on axioms: [propext, Classical.choice, Quot.sound]
+== lean: main_axioms.lean: exit 0, 4 s
+== lean: negative controls of the d = 3 data: negd3
+code/d3chain/neg/NegLe.lean  rc 1  fails as expected
+code/d3chain/neg/NegLe.lean:11:2: error: (kernel) application type mismatch
+  id (Eq.refl true)
+argument has type
+  true = true
+but function has type
+  decide (leCheck 64 224 S605.F S605.D (T.F.set 1 (getN S605.F 1 - 1)) T.D = true) = true →
+    decide (leCheck 64 224 S605.F S605.D (T.F.set 1 (getN S605.F 1 - 1)) T.D = true) = true
+code/d3chain/neg/NegLine.lean  rc 1  fails as expected
+code/d3chain/neg/NegLine.lean:11:2: error: (kernel) application type mismatch
+  id (Eq.refl true)
+argument has type
+  true = true
+but function has type
+  decide
+        (check
+            ((let __src := L350.line;
+== lean: negative controls of the d = 3 data: exit 0, 5 s
+== lean: facts.lean: lake env lean code/formal-proof/facts.lean
+hypotheses 0
+axioms 3
+sorryAx false
+== lean: facts.lean: exit 0, 4 s
+# total 25 s
+RESULT: PASS
+# release-build.sh on the release tree at 15c03a1 (0 changed files); 2026-10-04T06:33Z
+# 4 CPUs visible, LEAN_NUM_THREADS=2; Lean (version 4.34.1, x86_64-unknown-linux-gnu, commit 5045d0056413266e57c625dcd7c365b10e377c52, Release)
+# RESUME=1: a second part, on the data modules and the build directory of the first; clean_build.sh continues
+== build: code/formal-proof/clean_build.sh: env RUN_WRAP= HB=1 LB=2 PEAK_HEAVY=9G PEAK_LIGHT=4G MEM_MARGIN=1G MIN_DISK_GB=3 RESUME=1 code/formal-proof/clean_build.sh
+ok 10 s, peak 3.0 GiB: FrogModel.LemmaR.Planted.Main FrogModel.D3.LaneA.Depth
+ok 3 s, peak 1.0 GiB: FrogModel.Recursion.Main FrogModel.Engine.Markov
+ok 3 s, peak 1.0 GiB: FrogModel.D3.M1L.GenFold FrogModel.D3.M1L.GenBasic
+ok 12 s, peak 3.0 GiB: FrogModel.LemmaX.CertMain FrogModel.D3.LaneB.ClosMean
+ok 6 s, peak 2.9 GiB: FrogModel.D3.Chain.Link FrogModel.D3.LaneC.Couple
+ok 6 s, peak 2.9 GiB: FrogModel.D3.M1K.Sound FrogModel.D3.LaneA.Walk
+ok 6 s, peak 2.9 GiB: FrogModel.D3.LaneA.Sym FrogModel.D3.LaneA.Meas
+ok 3 s, peak 1.0 GiB: FrogModel.Engine.DomChain FrogModel.D3.ChainLaw
+ok 8 s, peak 3.0 GiB: FrogModel.D3.M1L.GenAux
+ok 3 s, peak 0.9 GiB: FrogModel.LemmaR.Planted.Check
+ok 7 s, peak 2.9 GiB: FrogModel.D3.LaneB.Lemma8a FrogModel.D3.CertData.B.B9
+ok 3 s, peak 0.9 GiB: FrogModel.D3.CertData.B.B8 FrogModel.D3.CertData.B.B7
+ok 3 s, peak 0.9 GiB: FrogModel.D3.CertData.B.B6 FrogModel.D3.CertData.B.B5
+ok 4 s, peak 0.9 GiB: FrogModel.D3.CertData.B.B4 FrogModel.D3.CertData.B.B3
+ok 3 s, peak 1.0 GiB: FrogModel.D3.CertData.B.B2 FrogModel.D3.CertData.B.B10
+ok 3 s, peak 1.0 GiB: FrogModel.D3.CertData.B.B1 FrogModel.D3.CertData.B.B0
+ok 6 s, peak 2.9 GiB: FrogModel.D3.LaneC.S2S3 FrogModel.D3.M1K.Run
+ok 6 s, peak 2.9 GiB: FrogModel.D3.Bridge FrogModel.D3.LaneA.Indep
+ok 3 s, peak 0.9 GiB: FrogModel.Engine.CandDom FrogModel.D3.M1L.Height0
+ok 4 s, peak 1.0 GiB: FrogModel.D3.CertData.Main FrogModel.D3.Interfaces.Assembly
+ok 6 s, peak 2.9 GiB: FrogModel.D3.LaneA.Trials FrogModel.D3.LaneA.Coins
+ok 3 s, peak 1.0 GiB: FrogModel.Engine.CandKernel FrogModel.D3.M1L.Height1
+ok 3 s, peak 0.9 GiB: FrogModel.D3.M1L.GenLaw
+ok 3 s, peak 0.9 GiB: FrogModel.Engine.G3Codes
+ok 3 s, peak 1.0 GiB: FrogModel.D3.Chain.Final FrogModel.D3.LaneB.Lemma10
+ok 6 s, peak 2.9 GiB: FrogModel.D3.LaneA.Pool.Defs FrogModel.D3.LaneA.FutureDom
+ok 3 s, peak 0.9 GiB: FrogModel.D3.M1L.Height1Law FrogModel.D3.M1L.GenStep
+ok 6 s, peak 2.9 GiB: FrogModel.D3.LaneA.Pool.Arrive FrogModel.D3.LaneA.Lemma19
+ok 3 s, peak 1.0 GiB: FrogModel.Engine.G3Sem FrogModel.D3.M1L.GenGood
+ok 5 s, peak 2.9 GiB: FrogModel.D3.LaneA.Pool.Copy FrogModel.Engine.G3Step
+ok 7 s, peak 2.9 GiB: FrogModel.D3.M1L.GenMain FrogModel.D3.LaneA.Pool.Law
+ok 3 s, peak 1.0 GiB: FrogModel.Engine.G3StepV FrogModel.D3.M1L.GenIface
+ok 6 s, peak 2.9 GiB: FrogModel.D3.LaneA.Pool.Main FrogModel.Engine.G3StepW
+ok 6 s, peak 2.9 GiB: FrogModel.D3.M1L.F3L FrogModel.D3.LaneA.Delivered
+ok 3 s, peak 1.0 GiB: FrogModel.Engine.G3Cert FrogModel.D3.M1L.F3LMain
+ok 6 s, peak 2.9 GiB: FrogModel.Final FrogModel.D3.Assembly
+ok 6 s, peak 1.0 GiB: FrogModel.Solution FrogModel.SolutionRecurrent
+# done in 21 min: 1490 modules, 754 batches (15 heavy, 739 light), 754 lake calls, 0 modules failed
+# size of .lake/build: 2043.3 MiB in all, setup.json 1215.3 MiB, olean 498.9 MiB, olean.private 188.3 MiB, c 61.0 MiB, ilean 42.8 MiB, ir 25.9 MiB, olean.server 6.2 MiB, trace 4.5 MiB, ir.sig 0.3 MiB, olean.server.hash 0.0 MiB, olean.private.hash 0.0 MiB, olean.hash 0.0 MiB, ir.sig.hash 0.0 MiB, ir.hash 0.0 MiB, ilean.hash 0.0 MiB, c.hash 0.0 MiB
+# result: ok, all 1490 modules built
+== build: code/formal-proof/clean_build.sh: exit 0, 1292 s
+== lean: lake build --no-build: lake build --no-build Defs Main G3K Challenge Solution D3 ChallengeRecurrent SolutionRecurrent
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: FrogModel/Recursion/LawGen.lean:499:76: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Recursion/LawGen.lean:502:74: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Recursion/LawGen.lean:505:74: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Recursion/LawGen.lean:506:76: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Recursion/LawGen.lean:555:32: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Recursion/LawGen.lean:555:32: This simp argument is unused:
+  Set.mem_setOf_eq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [G, Function.eval, Set.ext_iff, eq_comm]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: FrogModel/Recursion/LawGen.lean:620:18: This simp argument is unused:
+  Set.mem_inter_iff
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Set.mem_prod, Set.mem_compl_iff, Set.mem_univ]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: FrogModel/Recursion/LawGen.lean:819:8: `measurable_pi_lambda` has been deprecated: Use `Measurable.of_eval` instead
+warning: FrogModel/Recursion/LawGen.lean:831:23: `measurable_pi_lambda` has been deprecated: Use `Measurable.of_eval` instead
+warning: FrogModel/Recursion/LawGen.lean:874:14: Try this: intro v h_eq
+⚠ [9027/9040] Replayed FrogModel.Challenge
+warning: FrogModel/Challenge.lean:107:8: declaration uses `sorry`
+warning: FrogModel/Challenge.lean:964:8: declaration uses `sorry`
+⚠ [10420/10421] Replayed FrogModel.ChallengeRecurrent
+warning: FrogModel/ChallengeRecurrent.lean:938:8: declaration uses `sorry`
+All targets up-to-date (10421 jobs).
+== lean: lake build --no-build: exit 0, 5 s
+== lean: replay of every module: replay
+1490 modules, exit 0
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+All targets up-to-date (10413 jobs).
+== lean: replay of every module: exit 0, 5 s
+== lean: warnings and infos of the modules: msgs
+d = 3 modules: warnings 0, infos 0 (none allowed); d = 4 modules (v1): warnings 142, infos 0; the sorry of FrogModel/Challenge.lean and FrogModel/ChallengeRecurrent.lean aside
+     24 warning FrogModel/Engine/G3StepW.lean
+     17 warning FrogModel/Engine/G3StepV.lean
+     17 warning FrogModel/Engine/G3Step.lean
+     14 warning FrogModel/Recursion/LawGen.lean
+      9 warning FrogModel/Engine/FK.lean
+      8 warning FrogModel/Recursion/Copy.lean
+      8 warning FrogModel/Engine/Drive.lean
+      6 warning FrogModel/Engine/G3Codes.lean
+      5 warning FrogModel/Recursion/Glue.lean
+      5 warning FrogModel/Engine/G3Sem.lean
+      5 warning FrogModel/Engine/DomChain.lean
+      4 warning FrogModel/Pieces/Stage.lean
+      4 warning FrogModel/Pieces/Basic.lean
+      3 warning FrogModel/Recursion/Arrive.lean
+      3 warning FrogModel/Engine/G3Lanes.lean
+      2 warning FrogModel/Recursion/Closure.lean
+      2 warning FrogModel/Pieces/Glue.lean
+      2 warning FrogModel/Engine/Markov.lean
+      1 warning FrogModel/Lemmas/Refresh.lean
+      1 warning FrogModel/Lemmas/Quantile.lean
+      1 warning FrogModel/Engine/CandKernel.lean
+      1 warning FrogModel/Cert/Sound.lean
+== lean: warnings and infos of the modules: exit 0, 0 s
+== lean: main_axioms.lean: lake env lean code/formal-proof/main_axioms.lean
+'FrogModel.transient_four' depends on axioms: [propext, Classical.choice, Quot.sound]
+'FrogModel.meanVisits_four_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+'FrogModel.checkAll_theTree' depends on axioms: [propext, Quot.sound]
+'FrogModel.startOK_theTree' depends on axioms: [propext]
+'FrogModel.recurrent_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+'FrogModel.D3.Chain.m1run_certS_proof' depends on axioms: [propext, Classical.choice, Quot.sound]
+'FrogModel.D3.M1K.storedRun_holds' depends on axioms: [propext, Classical.choice, Quot.sound]
+== lean: main_axioms.lean: exit 0, 19 s
+== lean: negative controls of the d = 3 data: negd3
+code/d3chain/neg/NegLe.lean  rc 1  fails as expected
+code/d3chain/neg/NegLe.lean:11:2: error: (kernel) application type mismatch
+  id (Eq.refl true)
+argument has type
+  true = true
+but function has type
+  decide (leCheck 64 224 S605.F S605.D (T.F.set 1 (getN S605.F 1 - 1)) T.D = true) = true →
+    decide (leCheck 64 224 S605.F S605.D (T.F.set 1 (getN S605.F 1 - 1)) T.D = true) = true
+code/d3chain/neg/NegLine.lean  rc 1  fails as expected
+code/d3chain/neg/NegLine.lean:11:2: error: (kernel) application type mismatch
+  id (Eq.refl true)
+argument has type
+  true = true
+but function has type
+  decide
+        (check
+            ((let __src := L350.line;
+== lean: negative controls of the d = 3 data: exit 0, 4 s
+== lean: facts.lean: lake env lean code/formal-proof/facts.lean
+hypotheses 0
+axioms 3
+sorryAx false
+== lean: facts.lean: exit 0, 4 s
+# total 1329 s
+RESULT: PASS

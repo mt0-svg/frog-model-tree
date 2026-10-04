@@ -1,0 +1,142 @@
+warning: FrogModel/Cert/Sound.lean:42:62: Variable name `h1` is not explicitly referenced.
+warning: FrogModel/Pieces/Basic.lean:536:42: This simp argument is unused:
+warning: FrogModel/Pieces/Basic.lean:941:26: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Pieces/Basic.lean:941:79: This simp argument is unused:
+warning: FrogModel/Pieces/Basic.lean:1296:9: `Measurable.ennreal_tsum` has been deprecated: Use `Measurable.tsum` from `Mathlib.MeasureTheory.Constructions.Polish.Basic` instead
+warning: FrogModel/Pieces/Glue.lean:213:55: Variable name `h` is not explicitly referenced.
+warning: FrogModel/Pieces/Glue.lean:362:13: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Lemmas/Refresh.lean:47:75: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Recursion/LawGen.lean:168:23: Try `simp at hi_val` instead of `simpa using hi_val`
+warning: FrogModel/Recursion/LawGen.lean:184:23: Try `simp at hi_val` instead of `simpa using hi_val`
+warning: FrogModel/Recursion/LawGen.lean:235:2: Try this:
+warning: FrogModel/Recursion/LawGen.lean:237:2: Try this:
+warning: FrogModel/Recursion/LawGen.lean:499:76: try 'simp' instead of 'simpa'
+warning: FrogModel/Recursion/LawGen.lean:502:74: try 'simp' instead of 'simpa'
+warning: FrogModel/Recursion/LawGen.lean:505:74: try 'simp' instead of 'simpa'
+warning: FrogModel/Recursion/LawGen.lean:506:76: try 'simp' instead of 'simpa'
+warning: FrogModel/Recursion/LawGen.lean:555:32: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Recursion/LawGen.lean:555:32: This simp argument is unused:
+warning: FrogModel/Recursion/LawGen.lean:620:18: This simp argument is unused:
+warning: FrogModel/Recursion/LawGen.lean:819:8: `measurable_pi_lambda` has been deprecated: Use `Measurable.of_eval` instead
+warning: FrogModel/Recursion/LawGen.lean:831:23: `measurable_pi_lambda` has been deprecated: Use `Measurable.of_eval` instead
+warning: FrogModel/Recursion/LawGen.lean:874:14: Try this: intro v h_eq
+warning: FrogModel/Pieces/Stage.lean:162:4: `push_neg` has been deprecated. Prefer using `push Not` instead.
+warning: FrogModel/Pieces/Stage.lean:386:47: try 'simp' instead of 'simpa'
+warning: FrogModel/Pieces/Stage.lean:392:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Pieces/Stage.lean:396:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Recursion/Closure.lean:60:2: Try this: intro S S' h y hy
+warning: FrogModel/Recursion/Closure.lean:140:4: Try this: intro σ hσ τ ⟨hgen, _⟩ U hU
+warning: FrogModel/Recursion/Glue.lean:238:18: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Recursion/Glue.lean:259:18: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Recursion/Glue.lean:379:23: Variable name `hT` is not explicitly referenced.
+warning: FrogModel/Recursion/Glue.lean:599:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Recursion/Glue.lean:677:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Recursion/Arrive.lean:274:6: Try this: intro j hj heq
+warning: FrogModel/Recursion/Arrive.lean:455:6: Try `simp at this` instead of `simpa using this`
+warning: FrogModel/Recursion/Arrive.lean:460:6: Try `simp at this` instead of `simpa using this`
+warning: FrogModel/Recursion/Copy.lean:230:6: `push_neg` has been deprecated. Prefer using `push Not` instead.
+warning: FrogModel/Recursion/Copy.lean:242:6: `push_neg` has been deprecated. Prefer using `push Not` instead.
+warning: FrogModel/Recursion/Copy.lean:498:46: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Recursion/Copy.lean:508:41: Try `simp at h` instead of `simpa using h`
+warning: FrogModel/Recursion/Copy.lean:526:16: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Recursion/Copy.lean:536:16: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Recursion/Copy.lean:569:16: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Recursion/Copy.lean:743:6: try 'simp' instead of 'simpa'
+warning: FrogModel/Engine/FK.lean:37:4: try 'simp' instead of 'simpa'
+warning: FrogModel/Engine/FK.lean:53:8: try 'simp' instead of 'simpa'
+warning: FrogModel/Engine/FK.lean:62:13: `Measurable.ennreal_tsum` has been deprecated: Use `Measurable.tsum` from `Mathlib.MeasureTheory.Constructions.Polish.Basic` instead
+warning: FrogModel/Engine/FK.lean:59:14: this tactic is never executed
+warning: FrogModel/Engine/FK.lean:60:14: this tactic is never executed
+warning: FrogModel/Engine/FK.lean:59:14: Unused tactic linter: `intro y hy_ne` does nothing
+warning: FrogModel/Engine/FK.lean:60:14: Unused tactic linter: `simp [Set.indicator, hy_ne.symm]` does nothing
+warning: FrogModel/Engine/FK.lean:288:12: Try this:
+warning: FrogModel/Engine/FK.lean:341:4: Try this: intro n n' h w
+warning: FrogModel/Engine/Drive.lean:466:21: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Engine/Drive.lean:472:12: try 'simp' instead of 'simpa'
+warning: FrogModel/Engine/Drive.lean:688:12: try 'simp' instead of 'simpa'
+warning: FrogModel/Engine/Drive.lean:770:21: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Engine/Drive.lean:786:21: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Engine/Drive.lean:811:12: `Set.setOf_exists` has been deprecated: Use `Set.ofPred_exists` instead
+warning: FrogModel/Engine/Drive.lean:842:21: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Engine/Drive.lean:902:32: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Engine/Markov.lean:157:2: Try this:
+warning: FrogModel/Engine/Markov.lean:339:2: Try this:
+warning: FrogModel/Engine/DomChain.lean:53:50: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/DomChain.lean:56:50: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/DomChain.lean:624:18: try 'simp' instead of 'simpa'
+warning: FrogModel/Engine/DomChain.lean:638:18: try 'simp' instead of 'simpa'
+warning: FrogModel/Engine/DomChain.lean:605:43: This simp argument is unused:
+warning: FrogModel/Engine/CandKernel.lean:129:32: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+warning: FrogModel/Engine/G3Codes.lean:351:8: try 'simp' instead of 'simpa'
+warning: FrogModel/Engine/G3Codes.lean:379:10: try 'simp' instead of 'simpa'
+warning: FrogModel/Engine/G3Codes.lean:401:10: try 'simp' instead of 'simpa'
+warning: FrogModel/Engine/G3Codes.lean:431:8: try 'simp' instead of 'simpa'
+warning: FrogModel/Engine/G3Codes.lean:462:10: try 'simp' instead of 'simpa'
+warning: FrogModel/Engine/G3Codes.lean:489:10: try 'simp' instead of 'simpa'
+warning: FrogModel/Engine/G3Lanes.lean:221:6: exponent 1152 exceeds the threshold 256, exponentiation operation was not evaluated, use `set_option exponentiation.threshold <num>` to set a new threshold
+warning: FrogModel/Engine/G3Lanes.lean:242:2: exponent 1152 exceeds the threshold 256, exponentiation operation was not evaluated, use `set_option exponentiation.threshold <num>` to set a new threshold
+warning: FrogModel/Engine/G3Lanes.lean:252:57: Variable name `hW` is not explicitly referenced.
+warning: FrogModel/Engine/G3Sem.lean:150:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3Sem.lean:150:32: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3Sem.lean:189:24: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3Sem.lean:193:18: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3Sem.lean:223:6: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3Step.lean:57:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3Step.lean:57:18: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3Step.lean:58:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3Step.lean:58:18: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3Step.lean:309:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3Step.lean:309:17: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3Step.lean:311:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3Step.lean:311:28: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3Step.lean:312:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3Step.lean:312:48: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3Step.lean:320:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3Step.lean:320:17: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3Step.lean:329:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3Step.lean:329:17: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3Step.lean:329:28: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3Step.lean:349:39: Variable name `he` is not explicitly referenced.
+warning: FrogModel/Engine/G3Step.lean:514:52: try 'simp' instead of 'simpa'
+warning: FrogModel/Engine/G3StepV.lean:117:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3StepV.lean:297:21: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3StepV.lean:313:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3StepV.lean:317:14: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3StepV.lean:325:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3StepV.lean:358:12: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3StepV.lean:367:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3StepV.lean:779:79: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+warning: FrogModel/Engine/G3StepV.lean:980:14: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3StepV.lean:1001:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3StepV.lean:1002:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3StepV.lean:1004:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3StepV.lean:1006:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3StepV.lean:1009:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3StepV.lean:1010:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3StepV.lean:1054:6: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3StepV.lean:1074:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3StepW.lean:302:70: exponent 1024 exceeds the threshold 256, exponentiation operation was not evaluated, use `set_option exponentiation.threshold <num>` to set a new threshold
+warning: FrogModel/Engine/G3StepW.lean:386:60: exponent 384 exceeds the threshold 256, exponentiation operation was not evaluated, use `set_option exponentiation.threshold <num>` to set a new threshold
+warning: FrogModel/Engine/G3StepW.lean:446:6: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3StepW.lean:448:6: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3StepW.lean:453:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3StepW.lean:467:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3StepW.lean:470:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3StepW.lean:472:6: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3StepW.lean:644:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3StepW.lean:644:19: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3StepW.lean:706:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3StepW.lean:1120:6: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3StepW.lean:1120:17: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3StepW.lean:1144:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3StepW.lean:1152:27: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3StepW.lean:1158:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3StepW.lean:1198:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3StepW.lean:1198:27: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3StepW.lean:1203:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3StepW.lean:1203:27: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3StepW.lean:1239:33: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Engine/G3StepW.lean:1252:33: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3StepW.lean:1309:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Engine/G3StepW.lean:1309:21: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Lemmas/Quantile.lean:467:33: Try `simp at hyx` instead of `simpa using hyx`

@@ -2,9 +2,9 @@ name: Release
 
 # On a tag v* (or by hand for a given tag): the GitHub release of the tagged commit, from the green CI run of
 # that commit. Nothing is compiled again: the Lake build that CI built and checked (build, source scan, axioms,
-# Comparator and its controls, the computation jobs) is packed as it is, with the PDF and the outputs of every check
-# of that run. It takes the green CI run started by hand on the tagged commit; with none, the release stops: run
-# ci.yml on it first, then start this workflow by hand with the tag.
+# Comparator on config.json and config-recurrent.json and their controls, the computation jobs) is packed as it
+# is, with the PDF and the outputs of every check of that run. It takes the green CI run started by hand on the
+# tagged commit; with none, the release stops: run ci.yml on it first, then start this workflow by hand with the tag.
 on:
   push:
     tags: ["v*"]
@@ -130,7 +130,7 @@ jobs:
           set -eu
           d="verification-$TAG"
           run="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/${{ needs.ci-run.outputs.run }}"
-          for k in source-scan build up-to-date axioms comparator; do
+          for k in source-scan build up-to-date axioms neg-d3 comparator comparator-recurrent; do
             [ -f "verify/results/$k.tsv" ] || { echo "missing run: $k"; ls verify/results; exit 1; }
           done
           if cut -f4 verify/results/*.tsv | grep -v '^PASS'; then echo "a run did not pass"; exit 1; fi

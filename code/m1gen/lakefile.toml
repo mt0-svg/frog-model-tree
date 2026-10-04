@@ -1,0 +1,8 @@
+name = "m1gen"
+version = "0.1.0"
+defaultTargets = ["m1gen"]
+
+# m1gen RUNFILE MASSFILE OUTDIR: the Lean data modules of the stored M1 run (Gen/Main.lean).
+[[lean_exe]]
+name = "m1gen"
+root = "Gen.Main"

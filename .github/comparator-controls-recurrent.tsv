@@ -1,0 +1,4 @@
+# Negative controls of the Comparator job on config-recurrent.json: name, file, the line changed in place, its replacement, the
+# message Comparator must reject it with (tab separated).
+target	FrogModel/ChallengeRecurrent.lean	theorem recurrent_three : Recurrent 3 := by	theorem recurrent_three : Recurrent 2 := by	Challenge and solution theorem statement do not match: 'FrogModel.recurrent_three'
+definition	FrogModel/ChallengeRecurrent.lean	  ∀ᵐ ω ∂frogMeasure d, (visits (paths ω)).Infinite	  ∀ᵐ ω ∂frogMeasure d, (visits (paths ω)).Finite	Const does not match between challenge and target 'FrogModel.Recurrent'

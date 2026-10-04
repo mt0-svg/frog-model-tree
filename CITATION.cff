@@ -6,7 +6,8 @@ authors:
   - name: mt0-svg
 repository-code: "https://github.com/mt0-svg/frog-model-tree"
 license: Apache-2.0
-version: v1.0.0
+version: v2.0.0
+date-released: 2026-10-04
 doi: 10.5281/zenodo.23121586
 keywords:
   - frog model
@@ -14,13 +15,14 @@ keywords:
   - d-ary tree
   - regular trees
   - transience
+  - recurrence
   - stochastic domination
   - certificate
   - Lean 4
   - formal verification
 preferred-citation:
   type: article
-  title: "The frog model on the 4-ary tree is transient"
+  title: "The frog model is recurrent on the 3-ary tree and transient on the 4-ary tree"
   authors:
     - name: mt0-svg
   doi: 10.5281/zenodo.23121586

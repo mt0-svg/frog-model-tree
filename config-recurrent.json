@@ -1,0 +1,8 @@
+{
+  "challenge_module": "FrogModel.ChallengeRecurrent",
+  "solution_module": "FrogModel.SolutionRecurrent",
+  "theorem_names": ["FrogModel.recurrent_three"],
+  "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
+  "enable_nanoda": true,
+  "lean_kernel": false
+}

@@ -5,7 +5,8 @@
 #   \lean{A, B, ...}      its Lean declarations, full names; the first is the one its proof names;
 #   \computed{p, q, ...}  scripts and recorded outputs, paths from the root of the repository;
 #   \nolean{reason}       for a statement with no Lean declaration, the reason.
-# The Lean sources indexed: FrogModel/, less Challenge.lean and the data modules FrogModel/G3Q/. Checks: every
+# The Lean sources indexed: FrogModel/, less the two challenges (Challenge.lean, ChallengeRecurrent.lean) and the data
+# modules (FrogModel/G3Q/, FrogModel/D3/M1Data/, FrogModel/D3/CertData/, written by the generators). Checks: every
 # declaration is declared there (namespaces followed; a structure field counts), every path exists, every \decl{N}
 # of the text sits in a proof and is the first entry of the \lean macro of the statement it proves, and the first
 # entry of every theorem, lemma, proposition and corollary is named by a \decl. Exits 1 if a check fails, and with --check also if STATEMENTS.md differs.
@@ -19,8 +20,9 @@ end='<!-- end statement-map -->'
 t=$(mktemp -d); trap 'rm -rf "$t"' EXIT
 fail=0
 
-# Every declaration of the Lean package (not FrogModel/Challenge.lean, which repeats the definitions of
-# FrogModel/Defs.lean and the two statements, nor the data modules): full name, file, line.
+# Every declaration of the Lean package (not the challenges FrogModel/Challenge.lean and ChallengeRecurrent.lean,
+# which repeat the definitions of FrogModel/Defs.lean, FrogModel/D3/Defs.lean and the statements, nor the data
+# modules): full name, file, line.
 index() {
   awk -v file="$2" '
     /^[[:space:]]*namespace / { ns[++d] = $2; next }
@@ -40,7 +42,8 @@ index() {
     }' "$1"
 }
 {
-  find FrogModel -name '*.lean' ! -path FrogModel/Challenge.lean ! -path 'FrogModel/G3Q/*' | LC_ALL=C sort | while read -r f; do index "$f" "$f"; done
+  find FrogModel -name '*.lean' ! -path FrogModel/Challenge.lean ! -path FrogModel/ChallengeRecurrent.lean ! -path 'FrogModel/G3Q/*' \
+    ! -path 'FrogModel/D3/M1Data/*' ! -path 'FrogModel/D3/CertData/*' | LC_ALL=C sort | while read -r f; do index "$f" "$f"; done
 } > "$t/index.tsv"
 
 # The source without its comments (an unescaped % to the end of the line).

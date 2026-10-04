@@ -6,7 +6,7 @@ license = "Apache-2.0"
 licenseFiles = ["LICENSE", "NOTICE"]
 preferReleaseBuild = true
 releaseRepo = "https://github.com/mt0-svg/frog-model-tree"
-defaultTargets = ["Defs", "Main", "G3K", "Challenge", "Solution"]
+defaultTargets = ["Defs", "Main", "G3K", "Challenge", "Solution", "D3", "ChallengeRecurrent", "SolutionRecurrent"]
 
 [leanOptions]
 pp.unicode.fun = true
@@ -51,3 +51,29 @@ roots = ["FrogModel.Challenge"]
 [[lean_lib]]
 name = "Solution"
 roots = ["FrogModel.Solution"]
+
+# d = 3. The development: the reduction to the root (Lemma R, the zero-one law), the closure at the root and its
+# bounds, the step map and its kernel checker, the lower model M1 and the checker of its stored run, the induction on
+# the height, the certificate chain, the assembly (FrogModel.D3.Assembly).
+[[lean_lib]]
+name = "D3"
+globs = ["FrogModel.LemmaR.+", "FrogModel.ZeroOne.+", "FrogModel.D3.Assembly", "FrogModel.D3.Bridge",
+  "FrogModel.D3.ChainLaw", "FrogModel.D3.Defs", "FrogModel.D3.Interfaces.+", "FrogModel.D3.LaneA.+",
+  "FrogModel.D3.LaneB.+", "FrogModel.D3.LaneC.+", "FrogModel.D3.LaneD.+", "FrogModel.D3.LaneE.+",
+  "FrogModel.D3.M1L.+", "FrogModel.D3.M1K.+", "FrogModel.D3.Chain.+"]
+
+# The data of the stored M1 run (code/m1gen) and of the certificate of Proposition 15.1 (code/d3chain), with the
+# theorems that check them, written from the release assets (not committed).
+[[lean_lib]]
+name = "D3Data"
+globs = ["FrogModel.D3.M1Data.+", "FrogModel.D3.CertData.+"]
+
+# The statement of d = 3 with `sorry`, which nothing imports, and the module that proves it: the pair Comparator
+# checks with config-recurrent.json.
+[[lean_lib]]
+name = "ChallengeRecurrent"
+roots = ["FrogModel.ChallengeRecurrent"]
+
+[[lean_lib]]
+name = "SolutionRecurrent"
+roots = ["FrogModel.SolutionRecurrent"]

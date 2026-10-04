@@ -1,12 +1,12 @@
 #!/bin/bash
 # Clean build of the Lean package: the build directory .lake/build is moved aside and every module of FrogModel/ (the data
-# modules FrogModel/G3Q/ that code/g3k/gen.sh writes included) is compiled again, in dependency
+# modules that code/g3k/gen.sh, code/m1gen/gen.sh and code/d3chain/gen.sh write included) is compiled again, in dependency
 # order. Mathlib keeps its build (from `lake exe cache get` or an earlier build); only the package is compiled.
 #
 # Order: coreutils tsort of the import lines of the package's modules (imports from outside the package
 # dropped), grouped by import depth so that heavy and light modules form long runs. A module is heavy when its
-# name contains Check or Place, its file is over 100 KB (a module of FrogModel/G3Q/ aside: its peak is under 1 GB), or it has
-# more than 20 `decide +kernel`. Each lake
+# name contains Check or Place, its file is over 100 KB (the data modules of FrogModel/G3Q/, FrogModel/D3/M1Data/
+# and FrogModel/D3/CertData/ aside: those of G3Q peak under 1 GB), or it has more than 20 `decide +kernel`. Each lake
 # call builds up to HB consecutive heavy modules or up to LB consecutive light ones; every other module they
 # import was built by an earlier call. A failed call is retried module by module; a failure that remains counts.
 #
@@ -91,7 +91,7 @@ module_order() { # "h module" or "l module" (heavy or light), one per line, in b
   grep -Hc 'decide +kernel' "${files[@]}" > "$tmp/kernel"
   awk '
     function mod(p) { sub(/\.lean$/, "", p); gsub("/", ".", p); return p }
-    FILENAME == ARGV[1] { if ($1 > 100000 && $2 !~ /^FrogModel\/G3Q\//) heavy[mod($2)] = 1; next }
+    FILENAME == ARGV[1] { if ($1 > 100000 && $2 !~ /^FrogModel\/(G3Q|D3\/M1Data|D3\/CertData)\//) heavy[mod($2)] = 1; next }
     FILENAME == ARGV[2] { c = $0; sub(/.*:/, "", c); p = $0; sub(/:[^:]*$/, "", p); if (c + 0 > 20) heavy[mod(p)] = 1; next }
     FILENAME == ARGV[3] { if ($1 != $2) deps[$2] = deps[$2] " " $1; next }
     { m = $1; d = 0; k = split(deps[m], a, " ")

@@ -2,6 +2,13 @@
 /FrogModel/G3Q/
 /code/g3k/.lake
 /code/g3k/out/
+/FrogModel/D3/M1Data/
+/FrogModel/D3/CertData/
+/code/m1gen/.lake
+/code/m1gen/out/
+/code/d3chain/.lake
+/code/d3chain/out/
+/code/d3data/
 /code/certificate/target/
 /code/certificate/out/*.zst
 /code/certificate/out/occupations.txt
@@ -21,3 +28,12 @@ paper/main.synctex.gz
 /code/table/out/table.v2
 /code/table/out/table.v3
 /code/table/out/iterate.txt*
+/code/m1run/target/
+/code/m1run/out/*.txt
+/code/d3cert/target/
+/code/d3cert/out/d3-certificate/
+/code/dcheck/out/dcheck_m1_cert.gp
+/code/dcheck/out/dcheck_m1.out
+/code/dcheck/out/Table.lean.checkout
+/code/dcheck/out/probe/
+/code/dcheck/out/probe.txt

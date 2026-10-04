@@ -1,0 +1,7 @@
+out/dcheck_m1_cert.gp equals dcheck_m1_cert.gp
+verdict inputs: failing 0, interval lines 95 of 95, interval block completed, past 10^30 block completed
+(D'check) in MODE 1 with outward rounding: PASS
+out/dcheck_m1.out equals dcheck_m1.out, times aside
+wrote ../../FrogModel/D3/LaneE/Table.lean
+../../FrogModel/D3/LaneE/Table.lean, written again, equals the file of the checkout
+rational form self-check: 0 failing of 95; largest (K1)/eps 0.998788 at interval 36; smallest slope margin 4.1837 e-3; smallest base margin 0.004276

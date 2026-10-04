@@ -1,0 +1,221 @@
+# run_comparator.sh on the release tree at 15c03a1 (0 changed files); 2026-10-04T07:03Z
+# limits of the service: MemoryMax=10G, MemorySwapMax=0, CPUQuota=400%, RuntimeMaxSec=2h
+# Comparator at d03acab154d269c06e60e4de7e4cc85deebff94b, lean4export at 076e8e57707e813375e8f9da8bf989799ace9680, nanoda_lib at 3a2407216ee84a75f9e1aead6803d0578be06ae7
+# config-recurrent.json: {"challenge_module":"FrogModel.ChallengeRecurrent","solution_module":"FrogModel.SolutionRecurrent","theorem_names":["FrogModel.recurrent_three"],"permitted_axioms":["propext","Quot.sound","Classical.choice"],"enable_nanoda":true,"lean_kernel":false}
+# sha256 dbca3e6ce8103329d3ed1b2bee0f3e8298c9cd80df4dc09c969e424dffd1e5fa  FrogModel/ChallengeRecurrent.lean
+# sha256 8e8562871df0314bc6a0a9b09c9037be5249164b0a39304ec4a96369e31d44fc  FrogModel/SolutionRecurrent.lean
+# sha256 7264c0d1261aa9a534b3950a529063aba9065c0049b6043243da50fa2708f0f1  config-recurrent.json
+# build outputs of the challenge module dropped: 16
+Building FrogModel.ChallengeRecurrent
+⚠ [8924/8924] Built FrogModel.ChallengeRecurrent (5.2s)
+warning: FrogModel/ChallengeRecurrent.lean:938:8: declaration uses `sorry`
+Build completed successfully (8924 jobs).
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, FrogModel.recurrent_three, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from FrogModel.ChallengeRecurrent
+Building FrogModel.SolutionRecurrent
+⚠ [9498/9897] Replayed FrogModel.Pieces.Basic
+warning: FrogModel/Pieces/Basic.lean:536:42: This simp argument is unused:
+  root
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [step, stepStar, embedStar, h]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: FrogModel/Pieces/Basic.lean:941:26: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Pieces/Basic.lean:941:79: This simp argument is unused:
+  exists_prop
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Set.mem_setOf_eq, Set.mem_iUnion, Set.mem_inter_iff, and_assoc]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: FrogModel/Pieces/Basic.lean:1296:9: `Measurable.ennreal_tsum` has been deprecated: Use `Measurable.tsum` from `Mathlib.MeasureTheory.Constructions.Polish.Basic` instead
+⚠ [9499/9897] Replayed FrogModel.Pieces.Glue
+warning: FrogModel/Pieces/Glue.lean:213:55: Variable name `h` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _h
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: FrogModel/Pieces/Glue.lean:362:13: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+⚠ [9501/9897] Replayed FrogModel.Lemmas.Refresh
+warning: FrogModel/Lemmas/Refresh.lean:47:75: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+⚠ [9530/9897] Replayed FrogModel.Recursion.LawGen
+warning: FrogModel/Recursion/LawGen.lean:168:23: Try `simp at hi_val` instead of `simpa using hi_val`
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Recursion/LawGen.lean:184:23: Try `simp at hi_val` instead of `simpa using hi_val`
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Recursion/LawGen.lean:235:2: Try this:
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: FrogModel/Recursion/LawGen.lean:237:2: Try this:
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: FrogModel/Recursion/LawGen.lean:499:76: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Recursion/LawGen.lean:502:74: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Recursion/LawGen.lean:505:74: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Recursion/LawGen.lean:506:76: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Recursion/LawGen.lean:555:32: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Recursion/LawGen.lean:555:32: This simp argument is unused:
+  Set.mem_setOf_eq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [G, Function.eval, Set.ext_iff, eq_comm]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: FrogModel/Recursion/LawGen.lean:620:18: This simp argument is unused:
+  Set.mem_inter_iff
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Set.mem_prod, Set.mem_compl_iff, Set.mem_univ]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: FrogModel/Recursion/LawGen.lean:819:8: `measurable_pi_lambda` has been deprecated: Use `Measurable.of_eval` instead
+warning: FrogModel/Recursion/LawGen.lean:831:23: `measurable_pi_lambda` has been deprecated: Use `Measurable.of_eval` instead
+warning: FrogModel/Recursion/LawGen.lean:874:14: Try this: intro v h_eq
+⚠ [9536/9897] Replayed FrogModel.Pieces.Stage
+warning: FrogModel/Pieces/Stage.lean:162:4: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: FrogModel/Pieces/Stage.lean:386:47: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Pieces/Stage.lean:392:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Pieces/Stage.lean:396:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+⚠ [9537/9897] Replayed FrogModel.Recursion.Closure
+warning: FrogModel/Recursion/Closure.lean:60:2: Try this: intro S S' h y hy
+warning: FrogModel/Recursion/Closure.lean:140:4: Try this: intro σ hσ τ ⟨hgen, _⟩ U hU
+⚠ [9539/9897] Replayed FrogModel.Recursion.Glue
+warning: FrogModel/Recursion/Glue.lean:238:18: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Recursion/Glue.lean:259:18: `if_neg` has been deprecated: Use `ite_eq_right` instead
+warning: FrogModel/Recursion/Glue.lean:379:23: Variable name `hT` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hT
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: FrogModel/Recursion/Glue.lean:599:10: `if_pos` has been deprecated: Use `ite_eq_left` instead
+warning: FrogModel/Recursion/Glue.lean:677:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+⚠ [9541/9897] Replayed FrogModel.Recursion.Arrive
+warning: FrogModel/Recursion/Arrive.lean:274:6: Try this: intro j hj heq
+warning: FrogModel/Recursion/Arrive.lean:455:6: Try `simp at this` instead of `simpa using this`
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Recursion/Arrive.lean:460:6: Try `simp at this` instead of `simpa using this`
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+⚠ [9542/9897] Replayed FrogModel.Recursion.Copy
+warning: FrogModel/Recursion/Copy.lean:230:6: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: FrogModel/Recursion/Copy.lean:242:6: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+warning: FrogModel/Recursion/Copy.lean:498:46: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Recursion/Copy.lean:508:41: Try `simp at h` instead of `simpa using h`
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Recursion/Copy.lean:526:16: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Recursion/Copy.lean:536:16: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Recursion/Copy.lean:569:16: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Recursion/Copy.lean:743:6: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+⚠ [9597/9897] Replayed FrogModel.Engine.FK
+warning: FrogModel/Engine/FK.lean:37:4: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Engine/FK.lean:53:8: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Engine/FK.lean:62:13: `Measurable.ennreal_tsum` has been deprecated: Use `Measurable.tsum` from `Mathlib.MeasureTheory.Constructions.Polish.Basic` instead
+warning: FrogModel/Engine/FK.lean:59:14: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: FrogModel/Engine/FK.lean:60:14: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: FrogModel/Engine/FK.lean:59:14: Unused tactic linter: `intro y hy_ne` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: FrogModel/Engine/FK.lean:60:14: Unused tactic linter: `simp [Set.indicator, hy_ne.symm]` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: FrogModel/Engine/FK.lean:288:12: Try this:
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: FrogModel/Engine/FK.lean:341:4: Try this: intro n n' h w
+⚠ [9611/9897] Replayed FrogModel.Engine.Drive
+warning: FrogModel/Engine/Drive.lean:466:21: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Engine/Drive.lean:472:12: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Engine/Drive.lean:688:12: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: FrogModel/Engine/Drive.lean:770:21: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Engine/Drive.lean:786:21: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Engine/Drive.lean:811:12: `Set.setOf_exists` has been deprecated: Use `Set.ofPred_exists` instead
+warning: FrogModel/Engine/Drive.lean:842:21: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: FrogModel/Engine/Drive.lean:902:32: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+⚠ [9617/9897] Replayed FrogModel.Engine.Markov
+warning: FrogModel/Engine/Markov.lean:157:2: Try this:
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: FrogModel/Engine/Markov.lean:339:2: Try this:
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+Build completed successfully (10159 jobs).
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, FrogModel.recurrent_three, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from FrogModel.SolutionRecurrent
+Running nanoda kernel on solution
+nanoda kernel accepts the solution
+Your solution is okay!
+memory.peak 8482160640 bytes
+# memory peak of the service: 8089 MiB, under the cap of 10240 MiB
+COMPARATOR PASS: 1581 s wall, exit 0

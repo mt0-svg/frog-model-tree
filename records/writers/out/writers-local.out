@@ -1,0 +1,151 @@
+# writers-local.sh on the release tree at a3b8487 (0 changed files); 2026-10-04T07:36Z
+# 2 CPUs visible, RAYON_NUM_THREADS=2; PARI/GP [2, 15, 4]; rustc 1.98.1 (48a229cea 2026-09-01); cargo 1.98.1 (797e8a9bc 2026-08-05)
+== code/m1run/run.sh: PASS, 12 s (build included); its out/run.out:
+h 0 written
+h 1 deficit_rho 18
+h 2 deficit_rho 51
+h 3 deficit_rho 76
+h 4 deficit_rho 91
+h 5 deficit_rho 99
+h 6 deficit_rho 111
+h 7 deficit_rho 117
+h 8 deficit_rho 121
+h 9 deficit_rho 125
+h 10 deficit_rho 129
+h 11 deficit_rho 136
+h 12 deficit_rho 136
+h 13 deficit_rho 145
+h 14 deficit_rho 149
+h 15 deficit_rho 152
+h 16 deficit_rho 161
+h 17 deficit_rho 162
+h 18 deficit_rho 163
+h 19 deficit_rho 166
+h 20 deficit_rho 171
+h 21 deficit_rho 176
+h 22 deficit_rho 179
+h 23 deficit_rho 184
+h 24 deficit_rho 183
+h 25 deficit_rho 193
+h 26 deficit_rho 200
+h 27 deficit_rho 193
+h 28 deficit_rho 207
+h 29 deficit_rho 206
+h 30 deficit_rho 215
+h 31 deficit_rho 216
+h 32 deficit_rho 223
+h 33 deficit_rho 227
+h 34 deficit_rho 234
+h 35 deficit_rho 238
+h 36 deficit_rho 246
+h 37 deficit_rho 249
+h 38 deficit_rho 262
+h 39 deficit_rho 268
+h 40 deficit_rho 277
+h 41 deficit_rho 281
+h 42 deficit_rho 291
+h 43 deficit_rho 302
+h 44 deficit_rho 311
+h 45 deficit_rho 320
+h 46 deficit_rho 324
+h 47 deficit_rho 348
+h 48 deficit_rho 362
+h 49 deficit_rho 370
+h 50 deficit_rho 385
+h 51 deficit_rho 395
+h 52 deficit_rho 408
+h 53 deficit_rho 425
+h 54 deficit_rho 446
+h 55 deficit_rho 458
+h 56 deficit_rho 483
+h 57 deficit_rho 493
+h 58 deficit_rho 511
+h 59 deficit_rho 538
+h 60 deficit_rho 552
+h 61 deficit_rho 569
+h 62 deficit_rho 589
+h 63 deficit_rho 612
+h 64 deficit_rho 635
+h 65 deficit_rho 653
+h 66 deficit_rho 681
+h 67 deficit_rho 694
+h 68 deficit_rho 718
+h 69 deficit_rho 742
+h 70 deficit_rho 766
+h 71 deficit_rho 784
+h 72 deficit_rho 805
+h 73 deficit_rho 836
+h 74 deficit_rho 851
+h 75 deficit_rho 875
+h 76 deficit_rho 897
+h 77 deficit_rho 922
+h 78 deficit_rho 957
+h 79 deficit_rho 978
+h 80 deficit_rho 995
+h 81 deficit_rho 1016
+h 82 deficit_rho 1042
+h 83 deficit_rho 1066
+h 84 deficit_rho 1091
+h 85 deficit_rho 1112
+h 86 deficit_rho 1145
+h 87 deficit_rho 1178
+h 88 deficit_rho 1186
+h 89 deficit_rho 1223
+h 90 deficit_rho 1245
+h 91 deficit_rho 1269
+h 92 deficit_rho 1291
+h 93 deficit_rho 1322
+h 94 deficit_rho 1345
+h 95 deficit_rho 1373
+h 96 deficit_rho 1395
+h 97 deficit_rho 1419
+h 98 deficit_rho 1439
+h 99 deficit_rho 1473
+top 100 written
+e59e49e1f4982e89faa9c902631e511886f3238fcbc1fa95b7a68740ff10085c  m1run_V48_P96_h100.txt
+20899e67ffede92c5a40da027d7cac84730974e39fdca2fc53af912fe9b6e227  mass_V48_h100.txt
+the run and the masses equal the inputs of ../m1gen/modules.sha256
+== code/d3cert/run.sh: PASS, 139 s (build included); its out/run.out:
+# seed at 100 (E 32, GM 96)
+seed at 100: delta(1) 0.444414 delta(E) 0.312587 F(1, 11) 8.357710e-2
+# 500 steps to 600 at (32, 96, 16, 12)
+150 delta(1) 0.33901 delta(12) 0.26865 delta(E) 0.23912 worst 0.999999999985 s4 0
+200 delta(1) 0.27095 delta(12) 0.20655 delta(E) 0.18878 worst 0.999999999985 s4 0
+250 delta(1) 0.23047 delta(12) 0.16740 delta(E) 0.15554 worst 0.999999999985 s4 0
+300 delta(1) 0.20338 delta(12) 0.14070 delta(E) 0.13223 worst 0.999999999985 s4 0
+350 delta(1) 0.18396 delta(12) 0.12135 delta(E) 0.11499 worst 0.999999999985 s4 0
+400 delta(1) 0.16937 delta(12) 0.10669 delta(E) 0.10173 worst 0.999999999985 s4 0
+450 delta(1) 0.15798 delta(12) 0.09519 delta(E) 0.09122 worst 0.999999999985 s4 0
+500 delta(1) 0.14886 delta(12) 0.08594 delta(E) 0.08268 worst 0.999999999985 s4 0
+550 delta(1) 0.14140 delta(12) 0.07833 delta(E) 0.07561 worst 0.999999999985 s4 0
+600 delta(1) 0.13518 delta(12) 0.07196 delta(E) 0.06966 worst 0.999999999985 s4 0
+# extension to (64, 224) at 600 and five steps at (64, 224, 32, 24)
+ext at 600: E 32 -> 64, GM 96 -> 224
+601 delta(1) 0.13507 delta(12) 0.07182 delta(E) 0.06621 F(1, 16) 6.6168e-2 F(4, 16) 1.0905e-3 worst 0.999999999985 s4 0
+602 delta(1) 0.13484 delta(12) 0.07170 delta(E) 0.06611 F(1, 16) 6.6166e-2 F(4, 16) 1.0900e-3 worst 0.999999999985 s4 0
+603 delta(1) 0.13473 delta(12) 0.07158 delta(E) 0.06601 F(1, 16) 6.6166e-2 F(4, 16) 1.0900e-3 worst 0.999999999985 s4 0
+604 delta(1) 0.13462 delta(12) 0.07147 delta(E) 0.06591 F(1, 16) 6.6166e-2 F(4, 16) 1.0900e-3 worst 0.999999999985 s4 0
+605 delta(1) 0.13450 delta(12) 0.07135 delta(E) 0.06581 F(1, 16) 6.6166e-2 F(4, 16) 1.0900e-3 worst 0.999999999985 s4 0
+# d3-fhat: floating point search of T on [605, 1778279] from the state at 600 (margins 1e-8, 12 iterations)
+# FHAT_SAVET: T of iteration 11 written to T605.txt (FAIL)
+# outward-rounded interval check of T on [605, 1778279], row mode1
+tcheck on [605, 1778279]: all components named, worst term/stored 0.999999989999; hand-over row mode1: interval [605, 1778279] is [a, 1778279] with a <= 1778249; delta_T(1) 0.134502 <= 2/5 true; delta_T(62) 0.070891 <= 7045771/88917100 true: MET
+# manifest and verification of the chain
+0 OK seed at 100; largest term/stored 0.999999999985; names 1:1568 M:32 R:1536
+1 OK step 100 -> 101 (s4 0); largest term/stored 0.999999999985; names 1:743 A:314 L:9 S2:23 S3:2047
+2 OK step 101 -> 102 (s4 0); largest term/stored 0.999999999985; names 1:745 A:299 L:6 S2:26 S3:2060
+...
+506 OK step 604 -> 605 (s4 0); largest term/stored 0.999999999985; names A:1967 L:5159 S2:45 S3:7293
+507 OK interval check on [605, 1778279], T >= S_a; hand-over (exact comparisons) row mode1: interval [605, 1778279] is [a, 1778279] with a <= 1778249; delta_T(1) 0.134502 <= 2/5 true; delta_T(62) 0.070891 <= 7045771/88917100 true: MET; largest term/stored 0.999999989999; names A:1962 L:5129 S3:7373
+verify: 508 lines checked, 0 failed: PASS; the whole manifest from the seed, ending in a check whose hand-over is MET: (CertS) holds
+# sha256 of the 510 files of the manifest against the inputs of ../d3chain/modules.sha256, and of T605.txt
+the 510 files equal the inputs of ../d3chain/modules.sha256, and T605.txt has the sha256 of this script
+== code/dcheck/run.sh: PASS, 3 s (build included); its out/run.out:
+out/dcheck_m1_cert.gp equals dcheck_m1_cert.gp
+verdict inputs: failing 0, interval lines 95 of 95, interval block completed, past 10^30 block completed
+(D'check) in MODE 1 with outward rounding: PASS
+out/dcheck_m1.out equals dcheck_m1.out, times aside
+wrote ../../FrogModel/D3/LaneE/Table.lean
+../../FrogModel/D3/LaneE/Table.lean, written again, equals the file of the checkout
+rational form self-check: 0 failing of 95; largest (K1)/eps 0.998788 at interval 36; smallest slope margin 4.1837 e-3; smallest base margin 0.004276
+RESULT: PASS

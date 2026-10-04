@@ -1,0 +1,23 @@
+# run_nanoda.sh on the release tree at 15c03a1 (0 changed files); 2026-10-04T07:01Z
+# 4 CPUs visible; memory limit of the control group: 10737418240
+# lean4export at 076e8e57707e813375e8f9da8bf989799ace9680; nanoda_bin of nanoda_lib at 3a2407216ee84a75f9e1aead6803d0578be06ae7
+# nanoda.json: { "use_stdin": true, "permitted_axioms": ["propext", "Classical.choice", "Quot.sound"], "unpermitted_axiom_hard_error": true, "nat_extension": true, "string_extension": true, "print_success_message": true, "num_threads": 1 }
+== FrogModel.D3.LaneE.dcheck1_holds (module FrogModel.D3.LaneE.Table)
+export: exit 0, 5.47 s wall, largest resident memory 6489964 KB, 60691412 bytes
+nanoda: exit 0, 4.43 s wall, 4.38 s user, largest resident memory 76820 KB; its output:
+Checked 14429 declarations with no typechecker errors, 1 pretty printer errors: [
+    "Unable to print axioms",
+]
+== FrogModel.D3.LaneE.dprime_tail_holds (module FrogModel.D3.LaneE.Tail)
+export: exit 0, 5.92 s wall, largest resident memory 6498228 KB, 73595610 bytes
+nanoda: exit 0, 3.54 s wall, 3.48 s user, largest resident memory 94420 KB; its output:
+Checked 16871 declarations with no typechecker errors, 1 pretty printer errors: [
+    "Unable to print axioms",
+]
+== FrogModel.D3.LaneE.thmDprime1_of (module FrogModel.D3.LaneE.Induction)
+export: exit 0, 8.75 s wall, largest resident memory 6551136 KB, 148092148 bytes
+nanoda: exit 0, 8.81 s wall, 8.70 s user, largest resident memory 160796 KB; its output:
+Checked 29799 declarations with no typechecker errors, 1 pretty printer errors: [
+    "Unable to print axioms",
+]
+RESULT: PASS

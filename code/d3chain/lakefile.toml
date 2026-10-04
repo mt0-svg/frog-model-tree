@@ -1,0 +1,16 @@
+name = "d3chain"
+version = "0.1.0"
+defaultTargets = ["d3chain"]
+
+[leanOptions]
+autoImplicit = false
+
+# The kernel checker of the certificate (FrogModel/D3/LaneD/K, a link to that of the main package), Lean core only.
+[[lean_lib]]
+name = "K"
+globs = ["FrogModel.D3.LaneD.K.+"]
+
+# d3chain CERTDIR OUTROOT [-c] [-j N]: the Lean data modules of the certificate (Gen/Main.lean).
+[[lean_exe]]
+name = "d3chain"
+root = "Gen.Main"
